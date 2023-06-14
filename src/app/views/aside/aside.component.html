@@ -21,7 +21,7 @@
         <!-- Dashboard -->
         <li class="menu-item "  [ngClass]="{'active':currentUrl ==='/'}">
           <a [routerLink]="['/']" routerLinkActive="true" class="menu-link gap-2">
-            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+            <i class="fa fa-users" aria-hidden="true"></i>
             <div data-i18n="Personnel AFB">Personnel AFB</div>
           </a>
         </li>
@@ -29,37 +29,36 @@
         <!-- Layouts -->
         <li class="menu-item " routerLinkActive="active" [ngClass]="{'active':currentUrl ==='/agence'}">
           <a [routerLink]="['/agence']" routerLinkActive="true" class="menu-link gap-2" >
-              <i class="fa fa-folder-o" aria-hidden="true"></i>
+              <i class="fa fa-university" aria-hidden="true"></i>
             <div data-i18n="Agence">Agence</div>
           </a>
         </li>
   
         <li class="menu-item " routerLinkActive="active" [ngClass]="{'active':currentUrl ==='/filiale'}">
           <a [routerLink]="['/filiale']" routerLinkActive="true" class="menu-link gap-2" >
-            <i class="fa fa-user-o" aria-hidden="true"></i>
+            <i class="fa fa-home" aria-hidden="true"></i>
             <div data-i18n="Filiale">Filiale</div>
           </a>
         </li>
         <li class="menu-item" routerLinkActive="active" [ngClass]="{'active':currentUrl ==='/partenaire'}">
           <a [routerLink]="['/partenaire']" class="menu-link gap-2" >
-              <i class="fa fa-bell-o" aria-hidden="true"></i> 
+              <i class="fa fa-line-chart" aria-hidden="true"></i> 
             <div data-i18n="Partenaires">Partenaires</div>
           </a>
         </li>
         <li class="menu-item" routerLinkActive="active" [ngClass]="{'active':currentUrl ==='/confrere'}">
           <a [routerLink]="['/confrere']" routerLinkActive="true" class="menu-link gap-2" >
-            <i class="fa fa-cogs" aria-hidden="true"></i>
+            <i class="fa fa-handshake-o" aria-hidden="true"></i>
             <div data-i18n="Confrere">Confrere</div>
           </a>
         </li>
-        <li class="menu-item">
-          <hr style=" padding-left: 1px ; width: 100%;">
-          <a style="cursor: pointer;" class="menu-link gap-2">
-            <i class="fa fa-power-off" aria-hidden="true"></i>
-            <div data-i18n="Correspondance">Correspondance</div>
+        <li class="menu-item" routerLinkActive="active"  [ngClass]="{'active':currentUrl ==='/correspondant'}">
+          <a style="cursor: pointer;" class="menu-link gap-2" [routerLink]="['/correspondance']" >
+            <i class="fa fa-ravelry" aria-hidden="true"></i>
+            <div data-i18n="correspondance">Correspondance</div>
           </a>
         </li>
-        
+        <hr style=" padding-left: 1px ; width: 100%;">
        </ul> 
       
   </aside>

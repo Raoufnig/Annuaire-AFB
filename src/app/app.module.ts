@@ -14,6 +14,8 @@ import { PartenaireComponent } from './views/partenaire/partenaire.component';
 import { ConfrereComponent } from './views/confrere/confrere.component';
 import { CorrespondanceComponent } from './views/correspondance/correspondance.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ModalsComponent } from './views/modals/modals.component';
+import { LoginComponent } from './views/login/login.component';
 
 
 @NgModule({
@@ -26,7 +28,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FilialeComponent,
     PartenaireComponent,
     ConfrereComponent,
-    CorrespondanceComponent
+    CorrespondanceComponent,
+    ModalsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

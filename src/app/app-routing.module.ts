@@ -6,6 +6,7 @@ import { CorrespondanceComponent } from './views/correspondance/correspondance.c
 import { PartenaireComponent } from './views/partenaire/partenaire.component';
 import { ConfrereComponent } from './views/confrere/confrere.component';
 import { AgenceComponent } from './views/agence/agence.component';
+import { LoginComponent } from './views/login/login.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path:'correspondance', component: CorrespondanceComponent},
   {path:'partenaire', component: PartenaireComponent},
   {path:'confrere', component: ConfrereComponent},
-  {path:'agence', component: AgenceComponent}
+  {path:'agence', component: AgenceComponent},
+  {path:'login', component: LoginComponent},
 
 ];
 

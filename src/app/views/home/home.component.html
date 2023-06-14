@@ -1,179 +1,347 @@
 <div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
-        <app-aside id="layout-menu" (hideAside)="ShowNavbar=$event" [state]="ShowNavbar"></app-aside>
-        <div class="layout-page">
-            <app-navbar (showAside)="ShowNavbar=$event"></app-navbar>
-            <div class="content-wrapper">
-                <!-- <div class="container-xxl  container-p-y">
-                    <div class=" py-3 mb-4 d-flex flex-column ">
-                        <div>
-                            <h4 class="fw-bold "><span class="text-primary">Hello</span>Bienvenue sur l'Annuaire d'AFB</h4>
-                        </div>
-                        <span class="text-muted fw-light"> Votre Repertoire de collaborateurs </span>
-                    </div>
-
-                   
-                </div> -->
-
-                <div class="container-xxl container-p-y">
-                    <div class="py-3 d-flex flex-column">
+  <div class="layout-wrapper layout-content-navbar">
+  <div class="layout-container">
+      <app-aside id="layout-menu" (hideAside)="ShowNavbar=$event" [state]="ShowNavbar"></app-aside>
+      <div class="layout-page">
+          <app-navbar (showAside)="ShowNavbar=$event"></app-navbar>
+          <div class="content-wrapper">
+              <!-- <div class="container-xxl  container-p-y">
+                  <div class=" py-3 mb-4 d-flex flex-column ">
                       <div>
-                        <h6 class="fw-bold">
-                          <span class="text-primary">
-                            <i class="fa fa-home" aria-hidden="true"></i>
-                            <a
-                              [routerLink]="['/']"
-                              routerLinkActive="true"
-                              class="text-primary"
-                              >Acceuil /
-                            </a>
-                          </span>
-                          Personnel
-                        </h6>
+                          <h4 class="fw-bold "><span class="text-primary">Hello</span>Bienvenue sur l'Annuaire d'AFB</h4>
                       </div>
-                    </div>
-                    <!-- <div
-                      *ngIf="deleted == true"
-                      class="alert alert-primary alert-dismissible"
-                      role="alert"
-                    >
-                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
-                        Suppression effectuée
-                      </h6>
-                      <p class="mb-0">Votre employé a été supprimé.</p>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div
-                      *ngIf="errormessage == true"
-                      class="alert alert-danger alert-dismissible"
-                      role="alert"
-                    >
-                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
-                        Erreur ;(
-                      </h6>
-                      <p class="mb-0">{{ errormessage }}</p>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert"
-                        aria-label="Close"
-                      ></button>
-                    </div> -->
-                    <div class="p-3 row">
-                      <div class="card p-5">
-                        <h2 class="card-header text-primary">
-                          Personnel - AFB
-                        </h2>
-                        <!-- <div  class="text-center mb-5">
-                          <div
-                            class="spinner-border text-primary"
-                            role="status"
-                            style="width: 100px; height: 100px"
-                          >
-                            <span class="visually-hidden">Chargement...</span>
-                          </div>
-                        </div> -->
-                        <div class="card-body">
-                          Ici vous avez la liste de tout le personnel d'Afriland First Bank
-                          <div class="table-responsive text-nowrap mt-4">
-                           
-                            <div
-                              class="input-group mb-4"
-                              style="width: 30%; display: flex; float: right"
-                            >
-                              <span class="input-group-text" id="basic-addon-search31"
-                                ><i class="fa fa-search" aria-hidden="true"></i
-                              ></span>
-                              <input
-                                type="text"
-                        
-                                class="form-control"
-                                placeholder="Chercher..."
-                                aria-label="Chercher..."
-                                aria-describedby="basic-addon-search31"
-                              />
-                            </div>
+                      <span class="text-muted fw-light"> Votre Repertoire de collaborateurs </span>
+                  </div>
 
-                            
-          
-                            <table bootstrap-table class="table" data-data="filteredData">
-                              <thead style="background-color: #f3f2f7">
-                                <tr>
-                                  <th>#</th>
-                                  <th>Nom</th>
-                                  <th>Email</th>
-                                  <th>Affectation</th>
-                                  <th>Fonction</th>
-                                  <th>Cisco</th>
-                                  <th>Ville</th>
-                                  <th>Telephone</th>
-                                </tr>
-                              </thead>
-                              <tbody class="table-border-bottom-0">
-                                <tr
-                                >
-                                  <td>
-                                    <span>1</span>
-                                  </td>
-                                  <td>
-                                    <span>Raoufnig</span>
-                                  </td>
-                                  <td>
-                                    <span>raoufelabdoul@gmail.com</span>
-                                  </td>
-                                  <td>
-                                    <span>FLS</span>
-                                  </td>
-                                  <td>
-                                    <span>Assistant</span>
-                                  </td>
-                                  <td>
-                                    <span>01400</span>
-                                  </td>
-                                  <td>
-                                    <span>Yaounde</span>
-                                  </td>
-                                  <td>
-                                    <span>654721021</span>
-                                  </td>
-                                  <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-                                        <div class="dropdown-menu">
-                                          <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
-                                            margin-right: 8px;" ></i>  Details</a>
-                                          <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
-                                            margin-right: 8px;"></i>Modifier les accès</a>
-                                          <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="" ><i class="fa fa-trash-o" aria-hidden="true" style="
-                                            margin-right: 8px;"></i>  Supprimer</a>
-                                        </div>
-                                      </div>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <div style="display: flex; float: right">
-                              <div class="pagination">
-                                <pagination-controls
-                                  previousLabel="Previous"
-                                  nextLabel="Next"
-                                  
-                                >
-                                </pagination-controls>
-                              </div>
+                 
+              </div> -->
+
+              <div class="container-xxl container-p-y">
+                  <div class="py-3 d-flex flex-column">
+                    <div>
+                      <h6 class="fw-bold">
+                        <span class="text-primary">
+                          <i class="fa fa-home" aria-hidden="true"></i>
+                          <a
+                            [routerLink]="['/']"
+                            routerLinkActive="true"
+                            class="text-primary"
+                            >Acceuil /
+                          </a>
+                        </span>
+                        Personnel
+                      </h6>
+                    </div>
+                  </div>
+                  <!-- <div
+                    *ngIf="deleted == true"
+                    class="alert alert-primary alert-dismissible"
+                    role="alert"
+                  >
+                    <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                      Suppression effectuée
+                    </h6>
+                    <p class="mb-0">Votre employé a été supprimé.</p>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div
+                    *ngIf="errormessage == true"
+                    class="alert alert-danger alert-dismissible"
+                    role="alert"
+                  >
+                    <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                      Erreur ;(
+                    </h6>
+                    <p class="mb-0">{{ errormessage }}</p>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    ></button>
+                  </div> -->
+                  <div class="p-3 row">
+                    <div class="card p-5">
+                      <h2 class="card-header text-primary">
+                        Personnel - AFB
+                      </h2>
+                      <!-- <div  class="text-center mb-5">
+                        <div
+                          class="spinner-border text-primary"
+                          role="status"
+                          style="width: 100px; height: 100px"
+                        >
+                          <span class="visually-hidden">Chargement...</span>
+                        </div>
+                      </div> -->
+                      <div class="card-body">
+                        Ici vous avez la liste de tout le personnel d'Afriland First Bank
+                        <div class="table-responsive text-nowrap mt-4">
+                          <div class="d-flex justify-content-end mb-4">
+                            <button
+                              class="btn btn-primary"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalCreateUser"
+                            >
+                              Créer un employé
+                            </button>
+                          </div>
+                          <div class="group">
+                            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                            <input placeholder="Search" type="search" class="input">
+                          </div>
+                          <br>
+                          <br>
+                          <br>
+
+                          
+        
+                          <table bootstrap-table class="table">
+                            <thead style="background-color: #f3f2f7">
+                              <tr>
+                                <th>#</th>
+                                <th>photo</th>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Affectation</th>
+                                <th>Fonction</th>
+                                <th>Cisco</th>
+                                <th>Ville</th>
+                                <th>Telephone</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                              <tr
+                              >
+                                <td>
+                                  <span>1</span>
+                                </td>
+                                <td>
+                                  <div class="avatar avatar">
+                                    <img src="./assets/avatar/avatar.png" alt class="w-px-40 h-auto rounded-circle" />
+                                  </div>
+                                </td>
+                                <td>
+                                  <span>Raoufnig</span>
+                                </td>
+                                <td>
+                                  <span>raoufelabdoul@gmail.com</span>
+                                </td>
+                                <td>
+                                  <span>Douala</span>
+                                </td>
+                                <td>
+                                  <span>Assistant Direction</span>
+                                </td>
+                                <td>
+                                  <span>01400</span>
+                                </td>
+                                <td>
+                                  <span>Yaounde</span>
+                                </td>
+                                <td>
+                                  <span>654721021</span>
+                                </td>
+                                <td>
+                                  <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                        margin-right: 8px;" ></i>  Details</a>
+                                      <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                        margin-right: 8px;"></i>Modifier</a>
+                                      <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                        margin-right: 8px;"></i>  Supprimer</a>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div style="display: flex; float: right">
+                            <div class="pagination">
+                              <pagination-controls
+                                previousLabel="Previous"
+                                nextLabel="Next"
+                                
+                              >
+                              </pagination-controls>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-            </div>
-        </div>
-    </div>
+                </div>
+          </div>
+      </div>
+  </div>
 </div>
 
+<!-- Create User-->
+<div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCenterTitle">Ajouter un personnel</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="nav-align-top mb-4">
+          <ul class="nav nav-tabs" role="tablist">
+            
+            <li class="nav-item">
+              <button
+                type="button"
+                class="nav-link"
+                role="tab"
+                data-bs-toggle="tab"
+                data-bs-target="#navs-top-profile"
+                aria-controls="navs-top-profile"
+                aria-selected="true"
+              >
+                Remplir le formulaire
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade" id="navs-top-profile" role="tabpanel">
+            
+              <form [formGroup]="CreateUser" >
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">Nom</label>
+                  <input
+                    type="name"
+                    id="nameWithTitle"
+                    class="form-control"
+                    placeholder="Enter name"
+                    formControlName="name"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Email</label>
+                    <input
+                      type="email"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Enter email"
+                      formControlName="email"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Affectation</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer l'affectation"
+                      formControlName= "affectation"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Fonction</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer la fonction"
+                      formControlName="fonction"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Ville</label>
+                    <input
+                      type="email"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer la ville"
+                      formControlName="email"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Cisco</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer le cisco"
+                      formControlName="cisco"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
+                    <input
+                      type="tel"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Enter le numero"
+                      formControlName="telephone"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Photo</label>
+                    <input
+                  type="file"
+                  class="form-control"
+                  
+                />
+                  </div>
+                </div>
+                <div>
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                    style="width: 100%"
+                  >
+                    
+                   Enregistrer
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
