@@ -5,16 +5,334 @@
         <div class="layout-page">
             <app-navbar (showAside)="ShowNavbar=$event"></app-navbar>
             <div class="content-wrapper">
-                <div class="container-xxl  container-p-y">
-                    <div class=" py-3 mb-4 d-flex flex-column ">
-                        <div>
-                            <h4 class="fw-bold "><span class="text-primary">Hello</span>Bienvenue Sur l'Annuaire d'AFB</h4>
-                        </div>
-                        <span class="text-muted fw-light">De nouvelles informations à partager aujourd'hui ?</span>
+                <div class="container-xxl container-p-y">
+                    <div class="py-3 d-flex flex-column">
+                      <div>
+                        <h6 class="fw-bold">
+                          <span class="text-primary">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <a
+                              [routerLink]="['/home']"
+                              routerLinkActive="true"
+                              class="text-primary"
+                              >Acceuil /
+                            </a>
+                          </span>
+                          Confrere
+                        </h6>
+                      </div>
                     </div>
-
+                    <!-- <div
+                      *ngIf="deleted == true"
+                      class="alert alert-primary alert-dismissible"
+                      role="alert"
+                    >
+                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                        Suppression effectuée
+                      </h6>
+                      <p class="mb-0">Votre employé a été supprimé.</p>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div
+                      *ngIf="errormessage == true"
+                      class="alert alert-danger alert-dismissible"
+                      role="alert"
+                    >
+                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                        Erreur ;(
+                      </h6>
+                      <p class="mb-0">{{ errormessage }}</p>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div> -->
+                    <div class="p-3 row">
+                      <div class="card p-5">
+                        <h2 class="card-header text-primary">
+                          Confrere - AFB
+                        </h2>
+                        <!-- <div  class="text-center mb-5">
+                          <div
+                            class="spinner-border text-primary"
+                            role="status"
+                            style="width: 100px; height: 100px"
+                          >
+                            <span class="visually-hidden">Chargement...</span>
+                          </div>
+                        </div> -->
+                        <div class="card-body">
+                          Ici vous avez la liste de tous les confreres d'Afriland First Bank Cameroun
+                          <div class="table-responsive text-nowrap mt-4">
+                            <div class="d-flex justify-content-end mb-4">
+                              <button
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCreateUser"
+                              >
+                              Ajouter un confrere
+                              </button>
+                            </div>
+                            <div class="group">
+                              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                              <input placeholder="Search" type="text" class="input">
+                            </div>
+                            <div class="select1-row">
+                              <label for="select-1"></label>
+                              <select id="select-1" style="display: none;" >
+                                <option value="option-1">--Tous--</option>
+                                <option value="option-2">Option 2</option>
+                                <option value="option-3">Option 3</option>
+                              </select>
+                            
+                              <label for="select-2">Pays :</label>
+                              <select class="select1" id="select-2">
+                                <option value="option-1">--Tous--</option>
+                                <option value="option-2">Cameroun</option>
+                                <option value="option-3">Tchad</option>
+                              </select>
+                            
+                              <label for="select-3"></label>
+                              <select id="select-3" style="display: none;">
+                                <option value="option-1">--Tous--</option>
+                                <option value="option-2">Option 2</option>
+                                <option value="option-3">Option 3</option>
+                              </select>
+    
+                              <div class="search-container">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                              </div>
+    
+                             
+                            </div>
+                           
+                            <br>
+                            <br>
+                            <br>
+    
+                            
           
+                            <table bootstrap-table class="table">
+                              <thead style="background-color: #f3f2f7">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Nom</th>
+                                  <th>Adresse</th>
+                                  <th>BIC</th>
+                                  <th>Fax</th>
+                                  <th>Telephone</th>
+                                  <th>Pays</th>
+                                  <th>contact_sygma_systac</th>
+                                </tr>
+                              </thead>
+                              <tbody class="table-border-bottom-0">
+                                <tr
+                                >
+                                  <td>
+                                    <span>1</span>
+                                  </td>
+                                 
+                                  <td>
+                                    <span>AFB</span>
+                                  </td>
+                                  <td>
+                                    <span>Bario</span>
+                                  </td>
+                                  <td>
+                                    <span>9631202056566</span>
+                                  </td>
+                                  <td>
+                                    <span>0057931402</span>
+                                  </td>
+                                  <td>
+                                    <span>+2250142312</span>
+                                  </td>
+                                 
+                                  <td>
+                                    <span>Cameroun</span>
+                                  </td>
+                                  <td>
+                                    <span>befjlsj</span>
+                                  </td>
+                                  <td>
+                                    <div class="dropdown">
+                                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                                      <div class="dropdown-menu">
+                                        <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                          margin-right: 8px;" ></i>  Details</a>
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                          margin-right: 8px;"></i>Modifier</a>
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                          margin-right: 8px;"></i>  Supprimer</a>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <div style="display: flex; float: right">
+                              <div class="pagination">
+                                <pagination-controls
+                                  previousLabel="Previous"
+                                  nextLabel="Next"
+                                  
+                                >
+                                </pagination-controls>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <footer class="py-3 my-4">
+                    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                      
+                    </ul>
+                    <p class="text-center text-body-secondary">© 2023 Afriland First Bank, Cameroun</p>
+                  </footer>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Ajouter un confrere</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
+  
+        <div class="modal-body">
+          <div class="nav-align-top mb-4">
+            <ul class="nav nav-tabs" role="tablist">
+              
+              <li class="nav-item">
+                <button
+                  type="button"
+                  class="nav-link"
+                  role="tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#navs-top-profile"
+                  aria-controls="navs-top-profile"
+                  aria-selected="false"
+                >
+                  Remplir le formulaire
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div
+                class="tab-pane fade show active"
+                id="navs-top-home"
+                role="tabpanel"
+              >
+              
+                
+                <form [formGroup]="confrereForm" (ngSubmit)="onSubmit()">
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Nom</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Enter name"
+                      formControlName="name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Adresse</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer une adresse"
+                      formControlName="adresse"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Bic</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Enter email"
+                        formControlName="bic"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Fax</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Enter email"
+                        formControlName="fax"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
+                    <input
+                      type="tel"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer un numero de telephone"
+                      formControlName="telephone"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Pays</label>
+                    <select class="form-select" formControlName="pays" aria-label="Default select example">
+                      <option selected>Selectionner un pays</option>
+                      <option value="1">Cameroun</option>
+                      <option value="2">Tchad</option>
+                      <option value="3">Guinée</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">CONTACT_SYGMA_SYSTAC</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer le nom du manager"
+                      formControlName="cssystac"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                      style="width: 100%"
+                    >
+                    
+                      <span>Enregistrer</span>
+                    </button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+       
       </div>
     </div>
   </div>
@@ -22,5 +340,3 @@
 
 
 
-
-<p>confrere works!</p>

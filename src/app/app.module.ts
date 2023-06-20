@@ -40,7 +40,7 @@ import { LoginComponent } from './views/login/login.component';
     FormsModule,
     NgxPaginationModule
   ],
-  providers: [HttpClient],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
