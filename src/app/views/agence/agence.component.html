@@ -131,30 +131,30 @@
                             </tr>
                           </thead>
                           <tbody class="table-border-bottom-0">
-                            <tr
+                            <tr *ngFor="let agence of agenceList"
                             >
                               <td>
                                 <span>1</span>
                               </td>
                              
                               <td>
-                                <span>AFB Nkolbi</span>
+                                <span>{{agence.nom}}</span>
                               </td>
                               <td>
-                                <span>Nkolbisson</span>
+                                <span>{{agence.adresse}}</span>
                               </td>
                               <td>
-                                <span>00252763</span>
+                                <span>{{agence.fax}}</span>
                               </td>
                               <td>
-                                <span>657931402</span>
+                                <span>{{agence.telephone}}</span>
                               </td>
                              
                               <td>
-                                <span>Yaounde</span>
+                                <span>{{agence.ville1}}</span>
                               </td>
                               <td>
-                                <span>Mayake</span>
+                                <span>{{agence.manager}}</span>
                               </td>
                               <td>
                                 <div class="dropdown">
@@ -281,11 +281,10 @@
                   </div>
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Ville</label>
-                    <select class="form-select" formControlName="ville1" aria-label="Default select example">
+                    <select   class="form-select" formControlName="ville1">
                       <option selected>Selectionner une Ville</option>
-                      <option value="yaounde">Yaounde</option>
-                      <option value="Garoua">Garoua</option>
-                      <option value="Bertoua">Bertoua</option>
+                      <option *ngFor="let v of listville" value="{{v.nom}}">{{v.nom}}</option>
+                      
                     </select>
                   </div>
                   <div class="mb-3">

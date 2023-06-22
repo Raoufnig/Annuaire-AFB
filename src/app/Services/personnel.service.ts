@@ -11,9 +11,9 @@ export class PersonnelService {
 
   constructor(private http: HttpClient) { }
 
-  getpersonnel( url : string): Observable<any>{
+  getpersonnel( ): Observable<any>{
 
-    return this.http.get(url)
+    return this.http.get(URL.API_URL+ '/personnel'+ '/listpersonnel')
      
   }
 

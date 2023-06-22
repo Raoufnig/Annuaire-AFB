@@ -82,7 +82,7 @@
                       <div class="card-body">
                         Ici vous avez la liste de tout le personnel d'Afriland First Bank
                         <div class="table-responsive text-nowrap mt-4">
-                          <div class="d-flex justify-content-end mb-4">
+                          <!-- <div class="d-flex justify-content-end mb-4">
                             <button
                               class="btn btn-primary"
                               data-bs-toggle="modal"
@@ -90,7 +90,7 @@
                             >
                               Créer un employé
                             </button>
-                          </div>
+                          </div> -->
                           <div class="group">
                             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
                             <input placeholder="Search" type="text" class="input">
@@ -180,7 +180,8 @@
                                   <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                                     <div class="dropdown-menu">
-                                      <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                      <a class="dropdown-item"  data-bs-toggle="modal"
+                                      data-bs-target="#modalCreateUser" style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                         margin-right: 8px;" ></i>  Details</a>
                                       <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                         margin-right: 8px;"></i>Modifier</a>

@@ -5,6 +5,7 @@ import 'bootstrap-table';
 import { HttpClient } from '@angular/common/http';
 import { URL } from 'src/app/Classes/base-url';
 import { error } from 'jquery';
+import { PersonnelService } from 'src/app/Services/personnel.service';
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,7 @@ export class HomeComponent {
 
     reader.readAsDataURL(file);
   }
-  constructor(private formBuilder: FormBuilder, private http : HttpClient){
+  constructor(private formBuilder: FormBuilder, private http : HttpClient, private personnel : PersonnelService){
   
   }
 
@@ -58,10 +59,10 @@ export class HomeComponent {
   }
 
   listpersonnel(){
-    this.http.get(URL.API_URL+ '/personnel'+ '/listpersonnel').subscribe(
-      (res)=> this.employees = res,
-      (error)=> console.log(error)
-    );
+   this.personnel.getpersonnel().subscribe(res=>{
+    this.employees= res;
+    console.log(res)
+   })
   }
 
 
