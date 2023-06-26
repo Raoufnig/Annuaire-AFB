@@ -96,8 +96,7 @@
                               <label for="select-2">Pays :</label>
                               <select id="select-2">
                                 <option value="option-1">--Tous--</option>
-                                <option value="option-2">Option 2</option>
-                                <option value="option-3">Option 3</option>
+                                <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
                               </select>
                             
                               <label for="select-3"></label>
@@ -134,30 +133,34 @@
                               </thead>
                               <tbody class="table-border-bottom-0">
                                 <tr
+                                *ngFor="let corr of listcorrespondant | paginate
+                                : { itemsPerPage: 10, currentPage: currentPage };
+                            let i = index
+                          "
                                 >
                                   <td>
-                                    <span>1</span>
+                                    <span>{{i + 1}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>AFB cOR</span>
+                                    <span>{{corr.nom}}</span>
                                   </td>
                                   <td>
-                                    <span>9631202056566</span>
+                                    <span>{{corr.fax}}</span>
                                   </td>
                                   
                                   <td>
-                                    <span>+2250142312</span>
+                                    <span>{{corr.phone}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>Cameroun</span>
+                                    <span>{{corr.pays}}</span>
                                   </td>
                                   <td>
-                                    <span>www.correspond.com</span>
+                                    <span>{{corr.site}}</span>
                                   </td>
                                   <td>
-                                    <span>Frostrant</span>
+                                    <span>{{corr.manager}}</span>
                                   </td>
                                   <td>
                                     <div class="dropdown">
@@ -167,7 +170,7 @@
                                           margin-right: 8px;" ></i>  Details</a>
                                         <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + corr.id" ><i class="fa fa-trash" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
@@ -180,7 +183,7 @@
                                 <pagination-controls
                                   previousLabel="Previous"
                                   nextLabel="Next"
-                                  
+                                  (pageChange)="currentPage = $event"
                                 >
                                 </pagination-controls>
                               </div>
@@ -200,6 +203,7 @@
     </div>
   </div>
 
+<!-- Modal Creation d'un Correspondant-->
   <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -277,9 +281,8 @@
                     <label for="nameWithTitle" class="form-label">Pays</label>
                     <select class="form-select" formControlName="pays"aria-label="Default select example">
                       <option selected>Selectionner un pays</option>
-                      <option value="1">Cameroun</option>
-                      <option value="2">Tchad</option>
-                      <option value="3">Guinée</option>
+                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                      
                     </select>
                   </div>
                   <div class="mb-3">
@@ -322,5 +325,49 @@
       </div>
     </div>
   </div>
+<!--FIN-->
+
+   <!-- Modal Supprimer un Correspondant-->
+   <div 
+   *ngFor="let corr of listcorrespondant"
+   class="modal fade" 
+   id="modalSupprime{{corr.id}}" 
+   tabindex="-1" 
+   aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Supprimer un Correspondant</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p> Voulez vous vraiment supprimer ce Correspondant ?</p>
+        </div>
+        <div class="modal-footer" >
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Annuler
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteCorrespondant(corr.id)">
+            <div
+           *ngIf="actionDelete==true"
+            class="spinner-border spinner-border-sm"
+            style="color: white"
+            role="status"
+          >
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+          Supprimer
+        </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIN-->
 </div>
 

@@ -81,7 +81,8 @@
                             </div>
                             <div class="group">
                               <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                              <input placeholder="Search" type="text" class="input">
+                              <input placeholder="Search" type="text" [(ngModel)]="searchText"
+                              (ngModelChange)="searchByName()" class="input">
                             </div>
                             <div class="select-row">
                               <label for="select-1"></label>
@@ -94,8 +95,8 @@
                               <label for="select-2">Pays :</label>
                               <select id="select-2">
                                 <option value="option-1">--Tous--</option>
-                                <option value="option-2">Option 2</option>
-                                <option value="option-3">Option 3</option>
+                                <option *ngFor="let p of listpays" value="option-2">{{p.nom}}</option>
+                                
                               </select>
                             
                               <label for="select-3"></label>
@@ -133,32 +134,33 @@
                               </thead>
                               <tbody class="table-border-bottom-0">
                                 <tr
+                                *ngFor="let fil of filtrecat
+                                | paginate
+                                   : { itemsPerPage: 10, currentPage: currentPage };
+                                   let i = index
+                               "
                                 >
                                   <td>
-                                    <span>1</span>
+                                    <span>{{i+1}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>AFB</span>
+                                    <span>{{fil.nom}}</span>
                                   </td>
                                   <td>
-                                    <span>78555654</span>
+                                    <span>{{fil.bic}}</span>
                                   </td>
                                   <td>
-                                    <span>96312020</span>
+                                    <span>{{fil.fax}}</span>
                                   </td>
                                   <td>
-                                    <span>0057931402</span>
+                                    <span>{{fil.phone}}</span>
                                   </td>
                                   <td>
-                                    <span>Cameroun</span>
-                                  </td>
-                                 
-                                  <td>
-                                    <span>Yaounde</span>
+                                    <span>{{fil.pays}}</span>
                                   </td>
                                   <td>
-                                    <span>www.afb.com</span>
+                                    <span>{{fil.site}}</span>
                                   </td>
                                   <td>
                                     <div class="dropdown">
@@ -168,7 +170,7 @@
                                           margin-right: 8px;" ></i>  Details</a>
                                         <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + fil.id"  ><i class="fa fa-trash" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
@@ -181,7 +183,7 @@
                                 <pagination-controls
                                   previousLabel="Previous"
                                   nextLabel="Next"
-                                  
+                                  (pageChange)="currentPage = $event"
                                 >
                                 </pagination-controls>
                               </div>
@@ -203,6 +205,7 @@
     </div>
   </div>
 
+   <!-- Modal Creation d'une Filiale-->
   <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -291,20 +294,10 @@
                     <label for="nameWithTitle" class="form-label">Pays</label>
                     <select class="form-select" formControlName="pays" aria-label="Default select example">
                       <option selected>Selectionner un pays</option>
-                      <option value="1">Cameroun</option>
-                      <option value="2">Tchad</option>
-                      <option value="3">Guinée</option>
+                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
                     </select>
                   </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Ville</label>
-                    <select class="form-select" formControlName="ville" aria-label="Default select example">
-                      <option selected>Selectionner une ville</option>
-                      <option value="1">Yaounde</option>
-                      <option value="2">Douala</option>
-                      <option value="3">Garoua</option>
-                    </select>
-                  </div>
+                  
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Site Web</label>
                     <input
@@ -336,6 +329,50 @@
       </div>
     </div>
   </div>
+   <!--FIN-->
+
+   <!-- Modal Supprimer une Filiale-->
+   <div 
+   *ngFor="let fil of listfiliale"
+   class="modal fade" 
+   id="modalSupprime{{fil.id}}" 
+   tabindex="-1" 
+   aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Supprimer un Correspondant</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p> Voulez vous vraiment supprimer ce Correspondant ?</p>
+        </div>
+        <div class="modal-footer" >
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Annuler
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteFiliale(fil.id)">
+            <div
+           *ngIf="actionDelete==true"
+            class="spinner-border spinner-border-sm"
+            style="color: white"
+            role="status"
+          >
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+          Supprimer
+        </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIN-->
 </div>
 
 

@@ -12,4 +12,8 @@ export class FilialeService {
   getFiliale(){
     return this.http.get(URL.API_URL + '/filiale'+'/listfiliale');
   }
+
+  deleteFiliale(Id: any){
+    return this.http.get(URL.API_URL +'/filiale'+ '/deletefiliale/'+Id);
+  }
 }

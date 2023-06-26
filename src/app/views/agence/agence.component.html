@@ -94,8 +94,8 @@
                           <label for="select-2">Ville :</label>
                           <select id="select-2" formControlName="ville">
                             <option value="option-1">--Tous--</option>
-                            <option value="option-2">Option 2</option>
-                            <option value="option-3">Option 3</option>
+                            <option *ngFor="let v of listville"value="option-2">{{v.nom}}</option>
+                           
                           </select>
                         
                           <label for="select-3"></label>
@@ -131,10 +131,13 @@
                             </tr>
                           </thead>
                           <tbody class="table-border-bottom-0">
-                            <tr *ngFor="let agence of agenceList"
+                            <tr *ngFor="let agence of agenceList | paginate
+                            : { itemsPerPage: 10, currentPage: currentPage };
+                        let i = index
+                      "
                             >
                               <td>
-                                <span>1</span>
+                                <span>{{i+1}}</span>
                               </td>
                              
                               <td>
@@ -177,7 +180,7 @@
                             <pagination-controls
                               previousLabel="Previous"
                               nextLabel="Next"
-                              
+                              (pageChange)="currentPage = $event"
                             >
                             </pagination-controls>
                           </div>
@@ -197,6 +200,7 @@
     </div>
   </div>
 
+  <!-- Modal Creation d'une Agence-->
   <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -281,10 +285,9 @@
                   </div>
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Ville</label>
-                    <select   class="form-select" formControlName="ville1">
+                    <select  class="form-select" formControlName="ville1">
                       <option selected>Selectionner une Ville</option>
-                      <option *ngFor="let v of listville" value="{{v.nom}}">{{v.nom}}</option>
-                      
+                      <option *ngFor="let v of listville" [ngValue]="v">{{v.nom}}</option>
                     </select>
                   </div>
                   <div class="mb-3">
@@ -317,6 +320,50 @@
       </div>
     </div>
   </div>
+<!--FIN-->
+
+   <!-- Modal Supprimer une Agence-->
+   <div 
+   *ngFor="let fil of listfiliale"
+   class="modal fade" 
+   id="modalSupprime{{agence.id}}" 
+   tabindex="-1" 
+   aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Supprimer une Agence</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p> Voulez vous vraiment supprimer cette agence ?</p>
+        </div>
+        <div class="modal-footer" >
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Annuler
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteFiliale(agence.id)">
+            <div
+           *ngIf="actionDelete==true"
+            class="spinner-border spinner-border-sm"
+            style="color: white"
+            role="status"
+          >
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+          Supprimer
+        </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--FIN-->
 </div>
 
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { URL } from 'src/app/Classes/base-url';
 import { AgenceService } from 'src/app/Services/agence.service';
 import { AssistService } from 'src/app/Services/assist.service';
@@ -16,29 +16,26 @@ export class AgenceComponent implements OnInit {
   id : any;
   idville:any;
   listville:any;
+  actionDelete=false;
+  currentPage = 1;
   agenceForm! : FormGroup
 
 
-  constructor(private agenceService : AgenceService, private assistService : AssistService, private http : HttpClient){
+  constructor(private agenceService : AgenceService, private assistService : AssistService, private http : HttpClient, private fb:FormBuilder){
     this.agenceForm = new FormGroup({
       name: new FormControl('', Validators.required),
       fax: new FormControl('', Validators.required), 
       adresse: new FormControl('', Validators.required),
       telephone: new FormControl('', Validators.required),
-      ville1: new FormControl('', Validators.required),
-      manager: new FormControl('', Validators.required)
-
+      manager: new FormControl('', Validators.required),
+      ville1 : new FormControl('')
 
   });
+
   }
   ngOnInit() {
     this.getList();
     this.getListVille();
-   
-    this.id =4;
-     
-    
-    
     this.idville=3
   }
 
@@ -60,15 +57,19 @@ export class AgenceComponent implements OnInit {
   
   onSubmit() {
 
+    const nig1 = JSON.stringify(this.agenceForm.value.ville1)
+
+
+    console.log(this.agenceForm.value.ville1)
+
+    console.log(nig1)
     let result = {
       adresse: this.agenceForm.value.adresse,
       fax: this.agenceForm.value.fax,
       manager: this.agenceForm.value.manager,
       nom:this.agenceForm.value.name,
       telephone: this.agenceForm.value.telephone,
-      ville1 : this.agenceForm.value.ville1,
-      ville_id: this.idville,
-      direction_id: this.id
+      ville : nig1
     }
 
     const nig = JSON.stringify(result)

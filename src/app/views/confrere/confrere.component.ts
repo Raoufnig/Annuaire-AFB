@@ -1,16 +1,24 @@
-import { Component } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { URL } from 'src/app/Classes/base-url';
+import { AssistService } from 'src/app/Services/assist.service';
+import { ConfrereService } from 'src/app/Services/confrere.service';
 
 @Component({
   selector: 'app-confrere',
   templateUrl: './confrere.component.html',
   styleUrls: ['./confrere.component.scss']
 })
-export class ConfrereComponent {
+export class ConfrereComponent implements OnInit {
   ShowNavbar=false;
+  ConfrereList: any;
+  listPays:any;
+  actionDelete= false;
+  currentPage = 1;
   confrereForm! : FormGroup
 
-  constructor(){
+  constructor(private confrereService : ConfrereService, private assistService:AssistService, private http : HttpClient){
     this.confrereForm = new FormGroup({
       nom: new FormControl('', Validators.required),
       adresse: new FormControl('', Validators.required),
@@ -22,9 +30,63 @@ export class ConfrereComponent {
 
     });
   }
+  ngOnInit() {
+   this.getListPays();
+   this.getListConfrere();
+  }
+
+  getListPays(){
+    this.assistService.getListPays().subscribe((res)=>{
+      this.listPays= res;
+      console.log(this.listPays)
+    })
+  }
+
+  getListConfrere(){
+    this.confrereService.getConfrere().subscribe((res)=>{
+      this.ConfrereList=res;
+    })
+  }
+
+  
 
   onSubmit() {
     console.log(this.confrereForm.value);
+    let result ={
+      adresse : this.confrereForm.value.adresse,
+      bic : this.confrereForm.value.bic,
+      contact_sygma_systac: this.confrereForm.value.cssystac,
+      fax:this.confrereForm.value.fax,
+      nom : this.confrereForm.value.nom,
+      pays: this.confrereForm.value.pays,
+      phone : this.confrereForm.value.telephone
+    };
+
+    let nig =JSON.stringify(result);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    this.http.post(URL.API_URL + '/confrere' + '/addconfrere', nig,{ headers }).subscribe((res)=>{
+      
+      window.location.reload;
+
+    });
+    
+    window.location.reload;
   }
+
+  deleteConfrere(id: any){
+    this.actionDelete = true;
+    this.confrereService.deleteConfrere(id).subscribe((res)=>{
+        
+      this.actionDelete = false;
+      //window.location.reload;
+    
+    }, (error)=>{
+      console.log(error);
+    });
+  }
+
 
 }

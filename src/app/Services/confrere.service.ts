@@ -14,4 +14,8 @@ export class ConfrereService {
     return this.http.get(URL.API_URL + '/confrere'+'/listconfrere');
   }
 
+  deleteConfrere(Id: any){
+    return this.http.get(URL.API_URL +'/confrere'+ '/deleteconf/'+ Id);
+  }
+
 }

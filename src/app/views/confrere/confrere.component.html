@@ -94,9 +94,8 @@
                             
                               <label for="select-2">Pays :</label>
                               <select class="select1" id="select-2">
-                                <option value="option-1">--Tous--</option>
-                                <option value="option-2">Cameroun</option>
-                                <option value="option-3">Tchad</option>
+                                <option value="">--Tous--</option>
+                                <option *ngFor='let p of listPays' value="p.id">{{p.nom}}</option>
                               </select>
                             
                               <label for="select-3"></label>
@@ -134,32 +133,36 @@
                               </thead>
                               <tbody class="table-border-bottom-0">
                                 <tr
+                                *ngFor="let conf of ConfrereList | paginate
+                                : { itemsPerPage: 10, currentPage: currentPage };
+                            let i = index
+                          "
                                 >
                                   <td>
-                                    <span>1</span>
+                                    <span>{{i + 1}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>AFB</span>
+                                    <span>{{conf.nom}}</span>
                                   </td>
                                   <td>
-                                    <span>Bario</span>
+                                    <span>{{conf.adresse}}</span>
                                   </td>
                                   <td>
-                                    <span>9631202056566</span>
+                                    <span>{{conf.bic}}</span>
                                   </td>
                                   <td>
-                                    <span>0057931402</span>
+                                    <span>{{conf.fax}}</span>
                                   </td>
                                   <td>
-                                    <span>+2250142312</span>
+                                    <span>{{conf.phone}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>Cameroun</span>
+                                    <span>{{conf.pays}}</span>
                                   </td>
                                   <td>
-                                    <span>befjlsj</span>
+                                    <span>{{conf.contact_sygma_systac}}</span>
                                   </td>
                                   <td>
                                     <div class="dropdown">
@@ -169,7 +172,7 @@
                                           margin-right: 8px;" ></i>  Details</a>
                                         <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + conf.id"   ><i class="fa fa-trash" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
@@ -182,7 +185,7 @@
                                 <pagination-controls
                                   previousLabel="Previous"
                                   nextLabel="Next"
-                                  
+                                  (pageChange)="currentPage = $event"
                                 >
                                 </pagination-controls>
                               </div>
@@ -203,6 +206,7 @@
     </div>
   </div>
 
+   <!-- Modal Creation d'un Confrere-->
   <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -250,7 +254,7 @@
                       id="nameWithTitle"
                       class="form-control"
                       placeholder="Enter name"
-                      formControlName="name"
+                      formControlName="nom"
                     />
                   </div>
                   <div class="mb-3">
@@ -301,9 +305,7 @@
                     <label for="nameWithTitle" class="form-label">Pays</label>
                     <select class="form-select" formControlName="pays" aria-label="Default select example">
                       <option selected>Selectionner un pays</option>
-                      <option value="1">Cameroun</option>
-                      <option value="2">Tchad</option>
-                      <option value="3">Guinée</option>
+                      <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
                     </select>
                   </div>
                   <div class="mb-3">
@@ -336,6 +338,51 @@
       </div>
     </div>
   </div>
+ <!--FIN-->
+
+
+    <!-- Modal Supprimer un Correspondant-->
+    <div 
+    *ngFor="let conf of ConfrereList"
+    class="modal fade" 
+    id="modalSupprime{{conf.id}}" 
+    tabindex="-1" 
+    aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="modalCenterTitle">Supprimer un Correspondant</h5>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"
+           ></button>
+         </div>
+         <div class="modal-body">
+           <p> Voulez vous vraiment supprimer ce Confrere ?</p>
+         </div>
+         <div class="modal-footer" >
+           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+             Annuler
+           </button>
+           <button type="button" class="btn btn-danger" (click)="deleteConfrere(conf.id)">
+             <div
+            *ngIf="actionDelete==true"
+             class="spinner-border spinner-border-sm"
+             style="color: white"
+             role="status"
+           >
+             <span class="visually-hidden">Chargement...</span>
+           </div>
+           Supprimer
+         </button>
+           
+         </div>
+       </div>
+     </div>
+   </div>
+   <!--FIN-->
 </div>
 
 
