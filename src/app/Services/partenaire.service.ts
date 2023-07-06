@@ -12,4 +12,8 @@ export class PartenaireService {
   getPartenaire(){
     return this.http.get(URL.API_URL + '/partenaire'+'/listpartenaire');
   }
+
+  deletePartenaire(Id: any){
+    return this.http.get(URL.API_URL +'/partenaire'+ '/deletepartenaire/'+Id);
+  }
 }

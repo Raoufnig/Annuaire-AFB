@@ -21,23 +21,8 @@
                         </h6>
                       </div>
                     </div>
+                   
                     <!-- <div
-                      *ngIf="deleted == true"
-                      class="alert alert-primary alert-dismissible"
-                      role="alert"
-                    >
-                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
-                        Suppression effectuée
-                      </h6>
-                      <p class="mb-0">Votre employé a été supprimé.</p>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="alert"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div
                       *ngIf="errormessage == true"
                       class="alert alert-danger alert-dismissible"
                       role="alert"
@@ -128,7 +113,6 @@
                                   <th>Fax</th>
                                   <th>Telephone</th>
                                   <th>Pays</th>
-                                  <th>Ville</th>
                                   <th>Site web</th>
                                 </tr>
                               </thead>
@@ -243,6 +227,24 @@
                 id="navs-top-home"
                 role="tabpanel"
               >
+              <div
+              *ngIf="create == true"
+              class="alert alert-primary alert-dismissible"
+              role="alert"
+            >
+              <h6
+                class="alert-heading d-flex align-items-center fw-bold mb-1"
+              >
+                Parfait :)
+              </h6>
+              <p class="mb-0">La filiale a été crée.</p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
               
                 
                 <form [formGroup]="filialeForm" (ngSubmit)="onSubmit()">
@@ -275,7 +277,7 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer fax"
+                        placeholder="Entrer un fax"
                         formControlName="fax"
                       />
                     </div>
@@ -314,10 +316,17 @@
                       class="btn btn-primary"
                       type="submit"
                       style="width: 100%"
-                    >
-                    
-                      <span>Enregistrer</span>
-                    </button>
+                    > 
+                    <div
+                    *ngIf="loader == true"
+                    class="spinner-border spinner-border-sm"
+                    style="color: white"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span *ngIf="loader == false">{{ enregistreur }}</span>
+                  </button>
                     
                   </div>
                 </form>
@@ -332,14 +341,16 @@
    <!--FIN-->
 
    <!-- Modal Supprimer une Filiale-->
-   <div 
+   <div
    *ngFor="let fil of listfiliale"
    class="modal fade" 
    id="modalSupprime{{fil.id}}" 
    tabindex="-1" 
    aria-hidden="true">
+   
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+      <div class="modal-content" >
+       
         <div class="modal-header">
           <h5 class="modal-title" id="modalCenterTitle">Supprimer un Correspondant</h5>
           <button
@@ -349,14 +360,26 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <p> Voulez vous vraiment supprimer ce Correspondant ?</p>
+        <div class="modal-body" *ngIf="deleted == false">
+          <p> Voulez vous vraiment supprimer cette filiale ?</p>
         </div>
-        <div class="modal-footer" >
+        <div class="modal-body" *ngIf="deleted == true">
+          <div
+                      *ngIf="deleted == true"
+                      class="alert alert-primary alert-dismissible"
+                      role="alert"
+                    >
+                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                        Suppression effectuée
+                      </h6>
+                      <p class="mb-0">La filiale a été supprimé.</p>
+                    </div>
+        </div>
+        <div class="modal-footer" *ngIf="deleted == false" >
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             Annuler
           </button>
-          <button type="button" class="btn btn-danger" (click)="deleteFiliale(fil.id)">
+          <button  type="button" class="btn btn-danger" (click)="deleteFiliale(fil.id)">
             <div
            *ngIf="actionDelete==true"
             class="spinner-border spinner-border-sm"
@@ -366,6 +389,13 @@
             <span class="visually-hidden">Chargement...</span>
           </div>
           Supprimer
+        </button>
+          
+        </div>
+        <div class="modal-footer" *ngIf="deleted == true" >
+          <button  type="button" class="btn btn-danger" (click)="deleteFiliale2(fil.id)">
+          
+          Fermer
         </button>
           
         </div>

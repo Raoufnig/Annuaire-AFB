@@ -378,6 +378,7 @@ button,
 [type=reset],
 [type=submit] {
   -webkit-appearance: button;
+  appearance: button;
 }
 button:not(:disabled),
 [type=button]:not(:disabled),
@@ -436,6 +437,7 @@ legend + * {
 [type=search] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
+  appearance: textf;
 }
 
 /* rtl:raw:
@@ -2451,7 +2453,7 @@ textarea.form-control-lg {
      -moz-appearance: none;
           appearance: none;
   -webkit-print-color-adjust: exact;
-          color-adjust: exact;
+          print-color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
   border-radius: 0.25em;
@@ -14599,8 +14601,8 @@ button.list-group-item-gray.active {
 }
 body {
   text-rendering: optimizeLegibility;
-  font-smoothing: antialiased;
-  -moz-font-feature-settings: "liga" on;
+ 
+  font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -15233,6 +15235,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 .content-wrapper > *,
 .layout-menu {
   min-height: 1px;
+ 
 }
 
 .layout-navbar,
@@ -15252,6 +15255,15 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
 }
 
 .content-wrapper {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: space-btween;
+  background-image: url(./assets/img/fondqfrilqnd.png);
+}
+
+.content-wrapper2 {
   display: flex;
   align-items: stretch;
   flex: 1 1 auto;
@@ -16649,7 +16661,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .footer.bg-light hr {
   border-color: rgba(105, 122, 141, 0.0783835294);
 }
-@charset "UTF-8";
+
 .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal) .layout-page:before {
   content: "";
   width: 100%;

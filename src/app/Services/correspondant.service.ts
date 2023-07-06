@@ -18,7 +18,7 @@ export class CorrespondantService {
   }
 
   updateCorrespondant(Id : any, form:any){
-    this.http.put(URL.API_URL + '/correspondant'+'/updatecorr/'+ Id, form);
+    this.http.put(URL.API_URL + '/correspondant'+'/updatecorrespondant/'+ Id, form);
   }
 
   deleteCorrespondant(Id: any){

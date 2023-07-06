@@ -13,6 +13,8 @@ import { AssistService } from 'src/app/Services/assist.service';
 export class AgenceComponent implements OnInit {
   ShowNavbar=false;
   agenceList : any;
+  filtrecat: any;
+  searchText!: string;
   id : any;
   idville:any;
   listville:any;
@@ -42,18 +44,23 @@ export class AgenceComponent implements OnInit {
   getList(){
       this.agenceService.getAgence().subscribe((res)=>{
         this.agenceList= res;
+        this.filtrecat=res;
         console.log(res);
       })
   }
 
   getListVille(){
     this.assistService.getListVille().subscribe((res)=>{
-      this.listville= res
+      this.listville= res;
+
       console.log(this.listville);
     })
   }
 
 
+  searchByName(){
+    this.filtrecat = this.agenceList.filter((mot: any) => mot.nom.toLowerCase().includes(this.searchText.toLowerCase()));
+  }
   
   onSubmit() {
 

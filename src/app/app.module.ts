@@ -16,6 +16,8 @@ import { CorrespondanceComponent } from './views/correspondance/correspondance.c
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ModalsComponent } from './views/modals/modals.component';
 import { LoginComponent } from './views/login/login.component';
+import { ServiceComponent } from './views/service/service.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { LoginComponent } from './views/login/login.component';
     ConfrereComponent,
     CorrespondanceComponent,
     ModalsComponent,
-    LoginComponent
+    LoginComponent,
+    ServiceComponent
   ],
   imports: [
     BrowserModule,

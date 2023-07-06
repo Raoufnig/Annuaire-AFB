@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import axios from 'axios';
 import { error } from 'jquery';
 import { URL } from 'src/app/Classes/base-url';
 import { AssistService } from 'src/app/Services/assist.service';
@@ -17,10 +18,15 @@ export class FilialeComponent implements OnInit {
   listfiliale: any;
   filtrecat: any;
   actionDelete = false;
+  deleted = false;
   listpays : any;
   searchText!: string;
   currentPage = 1;
+  enregistreur = "Enregistrer"; 
+  create = false;
+  loader = false;
   filialeForm!: FormGroup;
+  isOpen=false;
 
   constructor(private assistService: AssistService, private filialeService : FilialeService, private http : HttpClient, private router : Router){
     this.filialeForm = new FormGroup({
@@ -28,11 +34,12 @@ export class FilialeComponent implements OnInit {
       bic: new FormControl('', Validators.required),
       fax: new FormControl('', Validators.required),
       pays: new FormControl('', Validators.required),
-      telephone: new FormControl('', Validators.required),
+      telephone: new FormControl('', Validators.pattern(/^\d{10}$/)),
       site_web: new FormControl('', Validators.required)
 
     });
   }
+
   ngOnInit() {
     this.getListPays();
     this.getListFiliale();
@@ -48,22 +55,39 @@ getListPays(){
 getListFiliale(){
   this.filialeService.getFiliale().subscribe((res)=>{
     this.listfiliale=res;
+
     this.filtrecat=res;
+    console.log(this.filtrecat)
   })
 }
 
-deleteFiliale(id:any){
-  this.actionDelete= true;
-  this.filialeService.deleteFiliale(id).subscribe((res)=>{
-    this.actionDelete=false;
+deleteFiliale(idFiliale:any){
+  //this.actionDelete= true;
+  this.filialeService.deleteFiliale(idFiliale).subscribe((res)=>{
+     
     
   }, (error)=>{
-    console.log(error);
+    console.log(error.error.text);
+    //window.location.reload();
+    
+  })
+  this.deleted = true;
+}
+
+deleteFiliale2(idFiliale:any){
+  this.filialeService.deleteFiliale(idFiliale).subscribe((res)=>{
+     
+    
+  }, (error)=>{
+    console.log(error.error.text);
+    window.location.reload();
+    //window.location.reload();
+    
   })
 }
 
 searchByName(){
-  this.filtrecat = this.listfiliale.filter((mot:any) => mot.nom.toLowercase().includes(this.searchText.toLowerCase()));
+  this.filtrecat = this.listfiliale.filter((mot: any) => mot.nom.toLowerCase().includes(this.searchText.toLowerCase()));
 }
 
   onSubmit() {
@@ -79,17 +103,25 @@ searchByName(){
     }
 
     const nig = JSON.stringify(result);
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    this.http.post(URL.API_URL + '/filiale' + '/addfiliale',nig,{ headers }).subscribe((res)=>{
+    this.loader = true;
+    axios.post(URL.API_URL + '/filiale' + '/addfiliale',nig,{
+       headers : {
+        'Content-Type': 'application/json'
 
-      this.router.navigate(['/filiale']);
-      window.location.reload
+       } }).then((res)=>{
+        console.log(res.data);
+        this.create = true;
+        this.loader = false;
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500);
 
-    },(error)=>{
-      console.log(error);
-    }); 
+     }).catch((error)=>{
+      this.create = false;
+      this.loader = false;
+     // console.log(error);
+       
+    })
 
   }
 }

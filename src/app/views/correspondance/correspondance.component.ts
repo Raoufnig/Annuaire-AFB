@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { error } from 'jquery';
 import { URL } from 'src/app/Classes/base-url';
 import { AssistService } from 'src/app/Services/assist.service';
 import { CorrespondantService } from 'src/app/Services/correspondant.service';
@@ -15,8 +14,11 @@ export class CorrespondanceComponent implements OnInit {
   ShowNavbar=false;
   listcorrespondant : any;
   listpays:any;
+  searchText!: string;
+  filtrecat: any;
   isOpen = false;
-  actionDelete =false;
+  actionDelete = false;
+  deleted = false;
   currentPage = 1;
   correspondantForm! : FormGroup
 
@@ -28,7 +30,8 @@ export class CorrespondanceComponent implements OnInit {
       fax: new FormControl('', Validators.required),
       telephone: new FormControl('', Validators.required),
       site_web: new FormControl('', Validators.required),
-      pays: new FormControl('', Validators.required)
+      pays: new FormControl('', Validators.required),
+      pays1 : new FormControl('')
 
     });
   }
@@ -44,6 +47,7 @@ export class CorrespondanceComponent implements OnInit {
 
   closeModal() {
     this.isOpen = false;
+
   }
 
   getListPays(){
@@ -55,8 +59,22 @@ export class CorrespondanceComponent implements OnInit {
   getListCorrespondant(){
     this.correspondantService.getCorrespondant().subscribe((res)=>{
       this.listcorrespondant=res;
+      this.filtrecat=res;
     })
   }
+
+
+  searchByName(){
+    this.filtrecat = this.listcorrespondant.filter((mot: any) => mot.nom.toLowerCase().includes(this.searchText.toLowerCase()));
+  }
+  onSubmit2(){
+    let result = {
+     pays: this.correspondantForm.value.pays1
+    }
+    console.log(result);
+    this.filtrecat = this.listcorrespondant.filter((mot: any) => mot.pays.toLowerCase().includes( this.correspondantForm.value.pays1.toLowerCase()));
+
+}
 
   onSubmit() {
     console.log(this.correspondantForm.value);
@@ -76,10 +94,11 @@ export class CorrespondanceComponent implements OnInit {
       'Content-Type': 'application/json'
     });
     this.http.post(URL.API_URL + '/correspondant' + '/addcorrespondant',nig,{ headers }).subscribe((res)=>{
-
+      console.log(res);
     },(error)=>{
-      console.log(error);
+      console.log(error.error.text);
     }); 
+    window.location.reload();
 
   }
 
@@ -91,8 +110,12 @@ export class CorrespondanceComponent implements OnInit {
       window.location.reload;
     
     }, (error)=>{
-      console.log(error);
+      console.log(error.error.text);
+      window.location.reload();
+      this.deleted = true
+
     });
+    this.deleted = true
   }
 
   Update(){

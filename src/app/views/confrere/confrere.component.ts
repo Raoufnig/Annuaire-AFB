@@ -14,6 +14,8 @@ export class ConfrereComponent implements OnInit {
   ShowNavbar=false;
   ConfrereList: any;
   listPays:any;
+  searchText!: string;
+  filtrecat: any;
   actionDelete= false;
   currentPage = 1;
   confrereForm! : FormGroup
@@ -26,7 +28,8 @@ export class ConfrereComponent implements OnInit {
       fax: new FormControl('', Validators.required),
       pays: new FormControl('', Validators.required),
       telephone: new FormControl('', Validators.required),
-      cssystac: new FormControl('', Validators.required)
+      cssystac: new FormControl('', Validators.required),
+      pays1 : new FormControl('')
 
     });
   }
@@ -45,9 +48,26 @@ export class ConfrereComponent implements OnInit {
   getListConfrere(){
     this.confrereService.getConfrere().subscribe((res)=>{
       this.ConfrereList=res;
+      this.filtrecat=res;
     })
   }
 
+  searchByName(){
+    this.filtrecat = this.ConfrereList.filter((mot: any) => mot.nom.toLowerCase().includes(this.searchText.toLowerCase()));
+  }
+
+  searchByPays(paysnom:any){
+    this.filtrecat = this.ConfrereList.filter((mot: any) => mot.pays.toLowerCase().includes(paysnom.toLowerCase()));
+  }
+
+  onSubmit2(){
+       let result = {
+        pays: this.confrereForm.value.pays1
+       }
+       console.log(result);
+       this.filtrecat = this.ConfrereList.filter((mot: any) => mot.pays.toLowerCase().includes( this.confrereForm.value.pays1.toLowerCase()));
+
+  }
   
 
   onSubmit() {
@@ -68,7 +88,7 @@ export class ConfrereComponent implements OnInit {
       'Content-Type': 'application/json'
     });
     this.http.post(URL.API_URL + '/confrere' + '/addconfrere', nig,{ headers }).subscribe((res)=>{
-      
+      console.log(res);
       window.location.reload;
 
     });

@@ -29,7 +29,7 @@
                       <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
                         Suppression effectuée
                       </h6>
-                      <p class="mb-0">Votre employé a été supprimé.</p>
+                      <p class="mb-0">Votre partenaire a été supprimé.</p>
                       <button
                         type="button"
                         class="btn-close"
@@ -81,36 +81,39 @@
                             </div>
                             <div class="group">
                               <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                              <input placeholder="Search" type="text" class="input">
+                              <input placeholder="Search" [(ngModel)]="searchText"
+                              (ngModelChange)="searchByName()" type="text" class="input">
                             </div>
-                            <div class="select1-row">
-                              <label for="select-1"></label>
-                              <select id="select-1" style="display: none;" >
-                                <option value="option-1">--Tous--</option>
-                                <option value="option-2">Option 2</option>
-                                <option value="option-3">Option 3</option>
-                              </select>
-                            
-                              <label for="select-2">Pays :</label>
-                              <select id="select-2">
-                                <option value="option-1">--Tous--</option>
-                                <option value="option-2">Option 2</option>
-                                <option value="option-3">Option 3</option>
-                              </select>
-                            
-                              <label for="select-3"></label>
-                              <select id="select-3" style="display: none;">
-                                <option value="option-1">--Tous--</option>
-                                <option value="option-2">Option 2</option>
-                                <option value="option-3">Option 3</option>
-                              </select>
-    
-                              <div class="search-container">
-                                <button type="submit"><i class="fa fa-search"></i></button>
+                            <form [formGroup]="partenaireForm" (ngSubmit)="onSubmit2()">
+                              <div class="select1-row">
+                                <label for="select-1"></label>
+                                <select id="select-1" style="display: none;" >
+                                  <option value="option-1">--Tous--</option>
+                                  <option value="option-2">Option 2</option>
+                                  <option value="option-3">Option 3</option>
+                                </select>
+                              
+                                <label for="select-2">Pays :</label>
+                                <select id="select-2" formControlName="pays1">
+                                  <option value="">--Tous--</option>
+                                  <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                                </select>
+                              
+                                <label for="select-3"></label>
+                                <select id="select-3" style="display: none;">
+                                  <option value="option-1">--Tous--</option>
+                                  <option value="option-2">Option 2</option>
+                                  <option value="option-3">Option 3</option>
+                                </select>
+      
+                                <div class="search-container">
+                                  <button type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+      
+                               
                               </div>
-    
-                             
-                            </div>
+                            </form>
+                            
                            
                             <br>
                             <br>
@@ -132,33 +135,37 @@
                                 </tr>
                               </thead>
                               <tbody class="table-border-bottom-0">
-                                <tr
+                                <tr 
+                                *ngFor="let part of filtrecat | paginate
+                                : { itemsPerPage: 10, currentPage: currentPage };
+                            let i = index
+                          "
                                 >
                                   <td>
-                                    <span>1</span>
+                                    <span>{{i + 1}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>Team</span>
+                                    <span>{{part.nom}}</span>
                                   </td>
                                   <td>
-                                    <span>Securité</span>
+                                    <span>{{part.dom_acti}}</span>
                                   </td>
                                   <td>
-                                    <span>Rue Saint-Marte</span>
+                                    <span>{{part.adresse}}</span>
                                   </td>
                                   <td>
-                                    <span>0057931402</span>
+                                    <span>{{part.fax}}</span>
                                   </td>
                                   <td>
-                                    <span>+2250142312</span>
+                                    <span>{{part.phone}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>Cameroun</span>
+                                    <span>{{part.pays}}</span>
                                   </td>
                                   <td>
-                                    <span>Bizon</span>
+                                    <span>{{part.manager}}</span>
                                   </td>
                                   <td>
                                     <div class="dropdown">
@@ -168,7 +175,7 @@
                                           margin-right: 8px;" ></i>  Details</a>
                                         <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + part.id"  ><i class="fa fa-trash-o" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
@@ -181,7 +188,7 @@
                                 <pagination-controls
                                   previousLabel="Previous"
                                   nextLabel="Next"
-                                  
+                                  (pageChange)="currentPage = $event"
                                 >
                                 </pagination-controls>
                               </div>
@@ -201,6 +208,7 @@
     </div>
   </div>
 
+   <!-- Modal Creation d'un partenaire-->
   <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -258,7 +266,7 @@
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Entrer un domaine d'"
+                      placeholder="Entrer un domaine d'activite"
                       formControlName="dom_activite"
                     />
                   </div>
@@ -281,7 +289,7 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer fax"
+                        placeholder="Entrer un fax"
                         formControlName="fax"
                       />
                     </div>
@@ -300,9 +308,7 @@
                     <label for="nameWithTitle" class="form-label">Pays</label>
                     <select class="form-select" formControlName="pays" aria-label="Selectionner un pays">
                       <option selected>Selectionner un pays</option>
-                      <option value="Cameroun">Cameroun</option>
-                      <option value="Tchad">Tchad</option>
-                      <option value="Guinée">Guinée</option>
+                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
                     </select>
                   </div>
                   
@@ -337,6 +343,50 @@
       </div>
     </div>
   </div>
+   <!--FIN-->
+
+     <!-- Modal Supprimer un Partenaire-->
+     <div 
+     *ngFor="let part of filtrecat"
+     class="modal fade" 
+     id="modalSupprime{{part.id}}" 
+     tabindex="-1" 
+     aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCenterTitle">Supprimer un Partenaire</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p> Voulez vous vraiment supprimer ce Partenaire ?</p>
+          </div>
+          <div class="modal-footer" >
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              Annuler
+            </button>
+            <button type="button" class="btn btn-danger" (click)="deletePartenaire(part.id)">
+              <div
+             *ngIf="actionDelete==true"
+              class="spinner-border spinner-border-sm"
+              style="color: white"
+              role="status"
+            >
+              <span class="visually-hidden">Chargement...</span>
+            </div>
+            Supprimer
+          </button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--FIN-->
 </div>
 
 

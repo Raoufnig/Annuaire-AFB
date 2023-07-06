@@ -1,0 +1,35 @@
+.typewriter {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  h1 {
+    font-size: 55px;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typewriter 2s steps(13) normal both,
+        blink 800ms steps(13) infinite normal;
+    border-right: 7px solid black;
+}
+
+@keyframes typewriter {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 46%;
+    }
+}
+
+@keyframes blink {
+    from {
+        border-color: black;
+    }
+
+    to {
+        border-color: transparent;
+    }
+}
+

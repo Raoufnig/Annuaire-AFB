@@ -82,35 +82,41 @@
                             </div>
                             <div class="group">
                               <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                              <input placeholder="Search" type="text" class="input">
+                              <input placeholder="Search" type="text" [(ngModel)]="searchText"
+                              (ngModelChange)="searchByName()" class="input"/>
                             </div>
-                            <div class="select1-row">
-                              <label for="select-1"></label>
-                              <select id="select-1" style="display: none;" >
-                                <option value="option-1">--Tous--</option>
-                                <option value="option-2">Option 2</option>
-                                <option value="option-3">Option 3</option>
-                              </select>
-                            
-                              <label for="select-2">Pays :</label>
-                              <select class="select1" id="select-2">
-                                <option value="">--Tous--</option>
-                                <option *ngFor='let p of listPays' value="p.id">{{p.nom}}</option>
-                              </select>
-                            
-                              <label for="select-3"></label>
-                              <select id="select-3" style="display: none;">
-                                <option value="option-1">--Tous--</option>
-                                <option value="option-2">Option 2</option>
-                                <option value="option-3">Option 3</option>
-                              </select>
-    
-                              <div class="search-container">
-                                <button type="submit"><i class="fa fa-search"></i></button>
+                            <form [formGroup]="confrereForm" (ngSubmit)="onSubmit2()">
+                              <div class="select1-row">
+                                <label for="select-1"></label>
+                                <select id="select-1" style="display: none;" >
+                                  <option value="option-1">--Tous--</option>
+                                  <option value="option-2">Option 2</option>
+                                  <option value="option-3">Option 3</option>
+                                </select>
+                              
+                                <label for="select-2">Pays :</label>
+                                <select class="select1" id="select-2" formControlName="pays1">
+                                  <option value="">--Tous--</option>
+                                  <option *ngFor='let p of listPays' value="{{p.nom}}">{{p.nom}}</option>
+                                  
+                                </select>
+                              
+                                <label for="select-3"></label>
+                                <select id="select-3" style="display: none;">
+                                  <option value="option-1">--Tous--</option>
+                                  <option value="option-2">Option 2</option>
+                                  <option value="option-3">Option 3</option>
+                                </select>
+      
+                                <div class="search-container">
+                                  <button type="submit" ><i class="fa fa-search" ></i></button>
+                                </div>
+      
+                               
                               </div>
-    
-                             
-                            </div>
+
+                            </form>
+                            
                            
                             <br>
                             <br>
@@ -133,7 +139,7 @@
                               </thead>
                               <tbody class="table-border-bottom-0">
                                 <tr
-                                *ngFor="let conf of ConfrereList | paginate
+                                *ngFor="let conf of filtrecat | paginate
                                 : { itemsPerPage: 10, currentPage: currentPage };
                             let i = index
                           "
@@ -253,7 +259,7 @@
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Enter name"
+                      placeholder="Enter un nom"
                       formControlName="nom"
                     />
                   </div>
@@ -274,7 +280,7 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Enter email"
+                        placeholder="Entrer le bic"
                         formControlName="bic"
                       />
                     </div>
@@ -286,7 +292,7 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Enter email"
+                        placeholder="Entrer le fax"
                         formControlName="fax"
                       />
                     </div>
@@ -314,7 +320,141 @@
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Entrer le nom du manager"
+                      placeholder="Entrer le contact_sygma_systac"
+                      formControlName="cssystac"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                      style="width: 100%"
+                    >
+                    
+                      <span>Enregistrer</span>
+                    </button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+ <!--FIN-->
+
+  <!-- Modal Modification d'un Confrere-->
+  <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Modifier les informations d'un confrere</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="nav-align-top mb-4">
+            <ul class="nav nav-tabs" role="tablist">
+              
+              <li class="nav-item">
+                <button
+                  type="button"
+                  class="nav-link"
+                  role="tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#navs-top-profile"
+                  aria-controls="navs-top-profile"
+                  aria-selected="false"
+                >
+                  Remplir le formulaire
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div
+                class="tab-pane fade show active"
+                id="navs-top-home"
+                role="tabpanel"
+              >
+              
+                
+                <form [formGroup]="confrereForm" (ngSubmit)="onSubmit()">
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Nom</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Enter un nom"
+                      formControlName="nom"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Adresse</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer une adresse"
+                      formControlName="adresse"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Bic</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer le bic"
+                        formControlName="bic"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Fax</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer le fax"
+                        formControlName="fax"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
+                    <input
+                      type="tel"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer un numero de telephone"
+                      formControlName="telephone"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Pays</label>
+                    <select class="form-select" formControlName="pays" aria-label="Default select example">
+                      <option selected>Selectionner un pays</option>
+                      <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">CONTACT_SYGMA_SYSTAC</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="Entrer le contact_sygma_systac"
                       formControlName="cssystac"
                     />
                   </div>
