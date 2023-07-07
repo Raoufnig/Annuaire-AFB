@@ -21,6 +21,8 @@ export class FilialeComponent implements OnInit {
   deleted = false;
   listpays : any;
   searchText!: string;
+  update = false;
+  messageSuccess!:string
   currentPage = 1;
   enregistreur = "Enregistrer"; 
   create = false;
@@ -110,6 +112,7 @@ searchByName(){
 
        } }).then((res)=>{
         console.log(res.data);
+        this.messageSuccess= res.data;
         this.create = true;
         this.loader = false;
         setTimeout(() => {
@@ -123,5 +126,64 @@ searchByName(){
        
     })
 
+  }
+
+  onUpdate(filiale : any) {
+    let fil = filiale;
+    console.log(fil);
+   
+    if(this.filialeForm.value.bic == ''){
+      this.filialeForm.value.bic = fil.bic; 
+    }
+    if(this.filialeForm.value.site_web == ''){
+      this.filialeForm.value.site_web = fil.site; 
+    }
+    if(this.filialeForm.value.fax == ''){
+      this.filialeForm.value.fax = fil.fax; 
+    }
+    if(this.filialeForm.value.nom == ''){
+      this.filialeForm.value.nom = fil.nom; 
+    }
+
+    if(this.filialeForm.value.pays == ''){
+      this.filialeForm.value.pays = fil.pays; 
+    }
+
+    if(this.filialeForm.value.telephone == ''){
+      this.filialeForm.value.telephone = fil.phone; 
+    }
+    console.log(this.filialeForm.value);
+    let result = {
+      bic : this.filialeForm.value.bic,
+      fax : this.filialeForm.value.fax,
+      nom : this.filialeForm.value.nom,
+      phone : this.filialeForm.value.telephone,
+      site: this.filialeForm.value.site_web,
+      pays: this.filialeForm.value.pays
+
+    }
+
+    let nig =JSON.stringify(result);
+    console.log(nig);
+
+
+    axios.put(URL.API_URL + '/filiale/'+'updatefiliale/'+fil.id,nig,{
+      headers : {
+        'Content-Type': 'application/json'
+
+       } 
+    }).then((res)=>{
+      console.log(res.data);
+       this.messageSuccess= res.data;
+      this.update = true;
+        this.loader = false;
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500);
+    }).catch((error)=>{
+      console.log(error);
+      this.update = false;
+      this.loader = false;
+    })
   }
 }

@@ -185,9 +185,7 @@
 .profile {
 	display: flex;
 	
-	align-items: center;
-	
-
+	justify-items: stretch;
 }
 
 .profile-picture img {
@@ -197,6 +195,7 @@
 .profile-picture {
 	position: relative;
 	display: inline-block;
+	left: -52px;
   }
   
   .file-upload-label {
@@ -220,6 +219,9 @@
   }
 
 
+.profile-info{
+	margin-left: 10px;
+}
 .profile-info h2 {
 	margin: 20;
 }

@@ -176,7 +176,7 @@
                                       <div class="dropdown-menu">
                                         <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                           margin-right: 8px;" ></i>  Details</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalUpdateConf' + conf.id" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
                                         <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + conf.id"   ><i class="fa fa-trash" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
@@ -347,7 +347,13 @@
  <!--FIN-->
 
   <!-- Modal Modification d'un Confrere-->
-  <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
+  <div 
+  *ngFor="let conf of ConfrereList"
+  class="modal fade" 
+  id="modalUpdateConf{{conf.id}}" 
+  tabindex="-1" 
+  aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -384,16 +390,33 @@
                 id="navs-top-home"
                 role="tabpanel"
               >
-              
+              <div
+              *ngIf="update == true"
+              class="alert alert-primary alert-dismissible"
+              role="alert"
+            >
+              <h6
+                class="alert-heading d-flex align-items-center fw-bold mb-1"
+              >
+                Parfait :)
+              </h6>
+              <p class="mb-0">{{messageSuccess}}</p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
                 
-                <form [formGroup]="confrereForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="confrereForm" (ngSubmit)="onUpdate(conf)">
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Nom</label>
                     <input
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Enter un nom"
+                      placeholder="{{conf.nom}}"
                       formControlName="nom"
                     />
                   </div>
@@ -403,7 +426,7 @@
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Entrer une adresse"
+                      placeholder="{{conf.adresse}}"
                       formControlName="adresse"
                     />
                   </div>
@@ -414,7 +437,7 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer le bic"
+                        placeholder="{{conf.bic}}"
                         formControlName="bic"
                       />
                     </div>
@@ -426,7 +449,7 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer le fax"
+                        placeholder="{{conf.fax}}"
                         formControlName="fax"
                       />
                     </div>
@@ -437,7 +460,7 @@
                       type="tel"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Entrer un numero de telephone"
+                      placeholder="{{conf.phone}}"
                       formControlName="telephone"
                     />
                   </div>
@@ -454,7 +477,7 @@
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Entrer le contact_sygma_systac"
+                      placeholder="{{conf.contact_sygma_systac}}"
                       formControlName="cssystac"
                     />
                   </div>
@@ -463,10 +486,17 @@
                       class="btn btn-primary"
                       type="submit"
                       style="width: 100%"
-                    >
-                    
-                      <span>Enregistrer</span>
-                    </button>
+                    > 
+                    <div
+                    *ngIf="loader == true"
+                    class="spinner-border spinner-border-sm"
+                    style="color: white"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span *ngIf="loader == false">Modifier</span>
+                  </button>
                     
                   </div>
                 </form>

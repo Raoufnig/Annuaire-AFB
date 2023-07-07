@@ -173,7 +173,7 @@
                                       <div class="dropdown-menu">
                                         <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                           margin-right: 8px;" ></i>  Details</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalUpdatePartenaire' + part.id" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
                                         <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + part.id"  ><i class="fa fa-trash-o" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
@@ -332,6 +332,173 @@
                     
                       <span>Enregistrer</span>
                     </button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+   <!--FIN-->
+
+    <!-- Modal Update d'un partenaire-->
+  <div 
+  *ngFor="let part of filtrecat"
+  class="modal fade" 
+  id="modalUpdatePartenaire{{part.id}}" 
+  tabindex="-1" 
+  aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Modifier un partenaire</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="nav-align-top mb-4">
+            <ul class="nav nav-tabs" role="tablist">
+              
+              <li class="nav-item">
+                <button
+                  type="button"
+                  class="nav-link"
+                  role="tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#navs-top-profile"
+                  aria-controls="navs-top-profile"
+                  aria-selected="false"
+                >
+                  Remplir le formulaire
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div
+                class="tab-pane fade show active"
+                id="navs-top-home"
+                role="tabpanel"
+              >
+              <div
+              *ngIf="update == true"
+              class="alert alert-primary alert-dismissible"
+              role="alert"
+            >
+              <h6
+                class="alert-heading d-flex align-items-center fw-bold mb-1"
+              >
+                Parfait :)
+              </h6>
+              <p class="mb-0">{{messageSuccess}}</p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+              
+                
+                <form [formGroup]="partenaireForm" (ngSubmit)="onUpdate(part)">
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Nom</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{part.nom}}"
+                      formControlName="nom"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Domaine d'activité</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{part.dom_acti}}"
+                      formControlName="dom_activite"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Adresse</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{part.adresse}}"
+                      formControlName="adresse"
+                    />
+                  </div>
+                  
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Fax</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{part.fax}}"
+                        formControlName="fax"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
+                    <input
+                      type="tel"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{part.phone}}"
+                      formControlName="telephone"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Pays</label>
+                    <select class="form-select" formControlName="pays" aria-label="Selectionner un pays">
+                      <option selected>Selectionner un pays</option>
+                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                    </select>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Manager</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{part.manager}}"
+                      formControlName="manager"
+                    />
+                  </div>
+                
+                  <div>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                      style="width: 100%"
+                    > 
+                    <div
+                    *ngIf="loader == true"
+                    class="spinner-border spinner-border-sm"
+                    style="color: white"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span *ngIf="loader == false">Modifier</span>
+                  </button>
                     
                   </div>
                 </form>

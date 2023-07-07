@@ -136,6 +136,7 @@
                                 <th>#</th>
                                 <th>photo</th>
                                 <th>Nom</th>
+                                <th>Prenom</th>
                                 <th>Email</th>
                                 <th>Affectation</th>
                                 <th>Fonction</th>
@@ -146,47 +147,52 @@
                             </thead>
                             <tbody class="table-border-bottom-0">
                               <tr
+                              *ngFor="let personnel of employees | paginate
+                              : { itemsPerPage: 10, currentPage: currentPage };
+                          let i = index" 
                               >
                                 <td>
-                                  <span>1</span>
+                                  <span>{{i+1}}</span>
                                 </td>
                                 <td>
                                   <div class="avatar avatar">
-                                    <img src="./assets/avatar/avatar.png" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="{{personnel.photo}}" alt class="w-px-40 h-auto rounded-circle" />
                                   </div>
                                 </td>
                                 <td>
-                                  <span>Raoufnig</span>
+                                  <span>{{personnel.nom}}</span>
                                 </td>
                                 <td>
-                                  <span>raoufelabdoul@gmail.com</span>
+                                  <span>{{personnel.prenom}}</span>
                                 </td>
                                 <td>
-                                  <span>Douala</span>
+                                  <span>{{personnel.email}}</span>
+                                </td>
+                               
+                                <td>
+                                  <span>{{personnel.affectation}}</span>
                                 </td>
                                 <td>
-                                  <span>Assistant Direction</span>
+                                <span>{{personnel.fonction}}</span>
                                 </td>
                                 <td>
-                                  <span>01400</span>
+                                  <span>{{personnel.cisco}}</span>
                                 </td>
                                 <td>
-                                  <span>Yaounde</span>
+                                  <span>{{personnel.ville}}</span>
                                 </td>
                                 <td>
-                                  <span>654721021</span>
+                                  <span>{{personnel.portable}}</span>
                                 </td>
                                 <td>
                                   <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                                     <div class="dropdown-menu">
-                                      <a class="dropdown-item"  data-bs-toggle="modal"
-                                      data-bs-target="#modalCreateUser" style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                      <a class="dropdown-item"  data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel" style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                         margin-right: 8px;" ></i>  Details</a>
-                                      <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                      <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  [attr.data-bs-target]="'#modalAddImgPers' + personnel.id_personnel"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                         margin-right: 8px;"></i>Modifier</a>
-                                      <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  ><i class="fa fa-trash-o" aria-hidden="true" style="
-                                        margin-right: 8px;"></i>  Supprimer</a>
+                                     
                                     </div>
                                   </div>
                                 </td>
@@ -198,7 +204,7 @@
                               <pagination-controls
                                 previousLabel="Previous"
                                 nextLabel="Next"
-                                
+                                (pageChange)="currentPage = $event"
                               >
                               </pagination-controls>
                             </div>
@@ -221,8 +227,14 @@
 </div>
 
 
-<!-- Create User-->
-<div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
+<!--Modal Detail Personnel-->
+<div 
+*ngFor="let personnel of employees"
+class="modal fade" 
+id="modalDetailPers{{personnel.id_personnel}}"
+ tabindex="-1" 
+ aria-hidden="true"
+ >
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -258,23 +270,18 @@
 
                 <div class="profile" >
                   <div class="profile-picture">
-                    <img [src]="profileImageUrl" alt="Profile picture" class="w-px-200 h-auto rounded-circle">
-                    
-                    <label for="file-upload" class="file-upload-label">
-                         <i class="fa fa-camera" ></i>
-                    </label>
-                    <input id="file-upload" type="file" accept="image/*" (change)="onFileSelected($event)" style="display: none;">
+                    <img src="{{personnel.photo}}" alt="Profile picture" class="w-px-200 h-auto rounded-circle">
                   </div>
                   
                   <div class="profile-info" >
-                    <h2>Abdoul Raouf</h2>
-                    <h2>Aboubakar Mayake</h2>
-                    <p>Email : raoufelabdoul@gmail.com</p>
-                    <p>Affectation : Douala</p>
-                    <p>Fonction : Assistant Direction</p>
-                    <p>Cisco : 01400</p>
-                    <p>Ville : Douala</p>
-                    <p>Telepone : 699454212</p>
+                    <h2>{{personnel.nom}}</h2>
+                    <h2>{{personnel.prenom}}</h2>
+                    <p>Email : {{personnel.email}}</p>
+                    <p>Affectation : {{personnel.affectation}}</p>
+                    <p>Fonction : {{personnel.fonction}}</p>
+                    <p>Cisco : {{personnel.cisco}}</p>
+                    <p>Ville : {{personnel.ville}}</p>
+                    <p>Telepone : {{personnel.portable}}</p>
                   </div>
                 </div>
                 </div>
@@ -296,5 +303,184 @@
     </div>
   </div>
 </div>
+<!--FIN-->
+
+<!--Modal Add Image Personnel-->
+<div 
+*ngFor="let personnel of employees"
+class="modal fade" 
+id="modalAddImgPers{{personnel.id_personnel}}" 
+tabindex="-1" 
+aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCenterTitle">Modifier les informations d'un personnel</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="nav-align-top mb-4">
+          <ul class="nav nav-tabs" role="tablist">
+            
+            <li class="nav-item">
+              <button
+                type="button"
+                class="nav-link"
+                role="tab"
+                data-bs-toggle="tab"
+                data-bs-target="#navs-top-profile"
+                aria-controls="navs-top-profile"
+                aria-selected="false"
+              >
+                Remplir le formulaire
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div
+              class="tab-pane fade show active"
+              id="navs-top-home"
+              role="tabpanel"
+            >
+            <div
+            *ngIf="create == true"
+            class="alert alert-primary alert-dismissible"
+            role="alert"
+          >
+            <h6
+              class="alert-heading d-flex align-items-center fw-bold mb-1"
+            >
+              Parfait :)
+            </h6>
+            <p class="mb-0">{{messageSuccess}}</p>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+              
+              <form [formGroup]="personnelForm" (ngSubmit)="onSubmit(personnel)">
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">Nom</label>
+                  <input
+                    type="name"
+                    id="nameWithTitle"
+                    class="form-control"
+                    placeholder="{{personnel.nom}}"
+                    formControlName="nom"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">Prenom</label>
+                  <input
+                    type="text"
+                    id="nameWithTitle"
+                    class="form-control"
+                    placeholder="{{personnel.prenom}}"
+                    formControlName="prenom"
+                  />
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">email</label>
+                    <input
+                      type="email"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{personnel.email}}"
+                      formControlName="email"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div>
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{personnel.portable}}"
+                      formControlName="telephone"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">cisco</label>
+                  <input
+                    type="tel"
+                    id="nameWithTitle"
+                    class="form-control"
+                    placeholder="{{personnel.cisco}}"
+                    formControlName="cisco"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">Ville</label>
+                  <select class="form-select" formControlName="ville" aria-label="Default select example">
+                    <option selected>Selectionner un pays</option>
+                    <option *ngFor="let p of listville" value="{{p.nom}}">{{p.nom}}</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">Affectation</label>
+                  <input
+                    type="name"
+                    id="nameWithTitle"
+                    class="form-control"
+                    placeholder="{{personnel.affectation}}"
+                    formControlName="affectation"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">Fonction</label>
+                  <input
+                    type="name"
+                    id="nameWithTitle"
+                    class="form-control"
+                    placeholder="{{personnel.fonction}}"
+                    formControlName="fonction"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="nameWithTitle" class="form-label">Image</label>
+                  <input type="file" accept="image/*"  class="form-control" id="image-input" (change)="onImageSelected($event)">
+                </div>
+                <div>
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                    style="width: 100%"
+                  > 
+                  <div
+                  *ngIf="loader == true"
+                  class="spinner-border spinner-border-sm"
+                  style="color: white"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <span *ngIf="loader == false">Modifier</span>
+                </button>
+                  
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div>
+<!--FIN-->
 
 </div>

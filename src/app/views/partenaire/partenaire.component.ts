@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import axios from 'axios';
 import { URL } from 'src/app/Classes/base-url';
 import { AssistService } from 'src/app/Services/assist.service';
 import { PartenaireService } from 'src/app/Services/partenaire.service';
@@ -17,6 +18,10 @@ export class PartenaireComponent implements OnInit {
   searchText!: string;
   filtrecat: any;
   currentPage = 1;
+  messageSuccess!: string;
+  create=false;
+  loader=false;
+  update=false;
   actionDelete= false;
   partenaireForm! : FormGroup
 
@@ -91,13 +96,85 @@ export class PartenaireComponent implements OnInit {
 
     const nig = JSON.stringify(result)
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    this.http.post(URL.API_URL + '/partenaire' + '/addpartenaire', nig,{ headers }).subscribe((res)=>{
-       console.log(res);
-    });
+    axios.post(URL.API_URL + '/partenaire' + '/addpartenaire',nig,{
+      headers : {
+       'Content-Type': 'application/json'
+
+      } }).then((res)=>{
+       console.log(res.data);
+       this.messageSuccess= res.data;
+       this.create = true;
+       this.loader = false;
+       setTimeout(() => {
+         window.location.reload()
+       }, 1500);
+
+    }).catch((error)=>{
+     this.create = false;
+     this.loader = false;
+    // console.log(error);
+      
+   })
+  }
+  onUpdate(partenaire : any) {
+    let part = partenaire;
+    console.log(part);
+   
+    if(this.partenaireForm.value.adresse == ''){
+      this.partenaireForm.value.adresse = part.adresse; 
+    }
+    if(this.partenaireForm.value.manager == ''){
+      this.partenaireForm.value.manager = part.manager; 
+    }
+    if(this.partenaireForm.value.cssystac == ''){
+      this.partenaireForm.value.dom_activite = part.dom_acti; 
+    }
+    if(this.partenaireForm.value.fax == ''){
+      this.partenaireForm.value.fax = part.fax; 
+    }
+    if(this.partenaireForm.value.nom == ''){
+      this.partenaireForm.value.nom = part.nom; 
+    }
+
+    if(this.partenaireForm.value.pays == ''){
+      this.partenaireForm.value.pays = part.pays; 
+    }
+
+    if(this.partenaireForm.value.telephone == ''){
+      this.partenaireForm.value.telephone = part.phone; 
+    }
+    console.log(this.partenaireForm.value);
+    let result = {
+      adresse : this.partenaireForm.value.adresse,
+      dom_acti : this.partenaireForm.value.dom_activite,
+      fax: this.partenaireForm.value.fax,
+      manager : this.partenaireForm.value.manager,
+      nom : this.partenaireForm.value.nom,
+      phone : this.partenaireForm.value.telephone,
+      pays : this.partenaireForm.value.pays
+    }
+
+    let nig =JSON.stringify(result);
+    console.log(nig);
 
 
+    axios.put(URL.API_URL + '/partenaire/'+'updatepartenaire/'+part.id,nig,{
+      headers : {
+        'Content-Type': 'application/json'
+
+       } 
+    }).then((res)=>{
+      console.log(res.data);
+       this.messageSuccess= res.data;
+      this.update = true;
+        this.loader = false;
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500);
+    }).catch((error)=>{
+      console.log(error);
+      this.update = false;
+      this.loader = false;
+    })
   }
 }

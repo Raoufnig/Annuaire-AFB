@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import axios from 'axios';
 import { URL } from 'src/app/Classes/base-url';
 import { AssistService } from 'src/app/Services/assist.service';
 import { CorrespondantService } from 'src/app/Services/correspondant.service';
@@ -18,6 +19,10 @@ export class CorrespondanceComponent implements OnInit {
   filtrecat: any;
   isOpen = false;
   actionDelete = false;
+  messageSuccess!:string
+  loader=false;
+  create=false;
+  update=false;
   deleted = false;
   currentPage = 1;
   correspondantForm! : FormGroup
@@ -90,17 +95,90 @@ export class CorrespondanceComponent implements OnInit {
     }
 
     const nig = JSON.stringify(result);
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    this.http.post(URL.API_URL + '/correspondant' + '/addcorrespondant',nig,{ headers }).subscribe((res)=>{
-      console.log(res);
-    },(error)=>{
-      console.log(error.error.text);
-    }); 
-    window.location.reload();
+    axios.post(URL.API_URL + '/correspondant' + '/addcorrespondant',nig,{
+      headers : {
+       'Content-Type': 'application/json'
+
+      } }).then((res)=>{
+       console.log(res.data);
+       this.messageSuccess= res.data;
+       this.create = true;
+       this.loader = false;
+       setTimeout(() => {
+         window.location.reload()
+       }, 1500);
+
+    }).catch((error)=>{
+     this.create = false;
+     this.loader = false;
+    // console.log(error);
+      
+   })
 
   }
+
+  onUpdate(correspondant : any) {
+    let corr = correspondant;
+    console.log(corr);
+   
+    if(this.correspondantForm.value.manager == ''){
+      this.correspondantForm.value.manager = corr.manager; 
+    }
+    if(this.correspondantForm.value.bic == ''){
+      this.correspondantForm.value.bic = corr.bic; 
+    }
+    if(this.correspondantForm.value.site_web == ''){
+      this.correspondantForm.value.site_web = corr.site; 
+    }
+    if(this.correspondantForm.value.fax == ''){
+      this.correspondantForm.value.fax = corr.fax; 
+    }
+    if(this.correspondantForm.value.nom == ''){
+      this.correspondantForm.value.nom = corr.nom; 
+    }
+
+    if(this.correspondantForm.value.pays == ''){
+      this.correspondantForm.value.pays = corr.pays; 
+    }
+
+    if(this.correspondantForm.value.telephone == ''){
+      this.correspondantForm.value.telephone = corr.phone; 
+    }
+    console.log(this.correspondantForm.value);
+    let result = {
+      fax : this.correspondantForm.value.fax,
+      manager : this.correspondantForm.value.manager,
+      nom: this.correspondantForm.value.nom,
+      pays: this.correspondantForm.value.pays,
+      phone: this.correspondantForm.value.telephone,
+      site: this.correspondantForm.value.site_web
+      
+    }
+
+    let nig =JSON.stringify(result);
+    console.log(nig);
+
+
+    axios.put(URL.API_URL + '/correspondant/'+'updatecorrespondant/'+corr.id,nig,{
+      headers : {
+        'Content-Type': 'application/json'
+
+       } 
+    }).then((res)=>{
+      console.log(res.data);
+       this.messageSuccess= res.data;
+      this.update = true;
+        this.loader = false;
+        setTimeout(() => {
+          window.location.reload()
+        }, 1500);
+    }).catch((error)=>{
+      console.log(error);
+      this.update = false;
+      this.loader = false;
+    })
+  }
+
 
   deleteCorrespondant(id: any){
     this.actionDelete = true;
@@ -118,8 +196,6 @@ export class CorrespondanceComponent implements OnInit {
     this.deleted = true
   }
 
-  Update(){
-
-  }
+  
 
 }
