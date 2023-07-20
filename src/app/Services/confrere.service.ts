@@ -1,21 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL } from '../Classes/base-url';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfrereService {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
 
   getConfrere(){
-    return this.http.get(URL.API_URL + '/confrere'+'/listconfrere');
+    return axios.get(URL.API_URL + '/confrere'+'/listconfrere');
   }
 
   deleteConfrere(Id: any){
-    return this.http.get(URL.API_URL +'/confrere'+ '/deleteconf/'+ Id);
+    return axios.get(URL.API_URL +'/confrere'+ '/deleteconf/'+ Id);
   }
 
 }

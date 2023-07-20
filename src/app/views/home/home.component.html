@@ -1,9 +1,20 @@
+
 <div class="layout-wrapper layout-content-navbar">
+  
   <div class="layout-wrapper layout-content-navbar">
   <div class="layout-container">
-      <app-aside id="layout-menu" (hideAside)="ShowNavbar=$event" [state]="ShowNavbar"></app-aside>
+   
+   
+      <app-aside  id="layout-menu" (hideAside)="ShowNavbar=$event" [state]="ShowNavbar"></app-aside>
       <div class="layout-page">
+
+        <div class="centered-element">
           <app-navbar (showAside)="ShowNavbar=$event"></app-navbar>
+        </div>
+            
+        
+          
+        
           <div class="content-wrapper">
               <!-- <div class="container-xxl  container-p-y">
                   <div class=" py-3 mb-4 d-flex flex-column ">
@@ -17,22 +28,7 @@
               </div> -->
 
               <div class="container-xxl container-p-y">
-                  <div class="py-3 d-flex flex-column">
-                    <div>
-                      <h6 class="fw-bold">
-                        <span class="text-primary">
-                          <i class="fa fa-home" aria-hidden="true"></i>
-                          <a
-                            [routerLink]="['/']"
-                            routerLinkActive="true"
-                            class="text-primary"
-                            >Acceuil /
-                          </a>
-                        </span>
-                        Personnel
-                      </h6>
-                    </div>
-                  </div>
+                  
                   <!-- <div
                     *ngIf="deleted == true"
                     class="alert alert-primary alert-dismissible"
@@ -66,20 +62,28 @@
                     ></button>
                   </div> -->
                   <div class="p-3 row">
+                    <div class="py-3 d-flex flex-column">
+                      <div>
+                        <h6 class="fw-bold">
+                          <span class="text-primary">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <a
+                              [routerLink]="['/']"
+                              routerLinkActive="true"
+                              class="text-primary"
+                              >Acceuil /
+                            </a>
+                          </span>
+                          Personnel
+                        </h6>
+                      </div>
+                    </div>
                     <div class="card p-5">
                       <h2 class="card-header text-primary">
                         Personnel - AFB
                       </h2>
-                      <!-- <div  class="text-center mb-5">
-                        <div
-                          class="spinner-border text-primary"
-                          role="status"
-                          style="width: 100px; height: 100px"
-                        >
-                          <span class="visually-hidden">Chargement...</span>
-                        </div>
-                      </div> -->
-                      <div class="card-body">
+                      
+                      <div class="card-body" >
                         Ici vous avez la liste de tout le personnel d'Afriland First Bank
                         <div class="table-responsive text-nowrap mt-4">
                           <!-- <div class="d-flex justify-content-end mb-4">
@@ -93,44 +97,78 @@
                           </div> -->
                           <div class="group">
                             <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                            <input placeholder="Search" type="text" class="input">
+                            <input placeholder="Search" [(ngModel)]="searchText"
+                            (ngModelChange)="searchByName()" type="text" class="input">
                           </div>
-                          <div class="select1-row">
-                            <label for="select-1">Ville :</label>
-                            <select id="select-1">
-                              <option value="option-1">--Tous--</option>
-                              <option value="option-2">Option 2</option>
-                              <option value="option-3">Option 3</option>
-                            </select>
-                          
-                            <label for="select-2">Affectation :</label>
-                            <select id="select-2">
-                              <option value="option-1">--Tous--</option>
-                              <option value="option-2">Option 2</option>
-                              <option value="option-3">Option 3</option>
-                            </select>
-                          
-                            <label for="select-3">Fonction :</label>
-                            <select id="select-3">
-                              <option value="option-1">--Tous--</option>
-                              <option value="option-2">Option 2</option>
-                              <option value="option-3">Option 3</option>
-                            </select>
 
-                            <div class="search-container">
-                              <button type="submit"><i class="fa fa-search"></i></button>
+                          <form [formGroup]="personnelForm" (ngSubmit)="onSubmit2()">
+                            <div class="select1-row">
+                              <label for="select-1">Ville :</label>
+                              <select id="select-1" formControlName="ville">
+                                <option value="">--Tous--</option>
+                                <option *ngFor="let vil of listville" value="{{vil}}">{{vil}}</option>
+                              </select>
+                            
+                              <label for="select-2">Unite :</label>
+                              <select id="select-2" formControlName="unite">
+                                <option value="">--Tous--</option>
+                                <option *ngFor="let uni of listUnite" value="{{uni}}">{{uni}}</option>
+                                
+                              </select>
+                            
+                              <label for="select-3">Fonction :</label>
+                              <select id="select-3" formControlName="fonction">
+                                <option value="">--Tous--</option>
+                                <option *ngFor="let fon of listFonction" value="{{fon}}">{{fon}}</option>
+                              </select>
+  
+                              <div class="search-container">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                              </div>
+                              
+                              
+                             <form [formGroup]="personnelForm" (ngSubmit)="downloadPersonnelExcel()">
+                              <div *ngIf="download == true" class="search-container">
+                                <button type="submit" class="button1" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                </svg>Download</button>
+                              </div>
+                             </form>
+                              
+  
+                             
                             </div>
-
-                           
-                          </div>
+ 
+                          </form>
+                          
                          
                           <br>
                           <br>
                           <br>
-
                           
+                          <div id="notfound" *ngIf="errorCode==true">
+                            <div class="notfound">
+                              <div class="notfound-bg">
+                                <div></div>
+                              </div>
+                              <h1>oops!</h1>
+                              <h2>Network Error</h2>
+                              
+                            </div>
+                          </div>
+
+                          <div *ngIf="pageload == true" class="text-center mb-5">
+                            <div
+                              class="spinner-border text-primary"
+                              role="status"
+                              style="width: 100px; height: 100px"
+                            >
+                              <span class="visually-hidden">Chargement...</span>
+                            </div>
+                          </div>
         
-                          <table bootstrap-table class="table" class="table table-striped" class="table table-hover">
+                          <table bootstrap-table class="table" class="table table-striped" class="table table-hover" *ngIf="pageload == false">
                             <thead style="background-color: #f3f2f7">
                               <tr>
                                 <th>#</th>
@@ -138,25 +176,32 @@
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
-                                <th>Affectation</th>
+                                <th>Unite</th>
                                 <th>Fonction</th>
-                                <th>Cisco</th>
+                                <th>Extension</th>
                                 <th>Ville</th>
                                 <th>Telephone</th>
                               </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
                               <tr
-                              *ngFor="let personnel of employees | paginate
+                              
+                              *ngFor="let personnel of filtercat | paginate
                               : { itemsPerPage: 10, currentPage: currentPage };
-                          let i = index" 
+                          let i = index"
+                          
+                          
                               >
+                              
                                 <td>
                                   <span>{{i+1}}</span>
                                 </td>
                                 <td>
-                                  <div class="avatar avatar">
+                                  <div *ngIf="personnel.photo!=''" class="avatar avatar" data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel">
                                     <img src="{{personnel.photo}}" alt class="w-px-40 h-auto rounded-circle" />
+                                  </div>
+                                  <div *ngIf="personnel.photo==''" class="avatar avatar" data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel">
+                                    <img src="/assets/img/imconnu-removebg-preview.png" alt class="w-px-40 h-auto rounded-circle" />
                                   </div>
                                 </td>
                                 <td>
@@ -166,23 +211,27 @@
                                   <span>{{personnel.prenom}}</span>
                                 </td>
                                 <td>
-                                  <span>{{personnel.email}}</span>
+                                  <span>{{personnel.email}} /</span>
+                                  <p *ngFor="let ad of adresse" ><span *ngIf="ad.id_source == personnel.id_personnel " >{{ad.mail}} /</span></p>
                                 </td>
                                
                                 <td>
-                                  <span>{{personnel.affectation}}</span>
+                                  <span>{{personnel.unite}}</span>
                                 </td>
                                 <td>
                                 <span>{{personnel.fonction}}</span>
                                 </td>
                                 <td>
-                                  <span>{{personnel.cisco}}</span>
+                                  <span>{{personnel.extension}}</span>
                                 </td>
                                 <td>
                                   <span>{{personnel.ville}}</span>
                                 </td>
                                 <td>
-                                  <span>{{personnel.portable}}</span>
+                                  
+                                  <p><span>{{personnel.portable}} /</span></p>
+                                  <p *ngFor="let nu of numero"><span *ngIf="nu.id_source == personnel.id_personnel">{{nu.tel}} /</span></p>
+                                  
                                 </td>
                                 <td>
                                   <div class="dropdown">
@@ -214,13 +263,57 @@
                     </div>
                   </div>
                 </div>
-                <footer class="py-3 my-4">
-                  <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                   
-                  </ul>
-                  <p class="text-center text-body-secondary">© 2023 Afriland First Bank, Cameroun</p>
+                <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+                  <div class="col mb-3">
+                    <a [routerLink]="['/']" routerLinkActive="true" class="app-brand-link">
+                      <div class="logo">
+                        <img src="/assets/img/afrilandlogo.svg"/>
+                      </div>
+                      <span class="app-brand-text demo menu-text fw-bolder ms-2">Annuaire-AFB</span>
+                    </a>
+                    <p class="text-body-secondary">© 2023</p>
+                  </div>
+              
+                  <div class="col mb-3">
+              
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    </ul>
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    </ul>
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    </ul>
+                  </div>
                 </footer>
           </div>
+          
+         
       </div>
   </div>
   
@@ -251,42 +344,45 @@ id="modalDetailPers{{personnel.id_personnel}}"
         <div class="nav-align-top mb-4">
           <div class="tab-content">
             <div id="navs-top-profile" role="tabpanel">
-                <div class="container1">
-                  <!-- <div class="card1" id="modalCenterTitle">
-                    <div class="card1__img"></div>
-                    <div class="card1__avatar">
-                      <div class="avatar1">
-                        <img src="./assets/avatar/avatar.png" alt class="w-px-40 h-auto rounded-circle"/>
-                    </div>
+              <div class="container1">
+                <!-- <div class="card1" id="modalCenterTitle">
+                  <div class="card1__img"></div>
+                  <div class="card1__avatar">
+                    <div class="avatar1">
+                      <img src="./assets/avatar/avatar.png" alt class="w-px-40 h-auto rounded-circle"/>
                   </div>
-                    <div class="card1__title">Cameron Williamson</div>
-                    <div class="card1__subtitle">Web Development</div>
-                   
-                    <div class="card1__wrapper">
-                        <button class="card1__btn">Button</button>
-                        <button class="card1__btn card1__btn-solid">Button</button>
-                    </div>
-                </div> -->
+                </div>
+                  <div class="card1__title">Cameron Williamson</div>
+                  <div class="card1__subtitle">Web Development</div>
+                 
+                  <div class="card1__wrapper">
+                      <button class="card1__btn">Button</button>
+                      <button class="card1__btn card1__btn-solid">Button</button>
+                  </div>
+              </div> -->
 
-                <div class="profile" >
-                  <div class="profile-picture">
-                    <img src="{{personnel.photo}}" alt="Profile picture" class="w-px-200 h-auto rounded-circle">
-                  </div>
-                  
-                  <div class="profile-info" >
-                    <h2>{{personnel.nom}}</h2>
-                    <h2>{{personnel.prenom}}</h2>
-                    <p>Email : {{personnel.email}}</p>
-                    <p>Affectation : {{personnel.affectation}}</p>
-                    <p>Fonction : {{personnel.fonction}}</p>
-                    <p>Cisco : {{personnel.cisco}}</p>
-                    <p>Ville : {{personnel.ville}}</p>
-                    <p>Telepone : {{personnel.portable}}</p>
-                  </div>
+              <div class="profile" >
+                <div *ngIf="personnel.photo!=''" class="profile-picture">
+                  <img src="{{personnel.photo}}" alt="Profile picture" class="w-px-200 h-auto rounded-circle">
                 </div>
+                <div *ngIf="personnel.photo==''" class="profile-picture">
+                  <img src="/assets/img/imconnu-removebg-preview.png" alt="Profile picture" class="w-px-200 h-auto rounded-circle">
                 </div>
-               
                 
+                <div class="profile-info" >
+                  <h2>{{personnel.nom}}</h2>
+                  <h2>{{personnel.prenom}}</h2>
+                  <p>Email : {{personnel.email}}</p>
+                  <p>Depaertement : {{personnel.unite}}</p>
+                  <p>Fonction : {{personnel.fonction}}</p>
+                  <p>Extension : {{personnel.extension}}</p>
+                  <p>Ville : {{personnel.ville}}</p>
+                  <p>Telepone : {{personnel.portable}}</p>
+                </div>
+              </div>
+              </div>
+
+                  
             </div>
           </div>
         </div>
@@ -369,91 +465,169 @@ aria-hidden="true"
           </div>
               
               <form [formGroup]="personnelForm" (ngSubmit)="onSubmit(personnel)">
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Nom</label>
-                  <input
-                    type="name"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{personnel.nom}}"
-                    formControlName="nom"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Prenom</label>
-                  <input
-                    type="text"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{personnel.prenom}}"
-                    formControlName="prenom"
-                  />
-                </div>
-                <div class="mb-3">
-                  <div>
-                    <label for="nameWithTitle" class="form-label">email</label>
+
+                <div class="wrapper3">
+
+                  <div class="mb-3" >
+                    <label for="nameWithTitle" class="form-label">Nom</label>
                     <input
-                      type="email"
+                      type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{personnel.email}}"
-                      formControlName="email"
+                      placeholder="{{personnel.nom}}"
+                      formControlName="nom"
                     />
                   </div>
-                </div>
-                <div class="mb-3">
-                  <div>
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
+
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Prenom</label>
                     <input
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{personnel.portable}}"
-                      formControlName="telephone"
+                      placeholder="{{personnel.prenom}}"
+                      formControlName="prenom"
                     />
                   </div>
+
+                  <div class="mb-3" >
+                    <label for="nameWithTitle" class="form-label">email</label>
+                    <div class="add" >
+                      
+                      <input
+                        type="email"
+                        id="nameWithTitle"
+                        class="form-control"
+                        pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})$/"
+                        placeholder="{{personnel.email}}"
+                        formControlName="email"
+                      />
+                      <a class="btn"  (click)="addEmails()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                        </svg>
+                      </a>
+                      
+                    </div>
+                    <div *ngIf="personnelForm.get('email')?.invalid && (personnelForm.get('email')?.dirty || personnelForm.get('email')?.touched)">
+                        
+                      <div *ngIf="personnelForm.get('email')?.errors?.['email']" style="color: red;">Mauvaise adresse mail</div>
+                    </div>
+                    <div class="mb-3" formArrayName="addemail" >
+                      <br>
+                          <input *ngFor="let item of addEmail.controls; let i = index" type="email" class="form-control"   pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,63})$/" placeholder="Ajouter une nouvelle adresse mail" [formControlName]="i" />
+                          <div *ngIf="personnelForm.get('addemail')?.invalid && (personnelForm.get('addemail')?.dirty || personnelForm.get('addemail')?.touched)">
+                        
+                            <div *ngIf="personnelForm.get('addemail')?.errors?.['addemail']" style="color: red;">Mauvaise adresse mail</div>
+                          </div>
+                    </div>
+                  
+                  </div>
+                  
+                  
+                  
+                    <div class="mb-3" >
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
+                      <div class="add"  *ngFor="let phonenumber of phoneNumbers; let i=index">
+                        
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="{{personnel.portable}}"
+                          formControlName="telephone"
+                        />
+
+                        <a class="btn" (click)="addPhoneNumbers()">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                          </svg>
+                        </a>
+                      </div>
+                      <div class="mb-3" formArrayName="addphone" >
+                            <br>
+                            <input *ngFor="let item of addPhone.controls; let i = index" type="tel" class="form-control" placeholder="Ajouter un nouveau numero telephone" [formControlName]="i" />
+                            
+                      </div>
+                    </div>
+                  
+                  
+    
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Extension</label>
+                      <input
+                        type="tel"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{personnel.extension}}"
+                        formControlName="extension"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Ville</label>
+                      <select class="form-select" formControlName="ville" aria-label="Default select example">
+                        <option selected disabled>Selectionner un pays</option>
+                        <option *ngFor="let p of listville" value="{{p}}">{{p}}</option>
+                      </select>
+                    </div>
+                  
+                  
+                  
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Unité</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{personnel.unite}}"
+                        formControlName="unite"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Fonction</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{personnel.fonction}}"
+                        formControlName="fonction"
+                      />
+                    </div>
+                
+                    
+                  
                 </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">cisco</label>
-                  <input
-                    type="tel"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{personnel.cisco}}"
-                    formControlName="cisco"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Ville</label>
-                  <select class="form-select" formControlName="ville" aria-label="Default select example">
-                    <option selected>Selectionner un pays</option>
-                    <option *ngFor="let p of listville" value="{{p.nom}}">{{p.nom}}</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Affectation</label>
-                  <input
-                    type="name"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{personnel.affectation}}"
-                    formControlName="affectation"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Fonction</label>
-                  <input
-                    type="name"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{personnel.fonction}}"
-                    formControlName="fonction"
-                  />
-                </div>
+
+                
+               
+                    
+                
+                
+                  
                 <div class="mb-3">
                   <label for="nameWithTitle" class="form-label">Image</label>
                   <input type="file" accept="image/*"  class="form-control" id="image-input" (change)="onImageSelected($event)">
+                  <br>
+                  <div class="add" *ngIf="imgerror == false">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg>
+                    <br>
+                    <span><em>Veuillez telecharger une image avec une taille inferieure a 1Mo</em></span>
+                  
+                  </div>
+                   <br>
+                  
+
+                  <div *ngIf="imgerror == true" class="alert alert-dismissible alert alert-danger" role="alert">
+                    Le fichier est trop volumineux. Veuillez telecharger une image de moins de 1Mo.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
                 </div>
+                
                 <div>
                   <button
                     class="btn btn-primary"
@@ -470,6 +644,8 @@ aria-hidden="true"
                 </div>
                 <span *ngIf="loader == false">Modifier</span>
                 </button>
+
+                
                   
                 </div>
               </form>

@@ -2,25 +2,13 @@
     <div class="layout-container">
         <app-aside id="layout-menu" (hideAside)="ShowNavbar=$event" [state]="ShowNavbar"></app-aside>
         <div class="layout-page">
+          <div class="centered-element">
             <app-navbar (showAside)="ShowNavbar=$event"></app-navbar>
+          </div>
+              
             <div class="content-wrapper">
                 <div class="container-xxl container-p-y">
-                    <div class="py-3 d-flex flex-column">
-                      <div>
-                        <h6 class="fw-bold">
-                          <span class="text-primary">
-                            <i class="fa fa-home" aria-hidden="true"></i>
-                            <a
-                              [routerLink]="['/home']"
-                              routerLinkActive="true"
-                              class="text-primary"
-                              >Acceuil /
-                            </a>
-                          </span>
-                          Filiale
-                        </h6>
-                      </div>
-                    </div>
+                    
                    
                     <!-- <div
                       *ngIf="errormessage == true"
@@ -39,6 +27,22 @@
                       ></button>
                     </div> -->
                     <div class="p-3 row">
+                      <div class="py-3 d-flex flex-column">
+                        <div>
+                          <h6 class="fw-bold">
+                            <span class="text-primary">
+                              <i class="fa fa-home" aria-hidden="true"></i>
+                              <a
+                                [routerLink]="['/home']"
+                                routerLinkActive="true"
+                                class="text-primary"
+                                >Acceuil /
+                              </a>
+                            </span>
+                            Filiale
+                          </h6>
+                        </div>
+                      </div>
                       <div class="card p-5">
                         <h2 class="card-header text-primary">
                           Filiale - AFB

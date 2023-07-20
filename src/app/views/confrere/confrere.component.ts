@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import axios from 'axios';
 import { error } from 'jquery';
 import { URL } from 'src/app/Classes/base-url';
@@ -26,16 +26,21 @@ export class ConfrereComponent implements OnInit {
   currentPage = 1;
   confrereForm! : FormGroup
 
-  constructor(private confrereService : ConfrereService, private assistService:AssistService, private http : HttpClient){
+  constructor(private fb :FormBuilder, private confrereService : ConfrereService, private assistService:AssistService, private http : HttpClient){
     this.confrereForm = new FormGroup({
       nom: new FormControl('', Validators.required),
       adresse: new FormControl('', Validators.required),
       bic: new FormControl('', Validators.required),
       fax: new FormControl('', Validators.required),
       pays: new FormControl('', Validators.required),
-      telephone: new FormControl('', Validators.required),
+      telephone: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(10),
+        Validators.pattern('^[0-9]+$'),
+      ],),
       cssystac: new FormControl('', Validators.required),
-      pays1 : new FormControl('')
+      pays1 : new FormControl(''),
+      addDynamicElement: this.fb.array([]),
 
     });
   }
@@ -52,10 +57,17 @@ export class ConfrereComponent implements OnInit {
   }
 
   getListConfrere(){
-    this.confrereService.getConfrere().subscribe((res)=>{
-      this.ConfrereList=res;
-      this.filtrecat=res;
+    this.confrereService.getConfrere().then((res)=>{
+      this.ConfrereList=res.data;
+      this.filtrecat=res.data;
     })
+  }
+
+  get addDynamicElement() {
+    return this.confrereForm.get('addDynamicElement') as FormArray;
+  }
+  addSuperPowers() {
+    this.addDynamicElement.push(this.fb.control(''));
   }
 
   searchByName(){
@@ -78,37 +90,44 @@ export class ConfrereComponent implements OnInit {
 
   onSubmit() {
     console.log(this.confrereForm.value);
-    let result ={
-      adresse : this.confrereForm.value.adresse,
-      bic : this.confrereForm.value.bic,
-      contact_sygma_systac: this.confrereForm.value.cssystac,
-      fax:this.confrereForm.value.fax,
-      nom : this.confrereForm.value.nom,
-      pays: this.confrereForm.value.pays,
-      phone : this.confrereForm.value.telephone
-    };
 
-    let nig =JSON.stringify(result);
-
-    axios.post(URL.API_URL + '/confrere' + '/addconfrere',nig,{
-      headers : {
-       'Content-Type': 'application/json'
-
-      } }).then((res)=>{
-       console.log(res.data);
-       this.messageSuccess= res.data;
-       this.create = true;
-       this.loader = false;
-       setTimeout(() => {
-         window.location.reload()
-       }, 1500);
-
-    }).catch((error)=>{
-     this.create = false;
-     this.loader = false;
-    // console.log(error);
+    if (!this.confrereForm.valid) {
+      alert('Bien vouloir remplir tous les champs du formulaire');
       
-   })
+    } else {
+      let result ={
+        adresse : this.confrereForm.value.adresse,
+        bic : this.confrereForm.value.bic,
+        contact_sygma_systac: this.confrereForm.value.cssystac,
+        fax:this.confrereForm.value.fax,
+        nom : this.confrereForm.value.nom,
+        pays: this.confrereForm.value.pays,
+        phone : this.confrereForm.value.telephone
+      };
+  
+      let nig =JSON.stringify(result);
+  
+      axios.post(URL.API_URL + '/confrere' + '/addconfrere',nig,{
+        headers : {
+         'Content-Type': 'application/json'
+  
+        } }).then((res)=>{
+         console.log(res.data);
+         this.messageSuccess= res.data;
+         this.create = true;
+         this.loader = false;
+         setTimeout(() => {
+           window.location.reload()
+         }, 1500);
+  
+      }).catch((error)=>{
+       this.create = false;
+       this.loader = false;
+      // console.log(error);
+        
+     })
+    }
+  
   }
 
   onUpdate(confrere : any) {
@@ -175,12 +194,12 @@ export class ConfrereComponent implements OnInit {
 
   deleteConfrere(id: any){
     this.actionDelete = true;
-    this.confrereService.deleteConfrere(id).subscribe((res)=>{
+    this.confrereService.deleteConfrere(id).then((res)=>{
         
       this.actionDelete = false;
       //window.location.reload;
     
-    }, (error)=>{
+    }).catch((error)=>{
       console.log(error);
     });
   }

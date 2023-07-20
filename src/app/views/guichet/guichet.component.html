@@ -8,7 +8,7 @@
               
             <div class="content-wrapper">
                 <div class="container-xxl container-p-y">
-                   
+                 
                     <!-- <div
                       *ngIf="deleted == true"
                       class="alert alert-primary alert-dismissible"
@@ -17,7 +17,7 @@
                       <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
                         Suppression effectuée
                       </h6>
-                      <p class="mb-0">Votre partenaire a été supprimé.</p>
+                      <p class="mb-0">Votre employé a été supprimé.</p>
                       <button
                         type="button"
                         class="btn-close"
@@ -54,13 +54,13 @@
                                 >Acceuil /
                               </a>
                             </span>
-                            Partenaire
+                            Guichet
                           </h6>
                         </div>
                       </div>
                       <div class="card p-5">
                         <h2 class="card-header text-primary">
-                          Partenaire - AFB
+                          Guichet - AFB
                         </h2>
                         <!-- <div  class="text-center mb-5">
                           <div
@@ -72,7 +72,7 @@
                           </div>
                         </div> -->
                         <div class="card-body">
-                          Ici vous avez la liste de tous les partenaires d'Afriland First Bank Cameroun
+                          Ici vous avez la liste de tous les Guichets d'Afriland First Bank Cameroun
                           <div class="table-responsive text-nowrap mt-4">
                             <div class="d-flex justify-content-end mb-4">
                               <button
@@ -80,15 +80,15 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalCreateUser"
                               >
-                              Ajouter un partenaire
+                              Ajouter un Guichet
                               </button>
                             </div>
                             <div class="group">
                               <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                              <input placeholder="Search" [(ngModel)]="searchText"
-                              (ngModelChange)="searchByName()" type="text" class="input">
+                              <input placeholder="Search" type="text" [(ngModel)]="searchText"
+                              (ngModelChange)="searchByName()" class="input"/>
                             </div>
-                            <form [formGroup]="partenaireForm" (ngSubmit)="onSubmit2()">
+                            <form [formGroup]="guichetForm" (ngSubmit)="onSubmit2()">
                               <div class="select1-row">
                                 <label for="select-1"></label>
                                 <select id="select-1" style="display: none;" >
@@ -97,10 +97,11 @@
                                   <option value="option-3">Option 3</option>
                                 </select>
                               
-                                <label for="select-2">Pays :</label>
-                                <select id="select-2" formControlName="pays1">
+                                <label for="select-2">Agence :</label>
+                                <select class="select1" id="select-2" formControlName="agence">
                                   <option value="">--Tous--</option>
-                                  <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                                  <option *ngFor='let p of listPays' value="{{p.nom}}">{{p.nom}}</option>
+                                  
                                 </select>
                               
                                 <label for="select-3"></label>
@@ -111,11 +112,12 @@
                                 </select>
       
                                 <div class="search-container">
-                                  <button type="submit"><i class="fa fa-search"></i></button>
+                                  <button type="submit" ><i class="fa fa-search"></i></button>
                                 </div>
       
                                
                               </div>
+
                             </form>
                             
                            
@@ -130,46 +132,45 @@
                                 <tr>
                                   <th>#</th>
                                   <th>Nom</th>
-                                  <th>Domaine d'activité</th>
                                   <th>Adresse</th>
                                   <th>Fax</th>
                                   <th>Telephone</th>
-                                  <th>Pays</th>
+                                  <th>Ville</th>
                                   <th>Manager</th>
                                 </tr>
                               </thead>
                               <tbody class="table-border-bottom-0">
-                                <tr 
-                                *ngFor="let part of filtrecat | paginate
+                                <tr
+                                *ngFor="let guich of filtercat | paginate
                                 : { itemsPerPage: 10, currentPage: currentPage };
                             let i = index
                           "
                                 >
                                   <td>
-                                    <span>{{i + 1}}</span>
+                                    <span>{{i+1}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>{{part.nom}}</span>
+                                    <span>{{guich.nom}}</span>
                                   </td>
                                   <td>
-                                    <span>{{part.dom_acti}}</span>
+                                    <span>{{guich.mail_pro}}</span>
+                                  </td>
+                                  <!-- <td>
+                                    <span>{{guich.bic}}</span>
+                                  </td> -->
+                                  <td>
+                                    <span>{{guich.fax}}</span>
                                   </td>
                                   <td>
-                                    <span>{{part.adresse}}</span>
-                                  </td>
-                                  <td>
-                                    <span>{{part.fax}}</span>
-                                  </td>
-                                  <td>
-                                    <span>{{part.phone}}</span>
+                                    <span>{{guich.phone}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>{{part.pays}}</span>
+                                    <span>{{guich.ville}}</span>
                                   </td>
                                   <td>
-                                    <span>{{part.manager}}</span>
+                                    <span>{{guich.chef}}</span>
                                   </td>
                                   <td>
                                     <div class="dropdown">
@@ -177,9 +178,9 @@
                                       <div class="dropdown-menu">
                                         <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                           margin-right: 8px;" ></i>  Details</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalUpdatePartenaire' + part.id" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalUpdateguich' + guich.id" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + part.id"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + guich.id"   ><i class="fa fa-trash" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
@@ -202,6 +203,7 @@
                       </div>
                     </div>
                 </div>
+
                 <footer class="py-3 my-4">
                     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
                       
@@ -212,12 +214,12 @@
     </div>
   </div>
 
-   <!-- Modal Creation d'un partenaire-->
+   <!-- Modal Creation d'un guichet-->
   <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalCenterTitle">Ajouter un partenaire</h5>
+          <h5 class="modal-title" id="modalCenterTitle">Ajouter un Guichet</h5>
           <button
             type="button"
             class="btn-close"
@@ -252,38 +254,34 @@
               >
               
                 
-                <form [formGroup]="partenaireForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="guichetForm" (ngSubmit)="onSubmit()">
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Nom</label>
                     <input
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Entrer un nom"
+                      required=""
+                      placeholder="Enter un nom"
                       formControlName="nom"
                     />
+                    <div *ngIf="guichetForm.get('nom')?.invalid && (guichetForm.get('nom')?.dirty || guichetForm.get('nom')?.touched)">
+                      <div *ngIf="guichetForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
-
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Domaine d'activité</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer un domaine d'activite"
-                      formControlName="dom_activite"
-                    />
-                  </div>
-
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Adresse</label>
                     <input
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
+                      required=""
                       placeholder="Entrer une adresse"
-                      formControlName="adresse"
+                      formControlName="email_pro"
                     />
+                    <div *ngIf="guichetForm.get('adresse')?.invalid && (guichetForm.get('adresse')?.dirty || guichetForm.get('adresse')?.touched)">
+                      <div *ngIf="guichetForm.get('adresse')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
                   
                   <div class="mb-3">
@@ -293,9 +291,13 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer un fax"
+                        required=""
+                        placeholder="Entrer le fax"
                         formControlName="fax"
                       />
+                      <div *ngIf="guichetForm.get('fax')?.invalid && (guichetForm.get('fax')?.dirty || guichetForm.get('fax')?.touched)">
+                        <div *ngIf="guichetForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
                     </div>
                   </div>
                   <div class="mb-3">
@@ -304,29 +306,37 @@
                       type="tel"
                       id="nameWithTitle"
                       class="form-control"
+                      required=""
                       placeholder="Entrer un numero de telephone"
                       formControlName="telephone"
                     />
+                    <div *ngIf="guichetForm.get('telephone')?.invalid && (guichetForm.get('telephone')?.dirty || guichetForm.get('telephone')?.touched)">
+                      <div *ngIf="guichetForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
                   <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Selectionner un pays">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                    <label for="nameWithTitle" class="form-label">Ville</label>
+                    <select class="form-select" formControlName="pays" aria-label="Default select example">
+                      <option selected>Selectionner une ville</option>
+                      <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
                     </select>
                   </div>
-                  
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Manager</label>
                     <input
                       type="name"
                       id="nameWithTitle"
+                      required=""
                       class="form-control"
-                      placeholder="Entrer le nom du site web"
+                      placeholder="Entrer le non du gerant"
                       formControlName="manager"
                     />
+                    <div *ngIf="guichetForm.get('cssystac')?.invalid && (guichetForm.get('cssystac')?.dirty || guichetForm.get('cssystac')?.touched)">
+                      <div *ngIf="guichetForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
+                    </div>
                   </div>
-                
+                  
+                  
                   <div>
                     <button
                       class="btn btn-primary"
@@ -343,23 +353,24 @@
             </div>
           </div>
         </div>
-        
+       
       </div>
     </div>
   </div>
-   <!--FIN-->
+ <!--FIN-->
 
-    <!-- Modal Update d'un partenaire-->
+  <!-- Modal Modification d'un guichet-->
   <div 
-  *ngFor="let part of filtrecat"
+  *ngFor="let guich of listguichet"
   class="modal fade" 
-  id="modalUpdatePartenaire{{part.id}}" 
+  id="modalUpdateguich{{guich.id}}" 
   tabindex="-1" 
-  aria-hidden="true">
+  aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalCenterTitle">Modifier un partenaire</h5>
+          <h5 class="modal-title" id="modalCenterTitle">Modifier les informations d'un guichet</h5>
           <button
             type="button"
             class="btn-close"
@@ -410,42 +421,29 @@
                 aria-label="Close"
               ></button>
             </div>
-              
                 
-                <form [formGroup]="partenaireForm" (ngSubmit)="onUpdate(part)">
+                <form [formGroup]="guichetForm" (ngSubmit)="onUpdate(guich)">
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Nom</label>
                     <input
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.nom}}"
+                      placeholder="{{guich.nom}}"
                       formControlName="nom"
                     />
                   </div>
-
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Domaine d'activité</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{part.dom_acti}}"
-                      formControlName="dom_activite"
-                    />
-                  </div>
-
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Adresse</label>
                     <input
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.adresse}}"
-                      formControlName="adresse"
+                      placeholder="{{guich.mail_pro}}"
+                      formControlName="email_pro"
                     />
                   </div>
-                  
+                 
                   <div class="mb-3">
                     <div>
                       <label for="nameWithTitle" class="form-label">Fax</label>
@@ -453,7 +451,7 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="{{part.fax}}"
+                        placeholder="{{guich.fax}}"
                         formControlName="fax"
                       />
                     </div>
@@ -464,29 +462,27 @@
                       type="tel"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.phone}}"
+                      placeholder="{{guich.phone}}"
                       formControlName="telephone"
                     />
                   </div>
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Selectionner un pays">
+                    <select class="form-select" formControlName="pays" aria-label="Default select example">
                       <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                      <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
                     </select>
                   </div>
-                  
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Manager</label>
                     <input
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.manager}}"
-                      formControlName="manager"
+                      placeholder="{{guich.chef}}"
+                      formControlName="chef"
                     />
                   </div>
-                
                   <div>
                     <button
                       class="btn btn-primary"
@@ -510,55 +506,53 @@
             </div>
           </div>
         </div>
-        
+       
       </div>
     </div>
   </div>
+ <!--FIN-->
+
+
+    <!-- Modal Supprimer un Guichet-->
+    <div 
+    *ngFor="let guich of listguichet"
+    class="modal fade" 
+    id="modalSupprime{{guich.id}}" 
+    tabindex="-1" 
+    aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="modalCenterTitle">Supprimer un Correspondant</h5>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"
+           ></button>
+         </div>
+         <div class="modal-body">
+           <p> Voulez vous vraiment supprimer ce guichet ?</p>
+         </div>
+         <div class="modal-footer" >
+           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+             Annuler
+           </button>
+           <button type="button" class="btn btn-danger" (click)="deleteGuichet(guich.id)">
+             <div
+            *ngIf="actionDelete==true"
+             class="spinner-border spinner-border-sm"
+             style="color: white"
+             role="status"
+           >
+             <span class="visually-hidden">Chargement...</span>
+           </div>
+           Supprimer
+         </button>
+           
+         </div>
+       </div>
+     </div>
+   </div>
    <!--FIN-->
-
-     <!-- Modal Supprimer un Partenaire-->
-     <div 
-     *ngFor="let part of filtrecat"
-     class="modal fade" 
-     id="modalSupprime{{part.id}}" 
-     tabindex="-1" 
-     aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalCenterTitle">Supprimer un Partenaire</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p> Voulez vous vraiment supprimer ce Partenaire ?</p>
-          </div>
-          <div class="modal-footer" >
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-              Annuler
-            </button>
-            <button type="button" class="btn btn-danger" (click)="deletePartenaire(part.id)">
-              <div
-             *ngIf="actionDelete==true"
-              class="spinner-border spinner-border-sm"
-              style="color: white"
-              role="status"
-            >
-              <span class="visually-hidden">Chargement...</span>
-            </div>
-            Supprimer
-          </button>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--FIN-->
 </div>
-
-
-

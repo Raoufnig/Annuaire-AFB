@@ -3,25 +3,13 @@
     <div class="layout-container">
         <app-aside id="layout-menu" (hideAside)="ShowNavbar=$event" [state]="ShowNavbar"></app-aside>
         <div class="layout-page">
+          <div class="centered-element">
             <app-navbar (showAside)="ShowNavbar=$event"></app-navbar>
+          </div>
+              
             <div class="content-wrapper">
                 <div class="container-xxl container-p-y">
-                    <div class="py-3 d-flex flex-column">
-                      <div>
-                        <h6 class="fw-bold">
-                          <span class="text-primary">
-                            <i class="fa fa-home" aria-hidden="true"></i>
-                            <a
-                              [routerLink]="['/home']"
-                              routerLinkActive="true"
-                              class="text-primary"
-                              >Acceuil /
-                            </a>
-                          </span>
-                          Confrere
-                        </h6>
-                      </div>
-                    </div>
+                 
                     <!-- <div
                       *ngIf="deleted == true"
                       class="alert alert-primary alert-dismissible"
@@ -55,6 +43,22 @@
                       ></button>
                     </div> -->
                     <div class="p-3 row">
+                      <div class="py-3 d-flex flex-column">
+                        <div>
+                          <h6 class="fw-bold">
+                            <span class="text-primary">
+                              <i class="fa fa-home" aria-hidden="true"></i>
+                              <a
+                                [routerLink]="['/home']"
+                                routerLinkActive="true"
+                                class="text-primary"
+                                >Acceuil /
+                              </a>
+                            </span>
+                            Confrere
+                          </h6>
+                        </div>
+                      </div>
                       <div class="card p-5">
                         <h2 class="card-header text-primary">
                           Confrere - AFB
@@ -145,7 +149,7 @@
                           "
                                 >
                                   <td>
-                                    <span>{{i + 1}}</span>
+                                    <span>{{i+1}}</span>
                                   </td>
                                  
                                   <td>
@@ -259,9 +263,13 @@
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
+                      required=""
                       placeholder="Enter un nom"
                       formControlName="nom"
                     />
+                    <div *ngIf="confrereForm.get('nom')?.invalid && (confrereForm.get('nom')?.dirty || confrereForm.get('nom')?.touched)">
+                      <div *ngIf="confrereForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Adresse</label>
@@ -269,9 +277,13 @@
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
+                      required=""
                       placeholder="Entrer une adresse"
                       formControlName="adresse"
                     />
+                    <div *ngIf="confrereForm.get('adresse')?.invalid && (confrereForm.get('adresse')?.dirty || confrereForm.get('adresse')?.touched)">
+                      <div *ngIf="confrereForm.get('adresse')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <div>
@@ -280,9 +292,13 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
+                        required=""
                         placeholder="Entrer le bic"
                         formControlName="bic"
                       />
+                      <div *ngIf="confrereForm.get('bic')?.invalid && (confrereForm.get('bic')?.dirty || confrereForm.get('bic')?.touched)">
+                        <div *ngIf="confrereForm.get('bic')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
                     </div>
                   </div>
                   <div class="mb-3">
@@ -292,9 +308,13 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
+                        required=""
                         placeholder="Entrer le fax"
                         formControlName="fax"
                       />
+                      <div *ngIf="confrereForm.get('fax')?.invalid && (confrereForm.get('fax')?.dirty || confrereForm.get('fax')?.touched)">
+                        <div *ngIf="confrereForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
                     </div>
                   </div>
                   <div class="mb-3">
@@ -303,9 +323,13 @@
                       type="tel"
                       id="nameWithTitle"
                       class="form-control"
+                      required=""
                       placeholder="Entrer un numero de telephone"
                       formControlName="telephone"
                     />
+                    <div *ngIf="confrereForm.get('telephone')?.invalid && (confrereForm.get('telephone')?.dirty || confrereForm.get('telephone')?.touched)">
+                      <div *ngIf="confrereForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Pays</label>
@@ -319,10 +343,36 @@
                     <input
                       type="name"
                       id="nameWithTitle"
+                      required=""
                       class="form-control"
                       placeholder="Entrer le contact_sygma_systac"
                       formControlName="cssystac"
                     />
+                    <div *ngIf="confrereForm.get('cssystac')?.invalid && (confrereForm.get('cssystac')?.dirty || confrereForm.get('cssystac')?.touched)">
+                      <div *ngIf="confrereForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <!-- Add Super Powers Dynamically-->
+                    <div class="group-gap" formArrayName="addDynamicElement">
+                      <h5 class="mb-3">Add Super Powers</h5>
+                        <div class="mb-3">
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-success mb-3 btn-block"
+                            (click)="addSuperPowers()"
+                          >
+                            Add Powers
+                          </button>
+                          <ul class="subjectList">
+                            <li
+                              *ngFor="let item of addDynamicElement.controls; let i = index"
+                            >
+                              <input type="text" class="form-control" [formControlName]="i" />
+                            </li>
+                          </ul>
+                        </div>
+                   </div>
                   </div>
                   <div>
                     <button

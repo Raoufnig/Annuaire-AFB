@@ -16,8 +16,13 @@ import { CorrespondanceComponent } from './views/correspondance/correspondance.c
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ModalsComponent } from './views/modals/modals.component';
 import { LoginComponent } from './views/login/login.component';
-import { ServiceComponent } from './views/service/service.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SuccursaleComponent } from './views/succursale/succursale.component';
+import { GuichetComponent } from './views/guichet/guichet.component';
+import { BureauxComponent } from './views/bureaux/bureaux.component';
+import { DirectionComponent } from './views/direction/direction.component';
+
 
 
 @NgModule({
@@ -33,7 +38,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CorrespondanceComponent,
     ModalsComponent,
     LoginComponent,
-    ServiceComponent
+    SuccursaleComponent,
+    GuichetComponent,
+    BureauxComponent,
+    DirectionComponent,
+
   ],
   imports: [
     BrowserModule,

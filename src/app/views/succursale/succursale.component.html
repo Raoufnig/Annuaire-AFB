@@ -8,7 +8,7 @@
               
             <div class="content-wrapper">
                 <div class="container-xxl container-p-y">
-                   
+                 
                     <!-- <div
                       *ngIf="deleted == true"
                       class="alert alert-primary alert-dismissible"
@@ -17,7 +17,7 @@
                       <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
                         Suppression effectuée
                       </h6>
-                      <p class="mb-0">Votre partenaire a été supprimé.</p>
+                      <p class="mb-0">Votre employé a été supprimé.</p>
                       <button
                         type="button"
                         class="btn-close"
@@ -54,13 +54,13 @@
                                 >Acceuil /
                               </a>
                             </span>
-                            Partenaire
+                            Succursale
                           </h6>
                         </div>
                       </div>
                       <div class="card p-5">
                         <h2 class="card-header text-primary">
-                          Partenaire - AFB
+                          Succursale - AFB
                         </h2>
                         <!-- <div  class="text-center mb-5">
                           <div
@@ -72,23 +72,23 @@
                           </div>
                         </div> -->
                         <div class="card-body">
-                          Ici vous avez la liste de tous les partenaires d'Afriland First Bank Cameroun
+                          Ici vous avez la liste de tous les succets d'Afriland First Bank Cameroun
                           <div class="table-responsive text-nowrap mt-4">
                             <div class="d-flex justify-content-end mb-4">
                               <button
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalCreateUser"
+                                data-bs-target="#modalCreateSucc"
                               >
-                              Ajouter un partenaire
+                              Ajouter une Succursale
                               </button>
                             </div>
                             <div class="group">
                               <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
-                              <input placeholder="Search" [(ngModel)]="searchText"
-                              (ngModelChange)="searchByName()" type="text" class="input">
+                              <input placeholder="Search" type="text" [(ngModel)]="searchText"
+                              (ngModelChange)="searchByName()" class="input"/>
                             </div>
-                            <form [formGroup]="partenaireForm" (ngSubmit)="onSubmit2()">
+                            <form [formGroup]="succursaleForm" (ngSubmit)="onSubmit2()">
                               <div class="select1-row">
                                 <label for="select-1"></label>
                                 <select id="select-1" style="display: none;" >
@@ -97,10 +97,11 @@
                                   <option value="option-3">Option 3</option>
                                 </select>
                               
-                                <label for="select-2">Pays :</label>
-                                <select id="select-2" formControlName="pays1">
+                                <label for="select-2">Region :</label>
+                                <select class="select1" id="select-2" formControlName="id_region">
                                   <option value="">--Tous--</option>
-                                  <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                                  <option *ngFor='let p of listregion' value="{{p.id}}">{{p.nom}}</option>
+                                  
                                 </select>
                               
                                 <label for="select-3"></label>
@@ -111,11 +112,12 @@
                                 </select>
       
                                 <div class="search-container">
-                                  <button type="submit"><i class="fa fa-search"></i></button>
+                                  <button type="submit" ><i class="fa fa-search"></i></button>
                                 </div>
       
                                
                               </div>
+
                             </form>
                             
                            
@@ -130,46 +132,45 @@
                                 <tr>
                                   <th>#</th>
                                   <th>Nom</th>
-                                  <th>Domaine d'activité</th>
                                   <th>Adresse</th>
                                   <th>Fax</th>
-                                  <th>Telephone</th>
-                                  <th>Pays</th>
+                                  <!-- <th>Telephone</th> -->
+                                  <th>Ville</th>
                                   <th>Manager</th>
                                 </tr>
                               </thead>
                               <tbody class="table-border-bottom-0">
-                                <tr 
-                                *ngFor="let part of filtrecat | paginate
+                                <tr
+                                *ngFor="let succ of filtercat | paginate
                                 : { itemsPerPage: 10, currentPage: currentPage };
                             let i = index
                           "
                                 >
                                   <td>
-                                    <span>{{i + 1}}</span>
+                                    <span>{{i+1}}</span>
                                   </td>
                                  
                                   <td>
-                                    <span>{{part.nom}}</span>
+                                    <span>{{succ.nom}}</span>
                                   </td>
                                   <td>
-                                    <span>{{part.dom_acti}}</span>
+                                    <span>{{succ.mail_pro}}</span>
                                   </td>
+                                  <!-- <td>
+                                    <span>{{succ.bic}}</span>
+                                  </td> -->
                                   <td>
-                                    <span>{{part.adresse}}</span>
+                                    <span>{{succ.fax}}</span>
                                   </td>
-                                  <td>
-                                    <span>{{part.fax}}</span>
-                                  </td>
-                                  <td>
-                                    <span>{{part.phone}}</span>
-                                  </td>
+                                  <!-- <td>
+                                    <span>{{succ.phone}}</span>
+                                  </td> -->
                                  
                                   <td>
-                                    <span>{{part.pays}}</span>
+                                    <span>{{succ.ville}}</span>
                                   </td>
                                   <td>
-                                    <span>{{part.manager}}</span>
+                                    <span>{{succ.chef}}</span>
                                   </td>
                                   <td>
                                     <div class="dropdown">
@@ -177,9 +178,9 @@
                                       <div class="dropdown-menu">
                                         <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                           margin-right: 8px;" ></i>  Details</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalUpdatePartenaire' + part.id" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalUpdateSucc' + succ.id" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
                                           margin-right: 8px;"></i>Modifier</a>
-                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + part.id"  ><i class="fa fa-trash-o" aria-hidden="true" style="
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + succ.id"   ><i class="fa fa-trash" aria-hidden="true" style="
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
@@ -202,6 +203,7 @@
                       </div>
                     </div>
                 </div>
+
                 <footer class="py-3 my-4">
                     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
                       
@@ -212,12 +214,12 @@
     </div>
   </div>
 
-   <!-- Modal Creation d'un partenaire-->
-  <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
+   <!-- Modal Creation d'une Succursale-->
+  <div class="modal fade" id="modalCreateSucc" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalCenterTitle">Ajouter un partenaire</h5>
+          <h5 class="modal-title" id="modalCenterTitle">Ajouter une succursale</h5>
           <button
             type="button"
             class="btn-close"
@@ -252,38 +254,34 @@
               >
               
                 
-                <form [formGroup]="partenaireForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="succursaleForm" (ngSubmit)="onSubmit()">
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Nom</label>
                     <input
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="Entrer un nom"
+                      required=""
+                      placeholder="Enter un nom"
                       formControlName="nom"
                     />
+                    <div *ngIf="succursaleForm.get('nom')?.invalid && (succursaleForm.get('nom')?.dirty || succursaleForm.get('nom')?.touched)">
+                      <div *ngIf="succursaleForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
-
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Domaine d'activité</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer un domaine d'activite"
-                      formControlName="dom_activite"
-                    />
-                  </div>
-
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Adresse</label>
                     <input
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
+                      required=""
                       placeholder="Entrer une adresse"
-                      formControlName="adresse"
+                      formControlName="email_pro"
                     />
+                    <div *ngIf="succursaleForm.get('adresse')?.invalid && (succursaleForm.get('adresse')?.dirty || succursaleForm.get('adresse')?.touched)">
+                      <div *ngIf="succursaleForm.get('adresse')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
                   </div>
                   
                   <div class="mb-3">
@@ -293,40 +291,52 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer un fax"
+                        required=""
+                        placeholder="Entrer le fax"
                         formControlName="fax"
                       />
+                      <div *ngIf="succursaleForm.get('fax')?.invalid && (succursaleForm.get('fax')?.dirty || succursaleForm.get('fax')?.touched)">
+                        <div *ngIf="succursaleForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
                     </div>
                   </div>
-                  <div class="mb-3">
+                  <!-- <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Telephone</label>
                     <input
                       type="tel"
                       id="nameWithTitle"
                       class="form-control"
+                      required=""
                       placeholder="Entrer un numero de telephone"
                       formControlName="telephone"
                     />
-                  </div>
+                    <div *ngIf="succursaleForm.get('telephone')?.invalid && (succursaleForm.get('telephone')?.dirty || succursaleForm.get('telephone')?.touched)">
+                      <div *ngIf="succursaleForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
+                  </div> -->
                   <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Selectionner un pays">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                    <label for="nameWithTitle" class="form-label">Region</label>
+                    <select class="form-select" formControlName="id_region" aria-label="Selectionner une region">
+                      <option selected>Selectionner une region</option>
+                      <option *ngFor="let p of listregion" value="{{p.id}}">{{p.nom}}</option>
                     </select>
                   </div>
-                  
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Manager</label>
                     <input
                       type="name"
                       id="nameWithTitle"
+                      required=""
                       class="form-control"
-                      placeholder="Entrer le nom du site web"
-                      formControlName="manager"
+                      placeholder="Entrer le non du gerant"
+                      formControlName="chef"
                     />
+                    <div *ngIf="succursaleForm.get('cssystac')?.invalid && (succursaleForm.get('cssystac')?.dirty || succursaleForm.get('cssystac')?.touched)">
+                      <div *ngIf="succursaleForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
+                    </div>
                   </div>
-                
+                  
+                  
                   <div>
                     <button
                       class="btn btn-primary"
@@ -343,23 +353,24 @@
             </div>
           </div>
         </div>
-        
+       
       </div>
     </div>
   </div>
-   <!--FIN-->
+ <!--FIN-->
 
-    <!-- Modal Update d'un partenaire-->
+  <!-- Modal Modification d'une succursale-->
   <div 
-  *ngFor="let part of filtrecat"
+  *ngFor="let succ of listsuccursale"
   class="modal fade" 
-  id="modalUpdatePartenaire{{part.id}}" 
+  id="modalUpdateSucc{{succ.id}}" 
   tabindex="-1" 
-  aria-hidden="true">
+  aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalCenterTitle">Modifier un partenaire</h5>
+          <h5 class="modal-title" id="modalCenterTitle">Modifier les informations d'un succet</h5>
           <button
             type="button"
             class="btn-close"
@@ -410,42 +421,29 @@
                 aria-label="Close"
               ></button>
             </div>
-              
                 
-                <form [formGroup]="partenaireForm" (ngSubmit)="onUpdate(part)">
+                <form [formGroup]="succursaleForm" (ngSubmit)="onUpdate(succ)">
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Nom</label>
                     <input
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.nom}}"
+                      placeholder="{{succ.nom}}"
                       formControlName="nom"
                     />
                   </div>
-
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Domaine d'activité</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{part.dom_acti}}"
-                      formControlName="dom_activite"
-                    />
-                  </div>
-
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Adresse</label>
                     <input
                       type="text"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.adresse}}"
-                      formControlName="adresse"
+                      placeholder="{{succ.mail_pro}}"
+                      formControlName="email_pro"
                     />
                   </div>
-                  
+                 
                   <div class="mb-3">
                     <div>
                       <label for="nameWithTitle" class="form-label">Fax</label>
@@ -453,40 +451,38 @@
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="{{part.fax}}"
+                        placeholder="{{succ.fax}}"
                         formControlName="fax"
                       />
                     </div>
                   </div>
-                  <div class="mb-3">
+                  <!-- <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Telephone</label>
                     <input
                       type="tel"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.phone}}"
+                      placeholder="{{succ.phone}}"
                       formControlName="telephone"
                     />
-                  </div>
+                  </div> -->
                   <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Selectionner un pays">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                    <label for="nameWithTitle" class="form-label">Region</label>
+                    <select class="form-select" formControlName="id_region" aria-label="Default select example">
+                      <option selected>Selectionner une region</option>
+                      <option *ngFor="let p of listregion" value="{{p.id}}">{{p.nom}}</option>
                     </select>
                   </div>
-                  
                   <div class="mb-3">
                     <label for="nameWithTitle" class="form-label">Manager</label>
                     <input
                       type="name"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{part.manager}}"
-                      formControlName="manager"
+                      placeholder="{{succ.chef}}"
+                      formControlName="chef"
                     />
                   </div>
-                
                   <div>
                     <button
                       class="btn btn-primary"
@@ -510,55 +506,53 @@
             </div>
           </div>
         </div>
-        
+       
       </div>
     </div>
   </div>
+ <!--FIN-->
+
+
+    <!-- Modal Supprimer une Succursale-->
+    <div 
+    *ngFor="let succ of listsuccursale"
+    class="modal fade" 
+    id="modalSupprime{{succ.id}}" 
+    tabindex="-1" 
+    aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="modalCenterTitle">Supprimer une Succursale</h5>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"
+           ></button>
+         </div>
+         <div class="modal-body">
+           <p> Voulez vous vraiment supprimer cette succursale ?</p>
+         </div>
+         <div class="modal-footer" >
+           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+             Annuler
+           </button>
+           <button type="button" class="btn btn-danger" (click)="deletesuccursale(succ.id)">
+             <div
+            *ngIf="actionDelete==true"
+             class="spinner-border spinner-border-sm"
+             style="color: white"
+             role="status"
+           >
+             <span class="visually-hidden">Chargement...</span>
+           </div>
+           Supprimer
+         </button>
+           
+         </div>
+       </div>
+     </div>
+   </div>
    <!--FIN-->
-
-     <!-- Modal Supprimer un Partenaire-->
-     <div 
-     *ngFor="let part of filtrecat"
-     class="modal fade" 
-     id="modalSupprime{{part.id}}" 
-     tabindex="-1" 
-     aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalCenterTitle">Supprimer un Partenaire</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p> Voulez vous vraiment supprimer ce Partenaire ?</p>
-          </div>
-          <div class="modal-footer" >
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-              Annuler
-            </button>
-            <button type="button" class="btn btn-danger" (click)="deletePartenaire(part.id)">
-              <div
-             *ngIf="actionDelete==true"
-              class="spinner-border spinner-border-sm"
-              style="color: white"
-              role="status"
-            >
-              <span class="visually-hidden">Chargement...</span>
-            </div>
-            Supprimer
-          </button>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--FIN-->
 </div>
-
-
-

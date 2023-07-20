@@ -57,3 +57,8 @@ button {
   button:hover .arrow:before {
     right: 0;
   }
+
+  .navbar-scrolled{
+    background-color: black;
+    box-shadow: 0 3px 10px rgb(0, 0, 0,0.15);
+  }

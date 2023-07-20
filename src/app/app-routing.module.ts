@@ -7,7 +7,10 @@ import { PartenaireComponent } from './views/partenaire/partenaire.component';
 import { ConfrereComponent } from './views/confrere/confrere.component';
 import { AgenceComponent } from './views/agence/agence.component';
 import { LoginComponent } from './views/login/login.component';
-import { ServiceComponent } from './views/service/service.component';
+import { GuichetComponent } from './views/guichet/guichet.component';
+import { SuccursaleComponent } from './views/succursale/succursale.component';
+import { BureauxComponent } from './views/bureaux/bureaux.component';
+import { DirectionComponent } from './views/direction/direction.component';
 
 const routes: Routes = [
   {path:'', component: HomeComponent},
@@ -17,7 +20,10 @@ const routes: Routes = [
   {path:'confrere', component: ConfrereComponent},
   {path:'agence', component: AgenceComponent},
   {path:'login', component: LoginComponent},
-  {path:'service', component: ServiceComponent},
+  {path:'guichet', component: GuichetComponent},
+  {path:'succursale', component: SuccursaleComponent},
+  {path:'bureau', component: BureauxComponent},
+  {path:'direction', component:DirectionComponent},
 
 ];
 
