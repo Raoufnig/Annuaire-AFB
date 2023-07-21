@@ -28,7 +28,7 @@
    
    .input:focus, input:hover {
 	outline: none;
-	border-color: rgba(173, 9, 72, 0.732);
+	border-color: red;
 	background-color: #fff;
 	box-shadow: 0 0 0 4px rgb(234 76 137 / 10%);
    }
@@ -80,8 +80,14 @@
   .search-container button[type="submit"] {
 	padding: 5px;
 	font-size: 16px;
-	background-color: #eb6d3f;
+	background-color: red;
 	color: #fff;
 	border: none;
 	border-radius: 8px;
+  }
+  .wrapper3 {
+	display: grid;
+	grid-template-columns: repeat(2, 2fr);
+	grid-gap: 10px;
+	grid-auto-rows: minmax(100px, auto);
   }

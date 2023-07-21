@@ -33,6 +33,8 @@ export class CorrespondanceComponent implements OnInit {
       nom: new FormControl('', Validators.required),
       manager: new FormControl('', Validators.required),
       fax: new FormControl('', Validators.required),
+      bic: new FormControl('', Validators.required),
+      num_compte: new FormControl('', Validators.required),
       telephone: new FormControl('', Validators.required),
       site_web: new FormControl('', Validators.required),
       pays: new FormControl('', Validators.required),
@@ -85,9 +87,11 @@ export class CorrespondanceComponent implements OnInit {
     console.log(this.correspondantForm.value);
 
     let result = {
+      bic: this.correspondantForm.value.bic,
       fax : this.correspondantForm.value.fax,
       manager : this.correspondantForm.value.manager,
       nom: this.correspondantForm.value.nom,
+      num_compte : this.correspondantForm.value.num_compte,
       pays: this.correspondantForm.value.pays,
       phone: this.correspondantForm.value.telephone,
       site: this.correspondantForm.value.site_web

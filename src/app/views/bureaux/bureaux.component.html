@@ -1,1 +1,559 @@
-<p>bureaux works!</p>
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <app-aside id="layout-menu" (hideAside)="ShowNavbar=$event" [state]="ShowNavbar"></app-aside>
+        <div class="layout-page">
+          <div class="centered-element">
+            <app-navbar (showAside)="ShowNavbar=$event"></app-navbar>
+          </div>
+              
+            <div class="content-wrapper">
+                <div class="container-xxl container-p-y">
+                 
+                    <!-- <div
+                      *ngIf="deleted == true"
+                      class="alert alert-primary alert-dismissible"
+                      role="alert"
+                    >
+                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                        Suppression effectuée
+                      </h6>
+                      <p class="mb-0">Votre employé a été supprimé.</p>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div
+                      *ngIf="errormessage == true"
+                      class="alert alert-danger alert-dismissible"
+                      role="alert"
+                    >
+                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                        Erreur ;(
+                      </h6>
+                      <p class="mb-0">{{ errormessage }}</p>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                      ></button>
+                    </div> -->
+                    <div class="p-3 row">
+                      <div class="py-3 d-flex flex-column">
+                        <div>
+                          <h6 class="fw-bold">
+                            <span class="text-primary">
+                              <i class="fa fa-home" aria-hidden="true"></i>
+                              <a
+                                [routerLink]="['/home']"
+                                routerLinkActive="true"
+                                class="text-primary"
+                                >Acceuil /
+                              </a>
+                            </span>
+                            Bureaux
+                          </h6>
+                        </div>
+                      </div>
+                      <div class="card p-5">
+                        <h2 class="card-header text-primary">
+                          Bureau - AFB
+                        </h2>
+                        <!-- <div  class="text-center mb-5">
+                          <div
+                            class="spinner-border text-primary"
+                            role="status"
+                            style="width: 100px; height: 100px"
+                          >
+                            <span class="visually-hidden">Chargement...</span>
+                          </div>
+                        </div> -->
+                        <div class="card-body">
+                          Ici vous avez la liste de tous les Bureaux d'Afriland First Bank Cameroun
+                          <div class="table-responsive text-nowrap mt-4">
+                            <div class="d-flex justify-content-end mb-4">
+                              <button
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalCreateBureau"
+                              >
+                              Ajouter un Bureau
+                              </button>
+                            </div>
+                            <div class="group">
+                              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+                              <input placeholder="Search" type="text" [(ngModel)]="searchText"
+                              (ngModelChange)="searchByName()" class="input"/>
+                            </div>
+                            <form [formGroup]="bureauForm" (ngSubmit)="onSubmit2()">
+                              <div class="select1-row">
+                                <label for="select-1"></label>
+                                <select id="select-1" style="display: none;" >
+                                  <option value="option-1">--Tous--</option>
+                                  <option value="option-2">Option 2</option>
+                                  <option value="option-3">Option 3</option>
+                                </select>
+                              
+                                <label for="select-2">Pays :</label>
+                                <select class="select1" id="select-2" formControlName="pays">
+                                  <option value="">--Tous--</option>
+                                  <option *ngFor='let p of listPays' value="{{p.nom}}">{{p.nom}}</option>
+                                  
+                                </select>
+                              
+                                <label for="select-3"></label>
+                                <select id="select-3" style="display: none;">
+                                  <option value="option-1">--Tous--</option>
+                                  <option value="option-2">Option 2</option>
+                                  <option value="option-3">Option 3</option>
+                                </select>
+      
+                                <div class="search-container">
+                                  <button type="submit" ><i class="fa fa-search"></i></button>
+                                </div>
+      
+                               
+                              </div>
+
+                            </form>
+                            
+                           
+                            <br>
+                            <br>
+                            <br>
+    
+                            
+          
+                            <table bootstrap-table class="table">
+                              <thead style="background-color: #f3f2f7">
+                                <tr>
+                                  <th>#</th>
+                                  <th>Nom</th>
+                                  <th>email_pro</th>
+                                  <th>Fax</th>
+                                  <!-- <th>Telephone</th> -->
+                                  <th>Pays</th>
+                                  <th>Manager</th>
+                                </tr>
+                              </thead>
+                              <tbody class="table-border-bottom-0">
+                                <tr
+                                *ngFor="let bur of filtercat | paginate
+                                : { itemsPerPage: 10, currentPage: currentPage };
+                            let i = index
+                          "
+                                >
+                                  <td>
+                                    <span>{{i+1}}</span>
+                                  </td>
+                                 
+                                  <td>
+                                    <span>{{bur.nom}}</span>
+                                  </td>
+                                  <td>
+                                    <span>{{bur.mail_pro}}</span>
+                                  </td>
+                                  <!-- <td>
+                                    <span>{{bur.bic}}</span>
+                                  </td> -->
+                                  <td>
+                                    <span>{{bur.fax}}</span>
+                                  </td>
+                                  <!-- <td>
+                                    <span>{{bur.phone}}</span>
+                                  </td> -->
+                                 
+                                  <td>
+                                    <span>{{bur.pays}}</span>
+                                  </td>
+                                  <td>
+                                    <span>{{bur.chef}}</span>
+                                  </td>
+                                  <td>
+                                    <div class="dropdown">
+                                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                                      <div class="dropdown-menu">
+                                        <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                          margin-right: 8px;" ></i>  Details</a>
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalUpdateBur' + bur.id" ><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                          margin-right: 8px;"></i>Modifier</a>
+                                        <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal" [attr.data-bs-target]="'#modalSupprime' + bur.id"   ><i class="fa fa-trash" aria-hidden="true" style="
+                                          margin-right: 8px;"></i>  Supprimer</a>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <div style="display: flex; float: right">
+                              <div class="pagination">
+                                <pagination-controls
+                                  previousLabel="Previous"
+                                  nextLabel="Next"
+                                  (pageChange)="currentPage = $event"
+                                >
+                                </pagination-controls>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <footer class="py-3 my-4">
+                    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                      
+                    </ul>
+                    <p class="text-center text-body-secondary">© 2023 Afriland First Bank, Cameroun</p>
+                  </footer>
+      </div>
+    </div>
+  </div>
+
+   <!-- Modal Creation d'un bureau-->
+  <div class="modal fade" id="modalCreateBureau" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Ajouter un bureau</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="nav-align-top mb-4">
+            <ul class="nav nav-tabs" role="tablist">
+              
+              <li class="nav-item">
+                <button
+                  type="button"
+                  class="nav-link"
+                  role="tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#navs-top-profile"
+                  aria-controls="navs-top-profile"
+                  aria-selected="false"
+                >
+                  Remplir le formulaire
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div
+                class="tab-pane fade show active"
+                id="navs-top-home"
+                role="tabpanel"
+              >
+              
+                
+                <form [formGroup]="bureauForm" (ngSubmit)="onSubmit()">
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Nom</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      required=""
+                      placeholder="Enter un nom"
+                      formControlName="nom"
+                    />
+                    <div *ngIf="bureauForm.get('nom')?.invalid && (bureauForm.get('nom')?.dirty || bureauForm.get('nom')?.touched)">
+                      <div *ngIf="bureauForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Adresse</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      required=""
+                      placeholder="Entrer une email_pro"
+                      formControlName="email_pro"
+                    />
+                    <div *ngIf="bureauForm.get('email_pro')?.invalid && (bureauForm.get('email_pro')?.dirty || bureauForm.get('email_pro')?.touched)">
+                      <div *ngIf="bureauForm.get('email_pro')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Fax</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        required=""
+                        placeholder="Entrer le fax"
+                        formControlName="fax"
+                      />
+                      <div *ngIf="bureauForm.get('fax')?.invalid && (bureauForm.get('fax')?.dirty || bureauForm.get('fax')?.touched)">
+                        <div *ngIf="bureauForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
+                    <input
+                      type="tel"
+                      id="nameWithTitle"
+                      class="form-control"
+                      required=""
+                      placeholder="Entrer un numero de telephone"
+                      formControlName="telephone"
+                    />
+                    <div *ngIf="bureauForm.get('telephone')?.invalid && (bureauForm.get('telephone')?.dirty || bureauForm.get('telephone')?.touched)">
+                      <div *ngIf="bureauForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
+                    </div>
+                  </div> -->
+                
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Pays</label>
+                    <select class="form-select" formControlName="pays" aria-label="Selectionner un pays">
+                      <option selected>Selectionner une region</option>
+                      <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Manager</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      required=""
+                      class="form-control"
+                      placeholder="Entrer le non du gerant"
+                      formControlName="chef"
+                    />
+                    <div *ngIf="bureauForm.get('chef')?.invalid && (bureauForm.get('chef')?.dirty || bureauForm.get('chef')?.touched)">
+                      <div *ngIf="bureauForm.get('chef')?.errors?.['required']">Ce champs est obligatoire</div>
+                    </div>
+                  </div>
+                  
+                  
+                  <div>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                      style="width: 100%"
+                    >
+                    
+                      <span>Enregistrer</span>
+                    </button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+ <!--FIN-->
+
+  <!-- Modal Modification d'un bureau-->
+  <div 
+  *ngFor="let bur of listbureau"
+  class="modal fade" 
+  id="modalUpdateBur{{bur.id}}" 
+  tabindex="-1" 
+  aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCenterTitle">Modifier les informations d'un bureau</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="nav-align-top mb-4">
+            <ul class="nav nav-tabs" role="tablist">
+              
+              <li class="nav-item">
+                <button
+                  type="button"
+                  class="nav-link"
+                  role="tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#navs-top-profile"
+                  aria-controls="navs-top-profile"
+                  aria-selected="false"
+                >
+                  Remplir le formulaire
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div
+                class="tab-pane fade show active"
+                id="navs-top-home"
+                role="tabpanel"
+              >
+              <div
+              *ngIf="update == true"
+              class="alert alert-primary alert-dismissible"
+              role="alert"
+            >
+              <h6
+                class="alert-heading d-flex align-items-center fw-bold mb-1"
+              >
+                Parfait :)
+              </h6>
+              <p class="mb-0">{{messageburess}}</p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+                
+                <form [formGroup]="bureauForm" (ngSubmit)="onUpdate(bur)">
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Nom</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{bur.nom}}"
+                      formControlName="nom"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">email_pro</label>
+                    <input
+                      type="text"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{bur.mail_pro}}"
+                      formControlName="email_pro"
+                    />
+                  </div>
+                 
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Fax</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{bur.fax}}"
+                        formControlName="fax"
+                      />
+                    </div>
+                  </div>
+                  <!-- <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
+                    <input
+                      type="tel"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{bur.phone}}"
+                      formControlName="telephone"
+                    />
+                  </div> -->
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Pays</label>
+                    <select class="form-select" formControlName="pays" aria-label="Default select example">
+                      <option selected>Selectionner un pays</option>
+                      <option *ngFor="let p of listregion" value="{{p.nom}}">{{p.nom}}</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Manager</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{bur.chef}}"
+                      formControlName="chef"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      class="btn btn-primary"
+                      type="submit"
+                      style="width: 100%"
+                    > 
+                    <div
+                    *ngIf="loader == true"
+                    class="spinner-border spinner-border-sm"
+                    style="color: white"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span *ngIf="loader == false">Modifier</span>
+                  </button>
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+ <!--FIN-->
+
+
+    <!-- Modal Supprimer un bureau-->
+    <div 
+    *ngFor="let bur of listbureau"
+    class="modal fade" 
+    id="modalSupprime{{bur.id}}" 
+    tabindex="-1" 
+    aria-hidden="true">
+     <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="modalCenterTitle">Supprimer un bureau</h5>
+           <button
+             type="button"
+             class="btn-close"
+             data-bs-dismiss="modal"
+             aria-label="Close"
+           ></button>
+         </div>
+         <div class="modal-body">
+           <p> Voulez vous vraiment supprimer ce Bureau ?</p>
+         </div>
+         <div class="modal-footer" >
+           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+             Annuler
+           </button>
+           <button type="button" class="btn btn-danger" (click)="deletebureau(bur.id)">
+             <div
+            *ngIf="actionDelete==true"
+             class="spinner-border spinner-border-sm"
+             style="color: white"
+             role="status"
+           >
+             <span class="visually-hidden">Chargement...</span>
+           </div>
+           Supprimer
+         </button>
+           
+         </div>
+       </div>
+     </div>
+   </div>
+   <!--FIN-->
+</div>

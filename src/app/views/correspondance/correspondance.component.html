@@ -121,6 +121,8 @@
                                   <th>Fax</th>
                                   <th>Telephone</th>
                                   <th>Pays</th>
+                                  <th>BIC</th>
+                                  <th>Numero de Compte</th>
                                   <th>Site web</th>
                                   <th>Manager</th>
                                 </tr>
@@ -149,6 +151,12 @@
                                  
                                   <td>
                                     <span>{{corr.pays}}</span>
+                                  </td>
+                                  <td>
+                                    <span>{{corr.bic}}</span>
+                                  </td>
+                                  <td>
+                                    <span>{{corr.num_compte}}</span>
                                   </td>
                                   <td>
                                     <span>{{corr.site}}</span>
@@ -238,67 +246,95 @@
               
                 
                 <form [formGroup]="correspondantForm" (ngSubmit)="onSubmit()">
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Nom</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer un nom"
-                      formControlName="nom"
-                    />
-                  </div>
-                  
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Fax</label>
+
+                  <div class="wrapper3">
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Nom</label>
                       <input
-                        type="text"
+                        type="name"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer un fax"
-                        formControlName="fax"
+                        placeholder="Entrer un nom"
+                        formControlName="nom"
+                      />
+                    </div>
+                    
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Fax</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="Entrer un fax"
+                          formControlName="fax"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
+                      <input
+                        type="tel"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer un numero de telephone"
+                        formControlName="telephone"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">BIC</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="Entrer le code swift"
+                          formControlName="bic"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Numero de Compte</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="Entrer un numero de Compte"
+                          formControlName="num_compte"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Pays</label>
+                      <select class="form-select" formControlName="pays"aria-label="Default select example">
+                        <option selected>Selectionner un pays</option>
+                        <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                        
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Site Web</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer le nom du site web"
+                        formControlName="site_web"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Manager</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer le nom du manager"
+                        formControlName="manager"
                       />
                     </div>
                   </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
-                    <input
-                      type="tel"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer un numero de telephone"
-                      formControlName="telephone"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays"aria-label="Default select example">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
-                      
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Site Web</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer le nom du site web"
-                      formControlName="site_web"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Manager</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer le nom du manager"
-                      formControlName="manager"
-                    />
-                  </div>
+                  
                   <div>
                     <button
                       class="btn btn-primary"
@@ -395,57 +431,85 @@ aria-hidden="true">
                     formControlName="nom"
                   />
                 </div>
-                
-                <div class="mb-3">
-                  <div>
-                    <label for="nameWithTitle" class="form-label">Fax</label>
+
+                <div class="wrapper3">
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Fax</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{corr.fax}}"
+                        formControlName="fax"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Telephone</label>
                     <input
-                      type="text"
+                      type="tel"
                       id="nameWithTitle"
                       class="form-control"
-                      placeholder="{{corr.fax}}"
-                      formControlName="fax"
+                      placeholder="{{corr.phone}}"
+                      formControlName="telephone"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">BIC</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{corr.bic}}"
+                        formControlName="bic"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div>
+                      <label for="nameWithTitle" class="form-label">Numero de Compte</label>
+                      <input
+                        type="text"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{corr.num_compte}}"
+                        formControlName="num_compte"
+                      />
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Pays</label>
+                    <select class="form-select" formControlName="pays"aria-label="Default select example">
+                      <option selected>Selectionner un pays</option>
+                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                      
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Site Web</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{corr.site}}"
+                      formControlName="site_web"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="nameWithTitle" class="form-label">Manager</label>
+                    <input
+                      type="name"
+                      id="nameWithTitle"
+                      class="form-control"
+                      placeholder="{{corr.manager}}"
+                      formControlName="manager"
                     />
                   </div>
                 </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Telephone</label>
-                  <input
-                    type="tel"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{corr.phone}}"
-                    formControlName="telephone"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Pays</label>
-                  <select class="form-select" formControlName="pays"aria-label="Default select example">
-                    <option selected>Selectionner un pays</option>
-                    <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
-                    
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Site Web</label>
-                  <input
-                    type="name"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{corr.site}}"
-                    formControlName="site_web"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="nameWithTitle" class="form-label">Manager</label>
-                  <input
-                    type="name"
-                    id="nameWithTitle"
-                    class="form-control"
-                    placeholder="{{corr.manager}}"
-                    formControlName="manager"
-                  />
-                </div>
+                
+            
                 <div>
                   <button
                     class="btn btn-primary"
