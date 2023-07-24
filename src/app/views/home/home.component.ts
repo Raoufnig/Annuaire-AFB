@@ -7,6 +7,7 @@ import { error } from 'jquery';
 import { PersonnelService } from 'src/app/Services/personnel.service';
 import axios from 'axios';
 import { AssistService } from 'src/app/Services/assist.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -31,9 +32,13 @@ export class HomeComponent implements OnInit{
   errorCode=false;
   imgerror=false;
   download=false;
+  statusUser=false;
+  statut:any;
   phoneNumbers: any[]=[''];
   listville: any[]=[];
   list: any;
+  userInfo: any;
+  storeData: any;
   listUnite: any[]=[];
   listFonction: any[]=[];
   currentPage = 1;
@@ -49,7 +54,7 @@ export class HomeComponent implements OnInit{
 
   
 
-  constructor(private fb :FormBuilder ,private assistService :AssistService, private http : HttpClient, private personnel : PersonnelService){
+  constructor(private router :Router,private fb :FormBuilder ,private assistService :AssistService, private http : HttpClient, private personnel : PersonnelService){
   
     this.personnelForm = new FormGroup({
       nom: new FormControl('', Validators.required),
@@ -72,6 +77,13 @@ export class HomeComponent implements OnInit{
   ngOnInit() {
     this.getListVille();
     this.listpersonnel();
+   
+    this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
+    
+    //console.log("userInfo", this.userInfo);
   
   }
 
@@ -153,7 +165,6 @@ export class HomeComponent implements OnInit{
     console.log(this.personnelForm.value)
 
     let result={
-      
       email : this.personnelForm.value.email,
       fonction : this.personnelForm.value.fonction,
       nom : this.personnelForm.value.nom,
@@ -163,14 +174,14 @@ export class HomeComponent implements OnInit{
       ville : this.personnelForm.value.ville,
       extension : this.personnelForm.value.extension,
       unite :this.personnelForm.value.unite
-     
-
     }
+
     console.log(result);
 
     let nig =JSON.stringify(result);
     axios.put(URL.API_URL + '/personnel' + '/updatepersonnel/'+pers.id_personnel,nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt, 
        'Content-Type': 'application/json'
 
       } }).then((res)=>{
@@ -200,6 +211,7 @@ export class HomeComponent implements OnInit{
     let nig1 =JSON.stringify(result1);
       axios.post(URL.API_URL + '/adresse' + '/addadresse/',nig1,{
         headers : {
+         'Authorization' : 'Bearer '  + this.userInfo.token, 
          'Content-Type': 'application/json'
   
         }}).then((res)=>{
@@ -243,7 +255,7 @@ export class HomeComponent implements OnInit{
         ville : this.personnelForm.value.ville,
         unite : this.personnelForm.value.unite,
         fonction: this.personnelForm.value.fonction
-      }
+      },
     }).then((res)=>{
        this.filtercat=res.data;
        this.filtercat.sort((a:any,b:any)=>(a.nom>b.nom ? 1 : -1));
@@ -276,6 +288,9 @@ downloadPersonnelExcel() {
 }
 
 listpersonnel(){
+
+    
+
    this.personnel.getpersonnel().then((res)=>{
     this.employees= res.data;
   

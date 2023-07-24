@@ -61,6 +61,7 @@
                           <div class="table-responsive text-nowrap mt-4">
                             <div class="d-flex justify-content-end mb-4">
                               <button
+                              *ngIf="statut=='Group_Admin' && statusUser==true"
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalCreateUser"
@@ -150,7 +151,7 @@
                                   <td>
                                     <span>{{fil.site}}</span>
                                   </td>
-                                  <td>
+                                  <td *ngIf="statut=='Group_Admin' && statusUser==true">
                                     <div class="dropdown">
                                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                                       <div class="dropdown-menu">
@@ -162,6 +163,11 @@
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
+                                  </td>
+
+                                  <td *ngIf="statut=='Group_Manager' && statusUser==true|| statut=='Group_Employe' && statusUser==true|| statusUser==false">
+                                    <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                      margin-right: 8px;" ></i>  </a>
                                   </td>
                                 </tr>
                               </tbody>
@@ -181,11 +187,53 @@
                       </div>
                     </div>
                   </div>
-                  <footer class="py-3 my-4">
-                    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                     
-                    </ul>
-                    <p class="text-center text-body-secondary">© 2023 Afriland First Bank, Cameroun</p>
+                  <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+                    <div class="col mb-3">
+                      <a [routerLink]="['/']" routerLinkActive="true" class="app-brand-link">
+                        <div class="logo">
+                          <img src="/assets/img/afrilandlogo.svg"/>
+                        </div>
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Annuaire-AFB</span>
+                      </a>
+                      <p class="text-body-secondary">© 2023</p>
+                    </div>
+                
+                    <div class="col mb-3">
+                
+                    </div>
+                
+                    <div class="col mb-3">
+                      <h5>Section</h5>
+                      <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                      </ul>
+                    </div>
+                
+                    <div class="col mb-3">
+                      <h5>Section</h5>
+                      <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                      </ul>
+                    </div>
+                
+                    <div class="col mb-3">
+                      <h5>Section</h5>
+                      <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                      </ul>
+                    </div>
                   </footer>
                     
         
@@ -252,68 +300,72 @@
               
                 
                 <form [formGroup]="filialeForm" (ngSubmit)="onSubmit()">
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Nom</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer un nom"
-                      formControlName="nom"
-                    />
-                  </div>
 
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Bic</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer le bic de la filiale"
-                      formControlName="bic"
-                    />
-                  </div>
-                  
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Fax</label>
+                  <div class="wrapper3">
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Nom</label>
                       <input
-                        type="text"
+                        type="name"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="Entrer un fax"
-                        formControlName="fax"
+                        placeholder="Entrer un nom"
+                        formControlName="nom"
+                      />
+                    </div>
+  
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Bic</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer le bic de la filiale"
+                        formControlName="bic"
+                      />
+                    </div>
+                    
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Fax</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="Entrer un fax"
+                          formControlName="fax"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
+                      <input
+                        type="tel"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer un numero de telephone"
+                        formControlName="telephone"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Pays</label>
+                      <select class="form-select" formControlName="pays" aria-label="Default select example">
+                        <option selected>Selectionner un pays</option>
+                        <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                      </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Site Web</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="Entrer le nom du site web"
+                        formControlName="site_web"
                       />
                     </div>
                   </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
-                    <input
-                      type="tel"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer un numero de telephone"
-                      formControlName="telephone"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Default select example">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
-                    </select>
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Site Web</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="Entrer le nom du site web"
-                      formControlName="site_web"
-                    />
-                  </div>
+               
                 
                   <div>
                     <button
@@ -409,68 +461,72 @@
               
                 
                 <form [formGroup]="filialeForm" (ngSubmit)="onUpdate(fil)">
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Nom</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{fil.nom}}"
-                      formControlName="nom"
-                    />
-                  </div>
 
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Bic</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="fil.bic"
-                      formControlName="bic"
-                    />
-                  </div>
-                  
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Fax</label>
+                  <div class="wrapper3">
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Nom</label>
                       <input
-                        type="text"
+                        type="name"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="{{fil.fax}}"
-                        formControlName="fax"
+                        placeholder="{{fil.nom}}"
+                        formControlName="nom"
+                      />
+                    </div>
+  
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Bic</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="fil.bic"
+                        formControlName="bic"
+                      />
+                    </div>
+                    
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Fax</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="{{fil.fax}}"
+                          formControlName="fax"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
+                      <input
+                        type="tel"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{fil.phone}}"
+                        formControlName="telephone"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Pays</label>
+                      <select class="form-select" formControlName="pays" aria-label="Default select example">
+                        <option selected>Selectionner un pays</option>
+                        <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
+                      </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Site Web</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{fil.site}}"
+                        formControlName="site_web"
                       />
                     </div>
                   </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
-                    <input
-                      type="tel"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{fil.phone}}"
-                      formControlName="telephone"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Default select example">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listpays" value="{{p.nom}}">{{p.nom}}</option>
-                    </select>
-                  </div>
-                  
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Site Web</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{fil.site}}"
-                      formControlName="site_web"
-                    />
-                  </div>
+                
                 
                   <div>
                     <button

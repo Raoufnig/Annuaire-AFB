@@ -13,12 +13,12 @@
           
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
-                <!-- <div class="info-user d-flex flex-column">
-                    <span style="font-weight: 600;">Afriland First Bank</span>
-                    <span style="font-size: 12px; text-align: end;">Administrateur</span>
-                </div> -->
+                <div class="info-user d-flex flex-column" *ngIf="statusUser==true">
+                    <span style="font-weight: 600;">{{userInfo.name}}</span>
+                    <span style="font-size: 12px; text-align: end;">{{userInfo.role}}</span>
+                </div> 
                 <!-- User -->
-                <!-- <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                <li class="nav-item navbar-dropdown dropdown-user dropdown" *ngIf="statusUser==true">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                       <img src="./assets/avatar/avatar.png" alt class="w-px-40 h-auto rounded-circle" />
@@ -34,8 +34,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Afriland First Bank</span>
-                            <small class="text-muted">Admin</small>
+                            <span class="fw-semibold d-block">{{userInfo.name}}</span>
+                            <small class="text-muted">{{userInfo.role}}</small>
                           </div>
                         </div>
                       </a>
@@ -53,25 +53,25 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li style="cursor: pointer;">
-                      <a class="dropdown-item" >
+                      <a class="dropdown-item" (click)="logout()">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Déconnexion</span>
                       </a>
                     </li>
                     
                   </ul>
-                </li> -->
+                </li> 
                 <!--/ User -->
                 
-                <div class="info-user d-flex flex-column">
+                <div class="info-user d-flex flex-column" *ngIf="statusUser==false">
                   <button [routerLink]="['/login']">
                     Se Connecter
                     <div class="arrow-wrapper">
                         <div class="arrow"></div>
                 
                     </div>
-                </button>
-              </div>
+                 </button>
+                </div>
 
               </ul>
             </div>

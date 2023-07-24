@@ -76,6 +76,7 @@
                           <div class="table-responsive text-nowrap mt-4">
                             <div class="d-flex justify-content-end mb-4">
                               <button
+                              *ngIf="statut=='Group_Admin' && statusUser==true"
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalCreateSucc"
@@ -172,7 +173,7 @@
                                   <td>
                                     <span>{{succ.chef}}</span>
                                   </td>
-                                  <td>
+                                  <td *ngIf="statut=='Group_Admin' && statusUser==true">
                                     <div class="dropdown">
                                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                                       <div class="dropdown-menu">
@@ -184,6 +185,10 @@
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
+                                  </td>
+                                  <td *ngIf="statut=='Group_Manager' && statusUser==true|| statut=='Group_Employe' && statusUser==true|| statusUser==false">
+                                    <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                      margin-right: 8px;" ></i> </a>
                                   </td>
                                 </tr>
                               </tbody>
@@ -204,12 +209,54 @@
                     </div>
                 </div>
 
-                <footer class="py-3 my-4">
-                    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                      
+                <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+                  <div class="col mb-3">
+                    <a [routerLink]="['/']" routerLinkActive="true" class="app-brand-link">
+                      <div class="logo">
+                        <img src="/assets/img/afrilandlogo.svg"/>
+                      </div>
+                      <span class="app-brand-text demo menu-text fw-bolder ms-2">Annuaire-AFB</span>
+                    </a>
+                    <p class="text-body-secondary">© 2023</p>
+                  </div>
+              
+                  <div class="col mb-3">
+              
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
                     </ul>
-                    <p class="text-center text-body-secondary">© 2023 Afriland First Bank, Cameroun</p>
-                  </footer>
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    </ul>
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    </ul>
+                  </div>
+                </footer>
       </div>
     </div>
   </div>
@@ -255,86 +302,90 @@
               
                 
                 <form [formGroup]="succursaleForm" (ngSubmit)="onSubmit()">
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Nom</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      required=""
-                      placeholder="Enter un nom"
-                      formControlName="nom"
-                    />
-                    <div *ngIf="succursaleForm.get('nom')?.invalid && (succursaleForm.get('nom')?.dirty || succursaleForm.get('nom')?.touched)">
-                      <div *ngIf="succursaleForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+
+                  <div class="wrapper3">
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Nom</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        required=""
+                        placeholder="Enter un nom"
+                        formControlName="nom"
+                      />
+                      <div *ngIf="succursaleForm.get('nom')?.invalid && (succursaleForm.get('nom')?.dirty || succursaleForm.get('nom')?.touched)">
+                        <div *ngIf="succursaleForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Adresse</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      required=""
-                      placeholder="Entrer une adresse"
-                      formControlName="email_pro"
-                    />
-                    <div *ngIf="succursaleForm.get('adresse')?.invalid && (succursaleForm.get('adresse')?.dirty || succursaleForm.get('adresse')?.touched)">
-                      <div *ngIf="succursaleForm.get('adresse')?.errors?.['required']">Ce champ est obligatoire</div>
-                    </div>
-                  </div>
-                  
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Fax</label>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Adresse</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
                         required=""
-                        placeholder="Entrer le fax"
-                        formControlName="fax"
+                        placeholder="Entrer une adresse"
+                        formControlName="email_pro"
                       />
-                      <div *ngIf="succursaleForm.get('fax')?.invalid && (succursaleForm.get('fax')?.dirty || succursaleForm.get('fax')?.touched)">
-                        <div *ngIf="succursaleForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
+                      <div *ngIf="succursaleForm.get('adresse')?.invalid && (succursaleForm.get('adresse')?.dirty || succursaleForm.get('adresse')?.touched)">
+                        <div *ngIf="succursaleForm.get('adresse')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Fax</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          required=""
+                          placeholder="Entrer le fax"
+                          formControlName="fax"
+                        />
+                        <div *ngIf="succursaleForm.get('fax')?.invalid && (succursaleForm.get('fax')?.dirty || succursaleForm.get('fax')?.touched)">
+                          <div *ngIf="succursaleForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
+                      <input
+                        type="tel"
+                        id="nameWithTitle"
+                        class="form-control"
+                        required=""
+                        placeholder="Entrer un numero de telephone"
+                        formControlName="telephone"
+                      />
+                      <div *ngIf="succursaleForm.get('telephone')?.invalid && (succursaleForm.get('telephone')?.dirty || succursaleForm.get('telephone')?.touched)">
+                        <div *ngIf="succursaleForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
+                    </div> -->
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Region</label>
+                      <select class="form-select" formControlName="id_region" aria-label="Selectionner une region">
+                        <option selected>Selectionner une region</option>
+                        <option *ngFor="let p of listregion" value="{{p.id}}">{{p.nom}}</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Manager</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        required=""
+                        class="form-control"
+                        placeholder="Entrer le non du gerant"
+                        formControlName="chef"
+                      />
+                      <div *ngIf="succursaleForm.get('cssystac')?.invalid && (succursaleForm.get('cssystac')?.dirty || succursaleForm.get('cssystac')?.touched)">
+                        <div *ngIf="succursaleForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
-                    <input
-                      type="tel"
-                      id="nameWithTitle"
-                      class="form-control"
-                      required=""
-                      placeholder="Entrer un numero de telephone"
-                      formControlName="telephone"
-                    />
-                    <div *ngIf="succursaleForm.get('telephone')?.invalid && (succursaleForm.get('telephone')?.dirty || succursaleForm.get('telephone')?.touched)">
-                      <div *ngIf="succursaleForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
-                    </div>
-                  </div> -->
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Region</label>
-                    <select class="form-select" formControlName="id_region" aria-label="Selectionner une region">
-                      <option selected>Selectionner une region</option>
-                      <option *ngFor="let p of listregion" value="{{p.id}}">{{p.nom}}</option>
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Manager</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      required=""
-                      class="form-control"
-                      placeholder="Entrer le non du gerant"
-                      formControlName="chef"
-                    />
-                    <div *ngIf="succursaleForm.get('cssystac')?.invalid && (succursaleForm.get('cssystac')?.dirty || succursaleForm.get('cssystac')?.touched)">
-                      <div *ngIf="succursaleForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
-                    </div>
-                  </div>
+                
                   
                   
                   <div>
@@ -423,66 +474,70 @@
             </div>
                 
                 <form [formGroup]="succursaleForm" (ngSubmit)="onUpdate(succ)">
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Nom</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{succ.nom}}"
-                      formControlName="nom"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Adresse</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{succ.mail_pro}}"
-                      formControlName="email_pro"
-                    />
-                  </div>
-                 
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Fax</label>
+
+                  <div class="wrapper3">
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Nom</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{succ.nom}}"
+                        formControlName="nom"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Adresse</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="{{succ.fax}}"
-                        formControlName="fax"
+                        placeholder="{{succ.mail_pro}}"
+                        formControlName="email_pro"
+                      />
+                    </div>
+                   
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Fax</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="{{succ.fax}}"
+                          formControlName="fax"
+                        />
+                      </div>
+                    </div>
+                    <!-- <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
+                      <input
+                        type="tel"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{succ.phone}}"
+                        formControlName="telephone"
+                      />
+                    </div> -->
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Region</label>
+                      <select class="form-select" formControlName="id_region" aria-label="Default select example">
+                        <option selected>Selectionner une region</option>
+                        <option *ngFor="let p of listregion" value="{{p.id}}">{{p.nom}}</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Manager</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{succ.chef}}"
+                        formControlName="chef"
                       />
                     </div>
                   </div>
-                  <!-- <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
-                    <input
-                      type="tel"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{succ.phone}}"
-                      formControlName="telephone"
-                    />
-                  </div> -->
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Region</label>
-                    <select class="form-select" formControlName="id_region" aria-label="Default select example">
-                      <option selected>Selectionner une region</option>
-                      <option *ngFor="let p of listregion" value="{{p.id}}">{{p.nom}}</option>
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Manager</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{succ.chef}}"
-                      formControlName="chef"
-                    />
-                  </div>
+               
                   <div>
                     <button
                       class="btn btn-primary"

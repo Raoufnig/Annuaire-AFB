@@ -76,7 +76,8 @@
                           Ici vous avez la liste de tous les confreres d'Afriland First Bank Cameroun
                           <div class="table-responsive text-nowrap mt-4">
                             <div class="d-flex justify-content-end mb-4">
-                              <button
+                              <button 
+                              *ngIf="statut=='Group_Admin' && statusUser==true"
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalCreateUser"
@@ -174,7 +175,7 @@
                                   <td>
                                     <span>{{conf.contact_sygma_systac}}</span>
                                   </td>
-                                  <td>
+                                  <td *ngIf="statut=='Group_Admin' && statusUser==true">
                                     <div class="dropdown">
                                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                                       <div class="dropdown-menu">
@@ -186,6 +187,11 @@
                                           margin-right: 8px;"></i>  Supprimer</a>
                                       </div>
                                     </div>
+                                  </td>
+
+                                  <td *ngIf="statut=='Group_Manager' && statusUser==true|| statut=='Group_Employe' && statusUser==true|| statusUser==false">
+                                    <a class="dropdown-item"  style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                      margin-right: 8px;" ></i> </a>
                                   </td>
                                 </tr>
                               </tbody>
@@ -206,12 +212,54 @@
                     </div>
                 </div>
 
-                <footer class="py-3 my-4">
-                    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                      
+                <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+                  <div class="col mb-3">
+                    <a [routerLink]="['/']" routerLinkActive="true" class="app-brand-link">
+                      <div class="logo">
+                        <img src="/assets/img/afrilandlogo.svg"/>
+                      </div>
+                      <span class="app-brand-text demo menu-text fw-bolder ms-2">Annuaire-AFB</span>
+                    </a>
+                    <p class="text-body-secondary">© 2023</p>
+                  </div>
+              
+                  <div class="col mb-3">
+              
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
                     </ul>
-                    <p class="text-center text-body-secondary">© 2023 Afriland First Bank, Cameroun</p>
-                  </footer>
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    </ul>
+                  </div>
+              
+                  <div class="col mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+                      <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                    </ul>
+                  </div>
+                </footer>
       </div>
     </div>
   </div>
@@ -257,123 +305,106 @@
               
                 
                 <form [formGroup]="confrereForm" (ngSubmit)="onSubmit()">
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Nom</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      required=""
-                      placeholder="Enter un nom"
-                      formControlName="nom"
-                    />
-                    <div *ngIf="confrereForm.get('nom')?.invalid && (confrereForm.get('nom')?.dirty || confrereForm.get('nom')?.touched)">
-                      <div *ngIf="confrereForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+
+                  <div class="wrapper3">
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Nom</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        required=""
+                        placeholder="Enter un nom"
+                        formControlName="nom"
+                      />
+                      <div *ngIf="confrereForm.get('nom')?.invalid && (confrereForm.get('nom')?.dirty || confrereForm.get('nom')?.touched)">
+                        <div *ngIf="confrereForm.get('nom')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Adresse</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      required=""
-                      placeholder="Entrer une adresse"
-                      formControlName="adresse"
-                    />
-                    <div *ngIf="confrereForm.get('adresse')?.invalid && (confrereForm.get('adresse')?.dirty || confrereForm.get('adresse')?.touched)">
-                      <div *ngIf="confrereForm.get('adresse')?.errors?.['required']">Ce champ est obligatoire</div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Bic</label>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Adresse</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
                         required=""
-                        placeholder="Entrer le bic"
-                        formControlName="bic"
+                        placeholder="Entrer une adresse"
+                        formControlName="adresse"
                       />
-                      <div *ngIf="confrereForm.get('bic')?.invalid && (confrereForm.get('bic')?.dirty || confrereForm.get('bic')?.touched)">
-                        <div *ngIf="confrereForm.get('bic')?.errors?.['required']">Ce champ est obligatoire</div>
+                      <div *ngIf="confrereForm.get('adresse')?.invalid && (confrereForm.get('adresse')?.dirty || confrereForm.get('adresse')?.touched)">
+                        <div *ngIf="confrereForm.get('adresse')?.errors?.['required']">Ce champ est obligatoire</div>
                       </div>
                     </div>
-                  </div>
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Fax</label>
-                      <input
-                        type="text"
-                        id="nameWithTitle"
-                        class="form-control"
-                        required=""
-                        placeholder="Entrer le fax"
-                        formControlName="fax"
-                      />
-                      <div *ngIf="confrereForm.get('fax')?.invalid && (confrereForm.get('fax')?.dirty || confrereForm.get('fax')?.touched)">
-                        <div *ngIf="confrereForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
-                    <input
-                      type="tel"
-                      id="nameWithTitle"
-                      class="form-control"
-                      required=""
-                      placeholder="Entrer un numero de telephone"
-                      formControlName="telephone"
-                    />
-                    <div *ngIf="confrereForm.get('telephone')?.invalid && (confrereForm.get('telephone')?.dirty || confrereForm.get('telephone')?.touched)">
-                      <div *ngIf="confrereForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Default select example">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">CONTACT_SYGMA_SYSTAC</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      required=""
-                      class="form-control"
-                      placeholder="Entrer le contact_sygma_systac"
-                      formControlName="cssystac"
-                    />
-                    <div *ngIf="confrereForm.get('cssystac')?.invalid && (confrereForm.get('cssystac')?.dirty || confrereForm.get('cssystac')?.touched)">
-                      <div *ngIf="confrereForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <!-- Add Super Powers Dynamically-->
-                    <div class="group-gap" formArrayName="addDynamicElement">
-                      <h5 class="mb-3">Add Super Powers</h5>
-                        <div class="mb-3">
-                          <button
-                            type="button"
-                            class="btn btn-sm btn-success mb-3 btn-block"
-                            (click)="addSuperPowers()"
-                          >
-                            Add Powers
-                          </button>
-                          <ul class="subjectList">
-                            <li
-                              *ngFor="let item of addDynamicElement.controls; let i = index"
-                            >
-                              <input type="text" class="form-control" [formControlName]="i" />
-                            </li>
-                          </ul>
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Bic</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          required=""
+                          placeholder="Entrer le bic"
+                          formControlName="bic"
+                        />
+                        <div *ngIf="confrereForm.get('bic')?.invalid && (confrereForm.get('bic')?.dirty || confrereForm.get('bic')?.touched)">
+                          <div *ngIf="confrereForm.get('bic')?.errors?.['required']">Ce champ est obligatoire</div>
                         </div>
-                   </div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Fax</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          required=""
+                          placeholder="Entrer le fax"
+                          formControlName="fax"
+                        />
+                        <div *ngIf="confrereForm.get('fax')?.invalid && (confrereForm.get('fax')?.dirty || confrereForm.get('fax')?.touched)">
+                          <div *ngIf="confrereForm.get('fax')?.errors?.['required']">Ce champ est obligatoire</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
+                      <input
+                        type="tel"
+                        id="nameWithTitle"
+                        class="form-control"
+                        required=""
+                        placeholder="Entrer un numero de telephone"
+                        formControlName="telephone"
+                      />
+                      <div *ngIf="confrereForm.get('telephone')?.invalid && (confrereForm.get('telephone')?.dirty || confrereForm.get('telephone')?.touched)">
+                        <div *ngIf="confrereForm.get('telephone')?.errors?.['required']">Ce champ est obligatoire</div>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Pays</label>
+                      <select class="form-select" formControlName="pays" aria-label="Default select example">
+                        <option selected>Selectionner un pays</option>
+                        <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">CONTACT_SYGMA_SYSTAC</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        required=""
+                        class="form-control"
+                        placeholder="Entrer le contact_sygma_systac"
+                        formControlName="cssystac"
+                      />
+                      <div *ngIf="confrereForm.get('cssystac')?.invalid && (confrereForm.get('cssystac')?.dirty || confrereForm.get('cssystac')?.touched)">
+                        <div *ngIf="confrereForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
+                      </div>
+                    </div>
                   </div>
+                
+                
                   <div>
                     <button
                       class="btn btn-primary"
@@ -460,77 +491,81 @@
             </div>
                 
                 <form [formGroup]="confrereForm" (ngSubmit)="onUpdate(conf)">
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Nom</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{conf.nom}}"
-                      formControlName="nom"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Adresse</label>
-                    <input
-                      type="text"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{conf.adresse}}"
-                      formControlName="adresse"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Bic</label>
+
+                  <div class="wrapper3">
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Nom</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{conf.nom}}"
+                        formControlName="nom"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Adresse</label>
                       <input
                         type="text"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="{{conf.bic}}"
-                        formControlName="bic"
+                        placeholder="{{conf.adresse}}"
+                        formControlName="adresse"
                       />
                     </div>
-                  </div>
-                  <div class="mb-3">
-                    <div>
-                      <label for="nameWithTitle" class="form-label">Fax</label>
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Bic</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="{{conf.bic}}"
+                          formControlName="bic"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <div>
+                        <label for="nameWithTitle" class="form-label">Fax</label>
+                        <input
+                          type="text"
+                          id="nameWithTitle"
+                          class="form-control"
+                          placeholder="{{conf.fax}}"
+                          formControlName="fax"
+                        />
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Telephone</label>
                       <input
-                        type="text"
+                        type="tel"
                         id="nameWithTitle"
                         class="form-control"
-                        placeholder="{{conf.fax}}"
-                        formControlName="fax"
+                        placeholder="{{conf.phone}}"
+                        formControlName="telephone"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">Pays</label>
+                      <select class="form-select" formControlName="pays" aria-label="Default select example">
+                        <option selected>Selectionner un pays</option>
+                        <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="nameWithTitle" class="form-label">CONTACT_SYGMA_SYSTAC</label>
+                      <input
+                        type="name"
+                        id="nameWithTitle"
+                        class="form-control"
+                        placeholder="{{conf.contact_sygma_systac}}"
+                        formControlName="cssystac"
                       />
                     </div>
                   </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Telephone</label>
-                    <input
-                      type="tel"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{conf.phone}}"
-                      formControlName="telephone"
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">Pays</label>
-                    <select class="form-select" formControlName="pays" aria-label="Default select example">
-                      <option selected>Selectionner un pays</option>
-                      <option *ngFor="let p of listPays" value="{{p.nom}}">{{p.nom}}</option>
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameWithTitle" class="form-label">CONTACT_SYGMA_SYSTAC</label>
-                    <input
-                      type="name"
-                      id="nameWithTitle"
-                      class="form-control"
-                      placeholder="{{conf.contact_sygma_systac}}"
-                      formControlName="cssystac"
-                    />
-                  </div>
+                
                   <div>
                     <button
                       class="btn btn-primary"

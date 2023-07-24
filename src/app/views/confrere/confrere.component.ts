@@ -24,6 +24,10 @@ export class ConfrereComponent implements OnInit {
   create=false;
   loader=false;
   currentPage = 1;
+  statusUser=false;
+  statut:any;
+  userInfo: any;
+  storeData: any;
   confrereForm! : FormGroup
 
   constructor(private fb :FormBuilder, private confrereService : ConfrereService, private assistService:AssistService, private http : HttpClient){
@@ -47,6 +51,10 @@ export class ConfrereComponent implements OnInit {
   ngOnInit() {
    this.getListPays();
    this.getListConfrere();
+   this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
   }
 
   getListPays(){
@@ -109,6 +117,7 @@ export class ConfrereComponent implements OnInit {
   
       axios.post(URL.API_URL + '/confrere' + '/addconfrere',nig,{
         headers : {
+          'Authorization' : 'Bearer '  + this.userInfo.jwt,
          'Content-Type': 'application/json'
   
         } }).then((res)=>{
@@ -174,6 +183,7 @@ export class ConfrereComponent implements OnInit {
 
     axios.put(URL.API_URL + '/confrere/'+'updateconfrere/'+conf.id,nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } 

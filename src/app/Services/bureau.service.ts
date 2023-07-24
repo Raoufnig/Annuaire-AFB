@@ -14,6 +14,6 @@ export class BureauService {
   }
 
   deleteBureau(bureauId:any){
-    return axios.get(URL.API_URL+ '/bureau' + '/deletebureau/' + bureauId)
+    return axios.delete(URL.API_URL+ '/bureau' + '/deletebureau/' + bureauId)
   }
 }

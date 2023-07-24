@@ -24,10 +24,14 @@ export class GuichetComponent implements OnInit {
   loader=false;
   errorCode=false;
   imgerror=false
-  listPays:any;
+  listville:any;
   download=false;
   currentPage = 1;
-  guichetForm! : FormGroup
+  statusUser=false;
+  statut:any;
+  userInfo: any;
+  storeData: any;
+  guichetForm: FormGroup
 
   constructor(private fb :FormBuilder ,private assistService :AssistService, private guichetService : GuichetService){
     this.guichetForm= new FormGroup({
@@ -45,7 +49,11 @@ export class GuichetComponent implements OnInit {
 
   ngOnInit() {
    this.ListGuichet();
-   this.getListPays();
+   this.getListville();
+   this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
   }
 
   ListGuichet(){
@@ -54,27 +62,24 @@ export class GuichetComponent implements OnInit {
       this.filtercat=res.data;
     })
   }
-  getListPays(){
-    this.assistService.getListPays().subscribe((res)=>{
-      this.listPays= res;
-      console.log(this.listPays)
+  getListville(){
+    this.assistService.getListVille().subscribe((res)=>{
+      this.listville= res;
+      console.log(this.listville)
     })
   }
 
   onSubmit() {
     console.log(this.guichetForm.value);
 
-    if (!this.guichetForm.valid) {
-      alert('Bien vouloir remplir tous les champs du formulaire');
-      
-    } else {
+   
       let result = {
         chef : this.guichetForm.value.chef,
         id_agence : this.guichetForm.value.id_agence,
         id_surccusale: this.guichetForm.value.id_succursale,
         mail_pro : this.guichetForm.value.email_pro,
         nom : this.guichetForm.value.nom,
-        ville : this.guichetForm.value.telephone,
+        ville : this.guichetForm.value.ville,
         fax:this.guichetForm.value.fax,
       };
   
@@ -82,6 +87,7 @@ export class GuichetComponent implements OnInit {
   
       axios.post(URL.API_URL + '/guichet' + '/addguichet',nig,{
         headers : {
+         'Authorization' : 'Bearer ' + this.userInfo.jwt,
          'Content-Type': 'application/json'
   
         } }).then((res)=>{
@@ -99,7 +105,7 @@ export class GuichetComponent implements OnInit {
       // console.log(error);
         
      })
-    }
+    
   
   }
   onSubmit2(){
@@ -159,6 +165,7 @@ searchByName(){
 
     axios.put(URL.API_URL + '/guichet/' +'updateguichet/'+guich.id,nig,{
       headers : {
+        'Authorization' : 'Bearer ' + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } 

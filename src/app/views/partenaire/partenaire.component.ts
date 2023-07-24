@@ -23,6 +23,10 @@ export class PartenaireComponent implements OnInit {
   loader=false;
   update=false;
   actionDelete= false;
+  statusUser=false;
+  statut:any;
+  userInfo: any;
+  storeData: any;
   partenaireForm! : FormGroup
 
   constructor(private assistService : AssistService, private http : HttpClient, private partenaireService : PartenaireService){
@@ -41,6 +45,10 @@ export class PartenaireComponent implements OnInit {
   ngOnInit() {
     this.getListPartenaire();
     this.getListPays();
+    this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
   }
 
   getListPays(){
@@ -98,6 +106,7 @@ export class PartenaireComponent implements OnInit {
 
     axios.post(URL.API_URL + '/partenaire' + '/addpartenaire',nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
        'Content-Type': 'application/json'
 
       } }).then((res)=>{
@@ -160,6 +169,7 @@ export class PartenaireComponent implements OnInit {
 
     axios.put(URL.API_URL + '/partenaire/'+'updatepartenaire/'+part.id,nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } 

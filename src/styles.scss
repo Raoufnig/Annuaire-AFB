@@ -17569,6 +17569,12 @@ html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item .menu-lin
 	border: none;
 	border-radius: 8px;
   }
+  .wrapper3 {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    }
 //Raoufnig
 
 

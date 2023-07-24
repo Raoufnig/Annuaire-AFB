@@ -28,6 +28,10 @@ export class SuccursaleComponent implements OnInit {
   listregion:any;
   download=false;
   currentPage = 1;
+  statusUser=false;
+  statut:any;
+  userInfo: any;
+  storeData: any;
   succursaleForm! : FormGroup
 
 
@@ -45,10 +49,14 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
   
 }
 
-  ngOnInit(): void {
+  ngOnInit(){
     this.ListSuccursale();
     this.getListRegion();
     this.getListPays();
+    this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
   }
 
   
@@ -93,6 +101,7 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
   
       axios.post(URL.API_URL + '/succursale' + '/addsuccursale',nig,{
         headers : {
+          'Authorization' : 'Bearer '  + this.userInfo.jwt,
          'Content-Type': 'application/json'
   
         } }).then((res)=>{
@@ -172,6 +181,7 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
 
     axios.put(URL.API_URL + '/succursale'+'/updatesuccursale/'+succ.id,nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } 

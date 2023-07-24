@@ -180,7 +180,7 @@
                                 <th>Fonction</th>
                                 <th>Extension</th>
                                 <th>Ville</th>
-                                <th>Telephone</th>
+                                <th *ngIf="statut=='Group_Manager' && statusUser==true|| statut=='Group_Admin' && statusUser==true">Telephone</th>
                               </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
@@ -227,13 +227,13 @@
                                 <td>
                                   <span>{{personnel.ville}}</span>
                                 </td>
-                                <td>
-                                  
+                                <td *ngIf="statut=='Group_Manager' && statusUser==true || statut=='Group_Admin' && statusUser==true">
+                                   
                                   <p><span>{{personnel.portable}} /</span></p>
-                                  <p *ngFor="let nu of numero"><span *ngIf="nu.id_source == personnel.id_personnel">{{nu.tel}} /</span></p>
+                                  <p *ngFor="let nu of numero"><span *ngIf="nu.id_source == personnel.id_personnel" >{{nu.tel}} /</span></p>
                                   
                                 </td>
-                                <td>
+                                <td *ngIf="statut=='Group_Admin' && statusUser==true">
                                   <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                                     <div class="dropdown-menu">
@@ -244,6 +244,14 @@
                                      
                                     </div>
                                   </div>
+                                </td>
+                                <td *ngIf="statut=='Group_Manager' && statusUser==true|| statut=='Group_Employe' && statusUser==true|| statusUser==false">
+                                  
+                                      <a class="dropdown-item"  data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel" style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
+                                        margin-right: 8px;" ></i></a>
+                                      
+                                     
+                                   
                                 </td>
                               </tr>
                             </tbody>

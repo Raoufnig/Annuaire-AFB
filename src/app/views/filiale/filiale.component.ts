@@ -29,6 +29,10 @@ export class FilialeComponent implements OnInit {
   loader = false;
   filialeForm!: FormGroup;
   isOpen=false;
+  userInfo: any;
+  storeData: any;
+  statusUser=false;
+  statut:any;
 
   constructor(private assistService: AssistService, private filialeService : FilialeService, private http : HttpClient, private router : Router){
     this.filialeForm = new FormGroup({
@@ -45,6 +49,10 @@ export class FilialeComponent implements OnInit {
   ngOnInit() {
     this.getListPays();
     this.getListFiliale();
+    this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
   }
 
 getListPays(){
@@ -108,6 +116,7 @@ searchByName(){
     this.loader = true;
     axios.post(URL.API_URL + '/filiale' + '/addfiliale',nig,{
        headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } }).then((res)=>{
@@ -169,6 +178,7 @@ searchByName(){
 
     axios.put(URL.API_URL + '/filiale/'+'updatefiliale/'+fil.id,nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } 

@@ -25,6 +25,10 @@ export class CorrespondanceComponent implements OnInit {
   update=false;
   deleted = false;
   currentPage = 1;
+  statusUser=false;
+  statut:any;
+  userInfo: any;
+  storeData: any;
   correspondantForm! : FormGroup
 
 
@@ -46,6 +50,10 @@ export class CorrespondanceComponent implements OnInit {
   ngOnInit() {
     this.getListPays();
     this.getListCorrespondant();
+    this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
     
   }
   openModal() {
@@ -101,6 +109,7 @@ export class CorrespondanceComponent implements OnInit {
     const nig = JSON.stringify(result);
     axios.post(URL.API_URL + '/correspondant' + '/addcorrespondant',nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
        'Content-Type': 'application/json'
 
       } }).then((res)=>{
@@ -165,6 +174,7 @@ export class CorrespondanceComponent implements OnInit {
 
     axios.put(URL.API_URL + '/correspondant/'+'updatecorrespondant/'+corr.id,nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } 

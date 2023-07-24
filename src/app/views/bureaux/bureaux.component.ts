@@ -28,6 +28,11 @@ export class BureauxComponent implements OnInit {
   listregion:any;
   download=false;
   currentPage = 1;
+  statusUser=false;
+  statut:any;
+  userInfo: any;
+  storeData: any;
+
   bureauForm! : FormGroup
 
   constructor(private fb :FormBuilder ,private assistService :AssistService, private bureauService : BureauService ){
@@ -44,6 +49,10 @@ export class BureauxComponent implements OnInit {
   ngOnInit() {
     this.ListBureau();
     this.getListPays();
+    this.storeData = localStorage.getItem("UserInfo")
+    this.userInfo = JSON.parse(this.storeData);
+    this.statusUser=this.userInfo.userDetails.enabled;
+    this.statut =this.userInfo.group;
   }
 
   ListBureau(){
@@ -81,6 +90,7 @@ export class BureauxComponent implements OnInit {
   
       axios.post(URL.API_URL + '/bureau' + '/addbureau',nig,{
         headers : {
+          'Authorization' : 'Bearer '  + this.userInfo.jwt,
          'Content-Type': 'application/json'
   
         } }).then((res)=>{
@@ -153,6 +163,7 @@ export class BureauxComponent implements OnInit {
 
     axios.put(URL.API_URL + '/bureau' + '/updatebureau/' + bur.id,nig,{
       headers : {
+        'Authorization' : 'Bearer '  + this.userInfo.jwt,
         'Content-Type': 'application/json'
 
        } 
