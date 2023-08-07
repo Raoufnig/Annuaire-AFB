@@ -56,43 +56,42 @@ export class FilialeComponent implements OnInit {
   }
 
 getListPays(){
-  this.assistService.getListPays().subscribe((res)=>{
-    this.listpays=res;
+  this.assistService.getListPays().then((res)=>{
+    this.listpays=res.data;
     
   })
 }
 
 getListFiliale(){
-  this.filialeService.getFiliale().subscribe((res)=>{
-    this.listfiliale=res;
+  this.filialeService.getFiliale().then((res)=>{
+    this.listfiliale=res.data;
 
-    this.filtrecat=res;
+    this.filtrecat=res.data;
     console.log(this.filtrecat)
   })
 }
 
 deleteFiliale(idFiliale:any){
   //this.actionDelete= true;
-  this.filialeService.deleteFiliale(idFiliale).subscribe((res)=>{
+  this.filialeService.deleteFiliale(idFiliale, this.userInfo.jwt).then((res)=>{
      
     
-  }, (error)=>{
+  }).catch((error)=>{
     console.log(error.error.text);
     //window.location.reload();
-    
+
   })
   this.deleted = true;
 }
 
 deleteFiliale2(idFiliale:any){
-  this.filialeService.deleteFiliale(idFiliale).subscribe((res)=>{
-     
-    
-  }, (error)=>{
-    console.log(error.error.text);
+  this.filialeService.deleteFiliale(idFiliale, this.userInfo.jwt).then((res)=>{
     window.location.reload();
-    //window.location.reload();
     
+  }).catch((error)=>{
+    console.log(error.error.text);
+    
+    //window.location.reload();
   })
 }
 

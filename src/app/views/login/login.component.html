@@ -24,18 +24,34 @@
                             </div> -->
 
                             <div class="user-box">
-                                <input type="text" formControlName="email"  required="">
+                                <input type="text" formControlName="email"  required="" pattern="^[a-zA-Z0-9._%+-]+@afrilandfirstbank\.com$">
                                 <label>Username</label>
+                              </div>
+                              <div class="mb-3" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].dirty || loginForm.controls['email'].touched)">
+                                <div *ngIf="loginForm.controls['email'].errors?.['required']" style="color: red;">
+                                    Ce champ est obligatoire
+                                </div>
+                                <div *ngIf="loginForm.controls['email'].errors?.['pattern']" style="color: red;">L'email doit se terminer par "@afrilandfirstbank.com".</div>
                               </div>
                               <div class="user-box">
                                 <input type="{{ showPassword ? 'text' : 'password' }}" name="" formControlName="password"  required="">
-                                <span (click)="showPassword =!showPassword" [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></span>
+                                <span (click)="showPassword =!showPassword" [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'" style="margin-top:28px ;"></span>
                                 <label>Password</label>
                               </div>
+                              <div class="mb-3" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+                                <div *ngIf="loginForm.controls['password'].errors?.['required']" style="color: red;">
+                                    Le mot de passe ne peut pas etre vide.
+                                </div>
+                                
+                              </div>
                             
-                            <br>
-                             <br>
-                            <button class="sign">Connexion</button>
+                              <br>
+                              <br>
+                            <button class="sign" >
+                                <div *ngIf="loader==true" class="spinner-border spinner-border-sm " style="color: white;" role="status">
+                                    <span class="visually-hidden">Chargement...</span>
+                              </div>
+                              <span *ngIf="log==false">Connexion</span></button>
                         </form>
                         
                     </div>

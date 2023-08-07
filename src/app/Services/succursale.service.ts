@@ -13,7 +13,11 @@ export class SuccursaleService {
     return axios.get(URL.API_URL + '/succursale' + '/listsuccursale')
   }
 
-  deleteSuccursale(succId:any){
-    return axios.get(URL.API_URL + '/succursale' + '/deletesuccursale/'+succId)
+  deleteSuccursale(succId:any, token: any){
+    return axios.delete(URL.API_URL + '/succursale' + '/deletesuccursale/'+succId,{
+      headers: {
+        'Authorization' : 'Bearer '  + token, 
+      }
+     })
   }
 }

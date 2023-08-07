@@ -5,19 +5,20 @@ import { URL } from '../Classes/base-url';
 @Injectable({
   providedIn: 'root'
 })
-export class GuichetService {
+export class DirectionService {
 
   constructor() { }
 
-  getListGuichet(){
-    return axios.get(URL.API_URL+ '/guichet' + '/listguichet');
+  getListDirection(){
+    return axios.get(URL.API_URL + '/direction' +'/listdirection')
   }
 
-  deleteGuichet(guichetId: any, token :any){
-     return axios.delete(URL.API_URL+ '/guichet' + '/deleteguichet/'+ guichetId,{
+  deleteDirection(Id: any, token:any){
+    return axios.delete(URL.API_URL +'/direction'+ '/deletedirection/'+Id,{
       headers: {
         'Authorization' : 'Bearer '  + token, 
       }
      });
   }
+
 }

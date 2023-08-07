@@ -59,17 +59,18 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
     this.statut =this.userInfo.group;
   }
 
-  
+//Fonction pour recuperer la liste des succursales 
   ListSuccursale(){
     this.succursale.getListSuccursale().then((res)=>{
       this.listsuccursale=res.data;
       this.filtercat=res.data;
     })
   }
+//
 
   getListPays(){
-    this.assistService.getListPays().subscribe((res)=>{
-      this.listPays= res;
+    this.assistService.getListPays().then((res)=>{
+      this.listPays= res.data;
       console.log(this.listPays)
     })
   }
@@ -80,6 +81,7 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
     })
   }
 
+//Fonction pour creer une nouvelle succursale
   onSubmit() {
     console.log(this.succursaleForm.value);
 
@@ -122,8 +124,9 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
     }
   
   }
+//
 
-
+//Fonction pour filtrer les recherches
   onSubmit2(){
     let result = {
      id_agence: this.succursaleForm.value.agence
@@ -132,11 +135,16 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
     this.filtercat = this.listsuccursale.filter((mot: any) => mot.id_region.toLowerCase().includes( this.succursaleForm.value.id_region.toLowerCase()));
 
 }
+//
 
+//Fonction de recherche en fonction de tous les attributs de la succursale
   searchByName(){
     this.filtercat = this.listsuccursale.filter((mot: any) => Object.values(mot).some(value=> typeof value === 'string' && value.toLowerCase().includes(this.searchText.toLowerCase())));
   }
+//
 
+
+//Fonction pour mettre à jour les infos d'une succursale à l'aide de son id
   onUpdate(_succursale : any) {
     let succ = _succursale;
     console.log(succ);
@@ -199,13 +207,23 @@ constructor(private fb :FormBuilder ,private assistService :AssistService, priva
       this.loader = false;
     })
   }
+//
 
+//Fonction qui permet de supprimer une direction à l'aide de son id
   deletesuccursale(id : any){
     this.actionDelete = true;
-    this.succursale.deleteSuccursale(id).then((res)=>{
+    this.succursale.deleteSuccursale(id, this.userInfo.jwt).then((res)=>{
       console.log(res);
     }).catch((error)=>{
       console.log(error);
     })
   }
+//
+
+//Fonction pour recharger la page
+reloadPage(){
+  window.location.reload();
+}
+//
+
 }

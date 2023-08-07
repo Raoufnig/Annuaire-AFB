@@ -14,7 +14,6 @@ import { PartenaireComponent } from './views/partenaire/partenaire.component';
 import { ConfrereComponent } from './views/confrere/confrere.component';
 import { CorrespondanceComponent } from './views/correspondance/correspondance.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ModalsComponent } from './views/modals/modals.component';
 import { LoginComponent } from './views/login/login.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,7 +35,6 @@ import { DirectionComponent } from './views/direction/direction.component';
     PartenaireComponent,
     ConfrereComponent,
     CorrespondanceComponent,
-    ModalsComponent,
     LoginComponent,
     SuccursaleComponent,
     GuichetComponent,

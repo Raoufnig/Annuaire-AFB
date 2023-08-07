@@ -56,16 +56,16 @@ export class AgenceComponent implements OnInit {
   }
 
   getList(){
-      this.agenceService.getAgence().subscribe((res)=>{
-        this.agenceList= res;
-        this.filtrecat=res;
+      this.agenceService.getAgence().then((res)=>{
+        this.agenceList= res.data;
+        this.filtrecat=res.data;
         console.log(res);
       })
   }
 
   getListVille(){
-    this.assistService.getListVille().subscribe((res)=>{
-      this.listville= res;
+    this.assistService.getListVille().then((res)=>{
+      this.listville= res.data;
 
       console.log(this.listville);
     })
@@ -77,7 +77,7 @@ export class AgenceComponent implements OnInit {
   }
   
   onSubmit() {
-    
+
     let result = {
       adresse: this.agenceForm.value.adresse,
       fax: this.agenceForm.value.fax,

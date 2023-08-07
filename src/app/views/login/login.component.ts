@@ -21,7 +21,7 @@ export class LoginComponent {
 
   constructor(private router : Router){
     this.loginForm = new FormGroup({
-      email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@afrilandfirstbank\.com$/)]),
       password: new FormControl('', Validators.required),
     });
   }

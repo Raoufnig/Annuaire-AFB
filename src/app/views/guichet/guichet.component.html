@@ -79,7 +79,7 @@
                               *ngIf="statut=='Group_Admin' && statusUser==true"
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalCreateUser"
+                                data-bs-target="#modalCreateGuichet"
                               >
                               Ajouter un Guichet
                               </button>
@@ -263,7 +263,7 @@
   </div>
 
    <!-- Modal Creation d'un guichet-->
-  <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-hidden="true">
+  <div class="modal fade" id="modalCreateGuichet" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -300,7 +300,24 @@
                 id="navs-top-home"
                 role="tabpanel"
               >
-              
+              <div
+              *ngIf="create == true"
+              class="alert alert-primary alert-dismissible"
+              role="alert"
+            >
+              <h6
+                class="alert-heading d-flex align-items-center fw-bold mb-1"
+              >
+                Parfait :)
+              </h6>
+              <p class="mb-0">Le Guichet a été crée.</p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
                 
                 <form [formGroup]="guichetForm" (ngSubmit)="onSubmit()">
 
@@ -380,7 +397,7 @@
                         required=""
                         class="form-control"
                         placeholder="Entrer le non du gerant"
-                        formControlName="manager"
+                        formControlName="chef"
                       />
                       <div *ngIf="guichetForm.get('cssystac')?.invalid && (guichetForm.get('cssystac')?.dirty || guichetForm.get('cssystac')?.touched)">
                         <div *ngIf="guichetForm.get('cssystac')?.errors?.['required']">Ce champs est obligatoire</div>
@@ -580,7 +597,7 @@
      <div class="modal-dialog modal-dialog-centered" role="document">
        <div class="modal-content">
          <div class="modal-header">
-           <h5 class="modal-title" id="modalCenterTitle">Supprimer un Correspondant</h5>
+           <h5 class="modal-title" id="modalCenterTitle">Supprimer un Guichet</h5>
            <button
              type="button"
              class="btn-close"
@@ -589,8 +606,20 @@
            ></button>
          </div>
          <div class="modal-body">
-           <p> Voulez vous vraiment supprimer ce guichet ?</p>
+           <p> Voulez vous vraiment supprimer le guichet {{guich.nom}} ?</p>
          </div>
+         <div class="modal-body" *ngIf="deleted == true">
+          <div
+                      *ngIf="deleted == true"
+                      class="alert alert-primary alert-dismissible"
+                      role="alert"
+                    >
+                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                        Suppression effectuée
+                      </h6>
+                      <p class="mb-0">{{guich.nom}} a été supprimé.</p>
+                    </div>
+        </div>
          <div class="modal-footer" >
            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
              Annuler
@@ -608,6 +637,13 @@
          </button>
            
          </div>
+         <div class="modal-footer" *ngIf="deleted == true" >
+          <button  type="button" class="btn btn-danger" (click)="reloadPage()">
+          
+          Fermer
+        </button>
+          
+        </div>
        </div>
      </div>
    </div>

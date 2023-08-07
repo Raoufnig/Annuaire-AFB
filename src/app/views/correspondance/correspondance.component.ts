@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import axios from 'axios';
+import { error } from 'jquery';
 import { URL } from 'src/app/Classes/base-url';
 import { AssistService } from 'src/app/Services/assist.service';
 import { CorrespondantService } from 'src/app/Services/correspondant.service';
@@ -56,33 +57,31 @@ export class CorrespondanceComponent implements OnInit {
     this.statut =this.userInfo.group;
     
   }
-  openModal() {
-    this.isOpen = true;
-  }
-
-  closeModal() {
-    this.isOpen = false;
-
-  }
+ 
 
   getListPays(){
-    this.assistService.getListPays().subscribe((res)=>{
-      this.listpays=res;
+    this.assistService.getListPays().then((res)=>{
+      this.listpays=res.data;
     })
   }
 
+//Fonction pour recuperer la liste des correspondants
   getListCorrespondant(){
-    this.correspondantService.getCorrespondant().subscribe((res)=>{
-      this.listcorrespondant=res;
-      this.filtrecat=res;
+    this.correspondantService.getCorrespondant().then((res)=>{
+      this.listcorrespondant=res.data;
+      this.filtrecat=res.data;
     })
   }
+//
 
-
+//Fonction de recherche en fonction de tous les attributs du correspondant 
   searchByName(){
     this.filtrecat = this.listcorrespondant.filter((mot: any) => mot.nom.toLowerCase().includes(this.searchText.toLowerCase()));
   }
-  onSubmit2(){
+//
+
+//Fontion pour filtrer la recherche
+onSubmit2(){
     let result = {
      pays: this.correspondantForm.value.pays1
     }
@@ -91,6 +90,7 @@ export class CorrespondanceComponent implements OnInit {
 
 }
 
+//Fonction pour creer un nouveau correspondant
   onSubmit() {
     console.log(this.correspondantForm.value);
 
@@ -129,7 +129,9 @@ export class CorrespondanceComponent implements OnInit {
    })
 
   }
+//
 
+//Fonction pour mettre à jour les infos d'un correspondant à l'aide de son id
   onUpdate(correspondant : any) {
     let corr = correspondant;
     console.log(corr);
@@ -192,24 +194,29 @@ export class CorrespondanceComponent implements OnInit {
       this.loader = false;
     })
   }
+//
 
-
+//Fonction qui permet de supprimer un correspondant à l'aide de son id
   deleteCorrespondant(id: any){
     this.actionDelete = true;
-    this.correspondantService.deleteCorrespondant(id).subscribe((res)=>{
+    this.correspondantService.deleteCorrespondant(id, this.userInfo.jwt).then((res)=>{
         
       this.actionDelete = false;
-      window.location.reload;
+      //window.location.reload;
     
-    }, (error)=>{
+    }).catch((error)=>{
       console.log(error.error.text);
-      window.location.reload();
+      //window.location.reload();
       this.deleted = true
-
     });
     this.deleted = true
   }
+//
 
-  
+//Fonction pour recharger la page
+  reloadPage(){
+    window.location.reload();
+  }
+//
 
 }

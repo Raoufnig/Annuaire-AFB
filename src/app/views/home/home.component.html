@@ -183,7 +183,7 @@
                                 <th *ngIf="statut=='Group_Manager' && statusUser==true|| statut=='Group_Admin' && statusUser==true">Telephone</th>
                               </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0">
+                            <tbody class="table-border-bottom-0 table-group-divider">
                               <tr
                               
                               *ngFor="let personnel of filtercat | paginate
@@ -200,7 +200,7 @@
                                   <div *ngIf="personnel.photo!=''" class="avatar avatar" data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel">
                                     <img src="{{personnel.photo}}" alt class="w-px-40 h-auto rounded-circle" />
                                   </div>
-                                  <div *ngIf="personnel.photo==''" class="avatar avatar" data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel">
+                                  <div *ngIf="personnel.photo=='' || personnel.photo==null " class="avatar avatar" data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel">
                                     <img src="/assets/img/imconnu-removebg-preview.png" alt class="w-px-40 h-auto rounded-circle" />
                                   </div>
                                 </td>
@@ -240,19 +240,26 @@
                                       <a class="dropdown-item"  data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel" style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                         margin-right: 8px;" ></i>  Details</a>
                                       <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  [attr.data-bs-target]="'#modalAddImgPers' + personnel.id_personnel"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
-                                        margin-right: 8px;"></i>Modifier</a>
+                                        margin-right: 8px;"></i> Modifier</a>
                                      
                                     </div>
                                   </div>
                                 </td>
-                                <td *ngIf="statut=='Group_Manager' && statusUser==true|| statut=='Group_Employe' && statusUser==true|| statusUser==false">
+                        
+                                <td *ngIf="statusUser==false ||  statut!='Group_Admin'|| userInfo.email != personnel.email &&  statut!='Group_Admin'">
                                   
                                       <a class="dropdown-item"  data-bs-toggle="modal" [attr.data-bs-target]="'#modalDetailPers' + personnel.id_personnel" style="cursor:pointer"><i class="fa fa-eye" aria-hidden="true" style="
                                         margin-right: 8px;" ></i></a>
-                                      
-                                     
-                                   
+                                    
                                 </td>
+                                <td *ngIf="statut=='Group_Manager' && statusUser==true && userInfo.email == personnel.email || statut=='Group_Employe' && statusUser==true && userInfo.email == personnel.email ">
+                                 
+                          
+                                  <a class="dropdown-item" href="#" style="cursor: pointer;" data-bs-toggle="modal"  [attr.data-bs-target]="'#modalAddImgPers' + personnel.id_personnel"><i class="fa fa-pencil-square-o" aria-hidden="true"  style="
+                                    margin-right: 2px;"></i></a>
+                                 
+              
+                            </td>
                               </tr>
                             </tbody>
                           </table>
@@ -385,7 +392,7 @@ id="modalDetailPers{{personnel.id_personnel}}"
                   <p>Fonction : {{personnel.fonction}}</p>
                   <p>Extension : {{personnel.extension}}</p>
                   <p>Ville : {{personnel.ville}}</p>
-                  <p>Telepone : {{personnel.portable}}</p>
+                  <p *ngIf="statut=='Group_Manager' && statusUser==true || statut=='Group_Admin' && statusUser==true">Telepone : {{personnel.portable}}</p>
                 </div>
               </div>
               </div>
@@ -409,7 +416,7 @@ id="modalDetailPers{{personnel.id_personnel}}"
 </div>
 <!--FIN-->
 
-<!--Modal Add Image Personnel-->
+<!--Modal Add Image/Modify Personnel-->
 <div 
 *ngFor="let personnel of employees"
 class="modal fade" 
@@ -474,7 +481,7 @@ aria-hidden="true"
               
               <form [formGroup]="personnelForm" (ngSubmit)="onSubmit(personnel)">
 
-                <div class="wrapper3">
+                <div class="wrapper3" *ngIf="statut=='Group_Admin' && statusUser==true">
 
                   <div class="mb-3" >
                     <label for="nameWithTitle" class="form-label">Nom</label>
@@ -606,13 +613,8 @@ aria-hidden="true"
                 
                     
                   
-                </div>
-
-                
+                  </div>
                
-                    
-                
-                
                   
                 <div class="mb-3">
                   <label for="nameWithTitle" class="form-label">Image</label>

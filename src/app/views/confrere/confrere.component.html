@@ -302,6 +302,24 @@
                 id="navs-top-home"
                 role="tabpanel"
               >
+              <div
+              *ngIf="create == true"
+              class="alert alert-primary alert-dismissible"
+              role="alert"
+            >
+              <h6
+                class="alert-heading d-flex align-items-center fw-bold mb-1"
+              >
+                Parfait :)
+              </h6>
+              <p class="mb-0">Le Confrere a été crée.</p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
               
                 
                 <form [formGroup]="confrereForm" (ngSubmit)="onSubmit()">
@@ -634,7 +652,15 @@
          </button>
            
          </div>
+         <div class="modal-footer" *ngIf="deleted == true" >
+          <button  type="button" class="btn btn-danger" (click)="reloadPage()">
+          
+          Fermer
+        </button>
+          
+        </div>
        </div>
+       
      </div>
    </div>
    <!--FIN-->

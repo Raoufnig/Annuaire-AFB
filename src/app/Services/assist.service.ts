@@ -12,12 +12,12 @@ export class AssistService {
 
   getListVille(){
 
-    return this.http.get(URL.API_URL + '/ville' +'/listville');
+    return axios.get(URL.API_URL + '/ville' +'/listville');
   }
 
   getListPays(){
 
-    return this.http.get(URL.API_URL + '/pays' +'/listpays');
+    return axios.get(URL.API_URL + '/pays' +'/listpays');
   }
 
   getListDirection(){
@@ -27,7 +27,7 @@ export class AssistService {
 
   getListDepartement(){
     
-    return this.http.get(URL.API_URL + '/departement' +'/listdepartement')
+    return axios.get(URL.API_URL + '/departement' +'/listdepartement')
   }
 
   getListNumero(){

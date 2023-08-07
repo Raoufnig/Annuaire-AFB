@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit{
   phoneNumbers: any[]=[''];
   listville: any[]=[];
   list: any;
+  index=0;
   userInfo: any;
   storeData: any;
   listUnite: any[]=[];
@@ -87,6 +88,7 @@ export class HomeComponent implements OnInit{
   
   }
 
+//Ensemble de fonction pour ajouter de nouvequx champs dynamiquement dans un formulaire
   get addPhone() {
     return this.personnelForm.get('addphone') as FormArray;
   }
@@ -109,9 +111,9 @@ export class HomeComponent implements OnInit{
    
     console.log(this.addEmail.value)
   }
-
+//
   
-
+//Fonction pour uploader une image
   onImageSelected(event: any) {
     const file = event.target.files[0];
     if(file.size>1000000){
@@ -126,7 +128,9 @@ export class HomeComponent implements OnInit{
     reader.readAsDataURL(file);
     console.log(this.selectedImage)
   }
+//
 
+//Fonction pour mettre à jour les infos d'un personnel à l'aide de son id
   onSubmit(personnel:any) {
      
     let pers = personnel;
@@ -234,6 +238,7 @@ export class HomeComponent implements OnInit{
     let rnig =JSON.stringify(res);
       axios.post(URL.API_URL + '/telephone' + '/addnumero/',rnig,{
         headers : {
+          'Authorization' : 'Bearer '  + this.userInfo.jwt, 
          'Content-Type': 'application/json'
   
         }}).then((response)=>{
@@ -247,7 +252,9 @@ export class HomeComponent implements OnInit{
    
  
   }
+//
 
+//Fonction pour filtrer la recherche suivant des critéres
   onSubmit2(){
     
     axios.get(URL.API_URL + '/personnel' + '/search', {
@@ -267,7 +274,9 @@ export class HomeComponent implements OnInit{
     })
 
 }
+//
 
+//Fonction pour telecharger la liste du personnel en fichier excel  
 downloadPersonnelExcel() {
   axios.get(URL.API_URL + '/personnel'+'/download', { responseType: 'blob',
   params: {
@@ -286,17 +295,34 @@ downloadPersonnelExcel() {
       window.location.reload();
     });
 }
+//
 
+//Fonction pour recuperer la liste des directions
 listpersonnel(){
-
-    
 
    this.personnel.getpersonnel().then((res)=>{
     this.employees= res.data;
   
     this.filtercat=res.data;
     this.filtercat.sort((a:any,b:any)=>(a.nom>b.nom ? 1 : -1));
+
+
+
     for(let i of this.employees){
+      
+      
+      this.index = this.index + 1;
+    if (this.statusUser==true && i.email == this.userInfo.email ){
+      let p:any;
+      p = this.filtercat[0] ;
+      i = this.filtercat[this.index]
+      this.filtercat[0] = i;
+      this.filtercat[this.index]=p;
+      console.log(this.index);
+      this.filtercat[this.index] = p;
+      //this.filtercat.push(p);
+
+    }
 
       if(!this.listUnite.includes(i.unite)){
         this.listUnite.push(i.unite);
@@ -308,10 +334,8 @@ listpersonnel(){
       if(!this.listville.includes(i.ville)){
         this.listville.push(i.ville);
       }
-
-    
-      
     }
+
     this.pageload=false;
     console.log(this.listUnite);
     console.log(this.listFonction);
@@ -336,6 +360,7 @@ listpersonnel(){
      console.log(this.numero)
    })
 }
+//
 
 // addphoneNumber(firstnumber:any){
 //   this.phoneNumbers[1]= firstnumber;
@@ -361,14 +386,15 @@ listpersonnel(){
 
 
 
-
+//Fonction de recherche en fonction de tous les attributs du personnel
 searchByName(){
   this.filtercat = this.employees.filter((mot: any) => Object.values(mot).some(value=> typeof value === 'string' && value.toLowerCase().includes(this.searchText.toLowerCase())));
 }
+//
 
 getListVille(){
-    this.assistService.getListVille().subscribe((res)=>{
-      this.list=res;
+    this.assistService.getListVille().then((res)=>{
+      this.list=res.data;
       for (let i of this.list){
          this.listville.push(i.nom)
       }
@@ -376,8 +402,6 @@ getListVille(){
       console.log(this.listville)
     })
 }
-
-
 
 }
 

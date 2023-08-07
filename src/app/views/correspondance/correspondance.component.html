@@ -290,6 +290,24 @@
                 id="navs-top-home"
                 role="tabpanel"
               >
+              <div
+              *ngIf="create == true"
+              class="alert alert-primary alert-dismissible"
+              role="alert"
+            >
+              <h6
+                class="alert-heading d-flex align-items-center fw-bold mb-1"
+              >
+                Parfait :)
+              </h6>
+              <p class="mb-0">Le correspondant a été crée.</p>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
               
                 
                 <form [formGroup]="correspondantForm" (ngSubmit)="onSubmit()">
@@ -587,8 +605,8 @@ aria-hidden="true">
 </div>
 <!--FIN-->
 
-   <!-- Modal Supprimer un Correspondant-->
-   <div 
+<!-- Modal Supprimer un Correspondant-->
+<div 
    *ngFor="let corr of listcorrespondant"
    class="modal fade" 
    id="modalSupprime{{corr.id}}" 
@@ -605,10 +623,22 @@ aria-hidden="true">
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <p> Voulez vous vraiment supprimer ce Correspondant ?</p>
+        <div class="modal-body"  *ngIf="deleted == false">
+          <p> Voulez vous vraiment supprimer {{corr.nom}} ?</p>
         </div>
-        <div class="modal-footer" >
+        <div class="modal-body" *ngIf="deleted == true">
+          <div
+                      
+                      class="alert alert-primary alert-dismissible"
+                      role="alert"
+                    >
+                      <h6 class="alert-heading d-flex align-items-center fw-bold mb-1">
+                        Suppression effectuée
+                      </h6>
+                      <p class="mb-0">{{corr.nom}} a été supprimé.</p>
+                    </div>
+        </div>
+        <div class="modal-footer" *ngIf="deleted == false">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
             Annuler
           </button>
@@ -625,9 +655,14 @@ aria-hidden="true">
         </button>
           
         </div>
+        <div class="modal-footer" *ngIf="deleted == true" >
+          <button  type="button" class="btn btn-danger" (click)="reloadPage()">
+          
+          Fermer
+        </button>
       </div>
     </div>
   </div>
   <!--FIN-->
 </div>
-
+ <!-- FIN -->

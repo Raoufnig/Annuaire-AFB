@@ -15,6 +15,7 @@ import { ConfrereService } from 'src/app/Services/confrere.service';
 export class ConfrereComponent implements OnInit {
   ShowNavbar=false;
   ConfrereList: any;
+  deleted = false;
   listPays:any;
   searchText!: string;
   filtrecat: any;
@@ -44,7 +45,7 @@ export class ConfrereComponent implements OnInit {
       ],),
       cssystac: new FormControl('', Validators.required),
       pays1 : new FormControl(''),
-      addDynamicElement: this.fb.array([]),
+      //addDynamicElement: this.fb.array([]),
 
     });
   }
@@ -58,34 +59,33 @@ export class ConfrereComponent implements OnInit {
   }
 
   getListPays(){
-    this.assistService.getListPays().subscribe((res)=>{
-      this.listPays= res;
+    this.assistService.getListPays().then((res)=>{
+      this.listPays= res.data;
       console.log(this.listPays)
     })
   }
 
+//Fonction pour recuperer la liste des confreres
   getListConfrere(){
     this.confrereService.getConfrere().then((res)=>{
       this.ConfrereList=res.data;
       this.filtrecat=res.data;
     })
   }
+//
 
-  get addDynamicElement() {
-    return this.confrereForm.get('addDynamicElement') as FormArray;
-  }
-  addSuperPowers() {
-    this.addDynamicElement.push(this.fb.control(''));
-  }
-
+//Fonction de recherche en fonction de tous les attributs du confrere 
   searchByName(){
     this.filtrecat = this.ConfrereList.filter((mot: any) => mot.nom.toLowerCase().includes(this.searchText.toLowerCase()));
   }
-
+//
+//Fonction de recherche en fonction du pays
   searchByPays(paysnom:any){
     this.filtrecat = this.ConfrereList.filter((mot: any) => mot.pays.toLowerCase().includes(paysnom.toLowerCase()));
   }
+//
 
+//Fonction pour filtrer la recherche
   onSubmit2(){
        let result = {
         pays: this.confrereForm.value.pays1
@@ -94,8 +94,9 @@ export class ConfrereComponent implements OnInit {
        this.filtrecat = this.ConfrereList.filter((mot: any) => mot.pays.toLowerCase().includes( this.confrereForm.value.pays1.toLowerCase()));
 
   }
+//
   
-
+//Fonction pour creer un nouveau confrere
   onSubmit() {
     console.log(this.confrereForm.value);
 
@@ -138,7 +139,9 @@ export class ConfrereComponent implements OnInit {
     }
   
   }
+//
 
+//Fonction pour mettre à jour les infos d'un confrere à l'aide de son id
   onUpdate(confrere : any) {
     let conf = confrere;
     console.log(conf);
@@ -201,18 +204,28 @@ export class ConfrereComponent implements OnInit {
       this.loader = false;
     })
   }
+//
 
+
+//Fonction pour supprimer un confrere à l'aide de son id
   deleteConfrere(id: any){
     this.actionDelete = true;
-    this.confrereService.deleteConfrere(id).then((res)=>{
+    this.confrereService.deleteConfrere(id, this.userInfo.jwt).then((res)=>{
         
       this.actionDelete = false;
+      this.deleted = true;
       //window.location.reload;
     
     }).catch((error)=>{
       console.log(error);
     });
   }
+//
 
+//Fonction pour recharger la page
+  reloadPage(){
+    window.location.reload();
+  }
+//
 
 }

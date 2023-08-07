@@ -15,8 +15,12 @@ export class ConfrereService {
     return axios.get(URL.API_URL + '/confrere'+'/listconfrere');
   }
 
-  deleteConfrere(Id: any){
-    return axios.get(URL.API_URL +'/confrere'+ '/deleteconf/'+ Id);
+  deleteConfrere(Id: any, token : any){
+    return axios.delete(URL.API_URL +'/confrere'+ '/deleteconf/'+ Id,{
+      headers: {
+        'Authorization' : 'Bearer '  + token, 
+      }
+     });
   }
 
 }

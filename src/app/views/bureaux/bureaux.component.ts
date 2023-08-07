@@ -54,21 +54,24 @@ export class BureauxComponent implements OnInit {
     this.statusUser=this.userInfo.userDetails.enabled;
     this.statut =this.userInfo.group;
   }
-
+//Fonction pour recuperer la liste des bureaux
   ListBureau(){
     this.bureauService.getListBureau().then((res)=>{
       this.listbureau=res.data;
       this.filtercat=res.data;
     })
   }
+
+//
+
   getListPays(){
-    this.assistService.getListPays().subscribe((res)=>{
-      this.listPays= res;
+    this.assistService.getListPays().then((res)=>{
+      this.listPays= res.data;
       console.log(this.listPays)
     })
   }
 
-  
+//Fonction pour creer un nouveau bureau
   onSubmit() {
     console.log(this.bureauForm.value);
 
@@ -111,8 +114,10 @@ export class BureauxComponent implements OnInit {
     }
   
   }
+//
 
-  onSubmit2(){
+//Fonction pour filtrer les recherches
+onSubmit2(){
     let result = {
      pays: this.bureauForm.value.pays
     }
@@ -121,10 +126,13 @@ export class BureauxComponent implements OnInit {
 
 }
 
+//Fonction de recherche en fonction de tous les attributs de la direction 
   searchByName(){
     this.filtercat = this.listbureau.filter((mot: any) => Object.values(mot).some(value=> typeof value === 'string' && value.toLowerCase().includes(this.searchText.toLowerCase())));
   }
+//
 
+//Fonction pour mettre à jour les infos d'un bureau à l'aide de son id
   onUpdate(_bureau : any) {
     let bur = _bureau;
     console.log(bur);
@@ -181,15 +189,17 @@ export class BureauxComponent implements OnInit {
       this.loader = false;
     })
   }
+//
 
-
+//Fonction qui permet de supprimer un burequ à l'aide de son id
   deletebureau(id : any){
     this.actionDelete = true;
-    this.bureauService.deleteBureau(id).then((res)=>{
+    this.bureauService.deleteBureau(id, this.userInfo.jwt).then((res)=>{
       console.log(res);
     }).catch((error)=>{
       console.log(error);
     })
   }
+//
 
 }

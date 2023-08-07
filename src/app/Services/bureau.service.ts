@@ -13,7 +13,11 @@ export class BureauService {
     return axios.get(URL.API_URL+ '/bureau' + '/listbureau')
   }
 
-  deleteBureau(bureauId:any){
-    return axios.delete(URL.API_URL+ '/bureau' + '/deletebureau/' + bureauId)
+  deleteBureau(bureauId:any, token:any){
+    return axios.delete(URL.API_URL+ '/bureau' + '/deletebureau/' + bureauId,{
+      headers: {
+        'Authorization' : 'Bearer '  + token, 
+      }
+     })
   }
 }

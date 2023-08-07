@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import axios from 'axios';
+import { error } from 'jquery';
 import { URL } from 'src/app/Classes/base-url';
 import { AssistService } from 'src/app/Services/assist.service';
 import { PartenaireService } from 'src/app/Services/partenaire.service';
@@ -52,24 +53,35 @@ export class PartenaireComponent implements OnInit {
   }
 
   getListPays(){
-    this.assistService.getListPays().subscribe((res)=>{
-      this.listpays= res;
+    this.assistService.getListPays().then((res)=>{
+      this.listpays= res.data;
     })
   }
+
+//Fonction pour recuperer la liste des partenaires
   getListPartenaire(){
-      this.partenaireService.getPartenaire().subscribe((res)=>{
-        this.listpartenaire=res;
-        this.filtrecat=res;
+      this.partenaireService.getPartenaire().then((res)=>{
+        this.listpartenaire=res.data;
+        this.filtrecat=res.data;
       })
   }
-  searchByName(){
-    this.filtrecat = this.listpartenaire.filter((mot: any) => mot.nom.toLowerCase().includes(this.searchText.toLowerCase()));
-  }
+//
 
+
+//Fonction de recherche en fonction de tous les attributs du confrere   
+  searchByName(){
+    this.filtrecat = this.listpartenaire.filter((mot: any) => Object.values(mot).some(value=> typeof value === 'string' && value.toLowerCase().includes(this.searchText.toLowerCase())));
+  }
+//
+
+
+//Fonction pour rechercher des partenaires en fonction du pays
   searchByPays(paysnom:any){
     this.filtrecat = this.listpartenaire.filter((mot: any) => mot.pays.toLowerCase().includes(paysnom.toLowerCase()));
   }
+//
 
+//Fonction pour filtrer les recherches
   onSubmit2(){
     let result = {
      pays: this.partenaireForm.value.pays1
@@ -78,17 +90,20 @@ export class PartenaireComponent implements OnInit {
     this.filtrecat = this.listpartenaire.filter((mot: any) => mot.pays.toLowerCase().includes( this.partenaireForm.value.pays1.toLowerCase()));
 
 }
+//
 
-
+//Fonction qui permet de supprimer un partenaire à l'aide de son id
   deletePartenaire(id : any){
-    this.partenaireService.deletePartenaire(id).subscribe((res)=>{
+    this.partenaireService.deletePartenaire(id, this.userInfo.jwt).then((res)=>{
 
-    }, (error)=>{
+    }).catch((error)=>{
       console.log(error);
     })
 
   }
+//
 
+//Fonction pour creer un nouveau partenaire
   onSubmit() {
     console.log(this.partenaireForm.value);
 
@@ -125,6 +140,9 @@ export class PartenaireComponent implements OnInit {
       
    })
   }
+//
+
+//Fonction pour mettre à jour les infos d'un partenaire à l'aide de son id
   onUpdate(partenaire : any) {
     let part = partenaire;
     console.log(part);
@@ -187,4 +205,5 @@ export class PartenaireComponent implements OnInit {
       this.loader = false;
     })
   }
+//
 }

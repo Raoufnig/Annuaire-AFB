@@ -42,6 +42,7 @@ export class GuichetComponent implements OnInit {
       id_agence: new FormControl('', Validators.required),
       id_succursale: new FormControl('', Validators.required),
       agence: new FormControl('', Validators.required),
+      fax: new FormControl('', Validators.required),
       succursale: new FormControl('', Validators.required),
 
     })
@@ -56,19 +57,24 @@ export class GuichetComponent implements OnInit {
     this.statut =this.userInfo.group;
   }
 
+//Fonction pour recuperer la liste des guichets
   ListGuichet(){
     this.guichetService.getListGuichet().then((res)=>{
       this.listguichet=res.data;
       this.filtercat=res.data;
     })
   }
+//
+
   getListville(){
-    this.assistService.getListVille().subscribe((res)=>{
-      this.listville= res;
+    this.assistService.getListVille().then((res)=>{
+      this.listville= res.data;
       console.log(this.listville)
     })
   }
 
+
+//Fonction pour creer un nouveau Guichet
   onSubmit() {
     console.log(this.guichetForm.value);
 
@@ -108,6 +114,9 @@ export class GuichetComponent implements OnInit {
     
   
   }
+//
+
+//Fonction pour filtrer les recherches
   onSubmit2(){
     let result = {
      id_agence: this.guichetForm.value.agence
@@ -116,10 +125,15 @@ export class GuichetComponent implements OnInit {
     this.filtercat = this.listguichet.filter((mot: any) => mot.id_agence.toLowerCase().includes( this.guichetForm.value.agence.toLowerCase()));
 
 }
+//
  
+//Fonction de recherche en fonction de tous les attributs du guichet
 searchByName(){
   this.filtercat = this.listguichet.filter((mot: any) => Object.values(mot).some(value=> typeof value === 'string' && value.toLowerCase().includes(this.searchText.toLowerCase())));
 }
+//
+
+//Fonction pour mettre à jour les infos d'un guichet à l'aide de son id
   onUpdate(guichet : any) {
     let guich = guichet;
     console.log(guich);
@@ -183,15 +197,24 @@ searchByName(){
       this.loader = false;
     })
   }
+//
 
-
+//Fonction qui permet de supprimer un Guichet à l'aide de son id
   deleteGuichet(id : any){
     this.actionDelete = true;
-    this.guichetService.deleteGuichet(id).then((res)=>{
+    this.guichetService.deleteGuichet(id, this.userInfo.jwt).then((res)=>{
       console.log(res);
+      this.deleted=true;
     }).catch((error)=>{
       console.log(error);
     })
   }
+//
+
+  //Fonction pour recharger la page
+  reloadPage(){
+    window.location.reload();
+  }
+//
 
 }
