@@ -69,6 +69,8 @@ export class HomeComponent implements OnInit{
       fonction : new FormControl(''),
       addphone: this.fb.array([]),
       addemail: this.fb.array([],[Validators.required, Validators.email]),
+      subject: new FormControl('', Validators.required),
+      message: new FormControl('', Validators.required),
 
     });
   }
@@ -389,6 +391,19 @@ listpersonnel(){
 //Fonction de recherche en fonction de tous les attributs du personnel
 searchByName(){
   this.filtercat = this.employees.filter((mot: any) => Object.values(mot).some(value=> typeof value === 'string' && value.toLowerCase().includes(this.searchText.toLowerCase())));
+}
+//
+
+//Fonction pour signaler une erreur a l'admin
+notifyAdmin(){
+  let subject = this.personnelForm.value.subject;
+  let msg = this.personnelForm.value.message
+  axios.post(URL.API_URL + '/personnel' + '/sendemail/'+ subject+'/'+msg).then((res)=>{
+    console.log(res);
+
+  }).catch((error)=>{
+    console.log(error);
+  })
 }
 //
 
